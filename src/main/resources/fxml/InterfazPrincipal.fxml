@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="763.0" prefWidth="1323.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorMain">
    <children>
-      <AnchorPane prefHeight="763.0" prefWidth="200.0" style="-fx-background-color: #4125f7;" />
-      <AnchorPane layoutX="200.0" prefHeight="763.0" prefWidth="200.0" style="-fx-background-color: #e01d1d;" />
+      <AnchorPane layoutX="298.0" prefHeight="777.0" prefWidth="567.0" style="-fx-background-color: linear-gradient(to left, #0765AF, #D83248);;" />
+      <AnchorPane layoutX="848.0" prefHeight="777.0" prefWidth="550.0" style="-fx-background-color: linear-gradient(to right, #D83248, #0765AF);;">
+         <children>
+            <ImageView fitHeight="512.0" fitWidth="426.0" layoutX="-213.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/kisspng-2005u201306-nba-season-orlando-magic-the-nba-final-nba-professional-basketball-logo-5a750448d17113.4246774315176182488579.png" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
+      <VBox layoutX="-1.0" prefHeight="777.0" prefWidth="300.0" style="-fx-background-color: #0a3765;" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="92.0" prefWidth="280.0" style="-fx-background-color: linear-gradient(to left, #0765AF, #D83248); -fx-background-radius: 50px;">
+               <children>
+                  <ImageView fitHeight="96.0" fitWidth="160.0" layoutX="69.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/header.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

@@ -11,7 +11,7 @@ public class ConexionBDD {
     private static final String URL = "jdbc:mysql://localhost:3306/nba";
     private static final String USERNAME = "root";
     // WINDOWS -> "root" | LINUX -> "Roo|"
-    private static final String PASSWORD = "Roo|";
+    private static final String PASSWORD = "root";
 
 
     public void abrirConexion() {
