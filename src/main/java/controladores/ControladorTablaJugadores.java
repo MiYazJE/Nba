@@ -1,8 +1,6 @@
 package controladores;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,7 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import modelo.Jugador;
+import modelo.*;
 
 public class ControladorMain implements Initializable {
 
@@ -30,21 +28,20 @@ public class ControladorMain implements Initializable {
 	@FXML private TableColumn<Jugador, String> col_posicion;
 	@FXML private TableColumn<Jugador, String> col_nombreEquipo;
 
-
-	private static final String URL = "jdbc:mysql://localhost:3306/nba";
-	private static final String USERNAME = "root";
-	// WINDOWS -> "root" | LINUX -> "Roo|"
-	private static final String PASSWORD = "root";
+	// Encargado de realizar las conexiones con la BDDD
+	private ConexionBDD conexion = new ConexionBDD();
 
 	ObservableList<Jugador> jugadores = FXCollections.observableArrayList();
-
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		// ABRIR CONEXION CON LA BASE DE DATOS
+		conexion.abrirConexion();
+
 		// EVENTO BOTON CONEXION BDDD
 		btnConectar.setOnMouseClicked(e -> {
-			realizarConexion();
+			leerTablaJugadores();
 		});
 
 		col_nombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
@@ -54,26 +51,20 @@ public class ControladorMain implements Initializable {
 		col_posicion.setCellValueFactory(new PropertyValueFactory<>("Posicion"));
 		col_nombreEquipo.setCellValueFactory(new PropertyValueFactory<>("Equipo"));
 
-		// Agregar el observableList a la tablaJugadores
+		// AGREGAR EL OBSERVABLE LIST A TABLA JUGADORES
 		tablaJugadores.setItems( jugadores );
 
 	}
 
-	private void realizarConexion() {
+	private void leerTablaJugadores() {
 
 		try {
 
-			// Establece la conexión
-			Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			Statement stmt = conexion.getStatement().createStatement();
+			ResultSet rs   = conexion.realizarConsulta("SELECT Nombre, Procedencia, Altura, Peso, Posicion, Nombre_equipo FROM jugadores");
 
-			// Ejecuta la consulta
-			Statement stmt = con.createStatement();
-			ResultSet rs   = stmt.executeQuery("SELECT Nombre, Procedencia, Altura, Peso, Posicion, Nombre_equipo FROM jugadores");
-
-			// Procesa los resultados
 			while (rs.next()) {
 
-				// Leer columnas
 				String nombre = rs.getString("Nombre");
 				String procedencia = rs.getString("Procedencia");
 				String altura = rs.getString("Altura");
@@ -84,11 +75,8 @@ public class ControladorMain implements Initializable {
 				Jugador jugador = new Jugador(nombre, procedencia, altura, peso, posicion, nombreEquipo);
 				jugadores.add( jugador );
 
-				System.out.println( "Añadiendo nuevo jugador a la tabla: " + jugador );
+				System.out.println("Adding " + jugador.getNombre() + " to the table.");
 			}
-
-			//Cerrar la conexión
-			con.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
