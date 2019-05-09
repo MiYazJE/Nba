@@ -17,7 +17,7 @@ public class Aplicacion extends Application {
 
 		try {
 
-			root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/fxml/TablaJugadores.fxml"));
 
 		} catch (IOException e) {
 			e.printStackTrace();

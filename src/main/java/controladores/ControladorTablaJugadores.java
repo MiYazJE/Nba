@@ -16,7 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.*;
 
-public class ControladorMain implements Initializable {
+public class ControladorTablaJugadores implements Initializable {
 
 
 	@FXML private Button btnConectar;
