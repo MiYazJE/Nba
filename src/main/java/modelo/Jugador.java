@@ -6,63 +6,90 @@ package modelo;
 
 public class Jugador {
 
-    private String Nombre;
-    private String Procedencia;
-    private String Peso;
+    private String nombre;
+    private String procedencia;
+    private String peso;
+    private String altura;
+    private String equipo;
+    private String posicion;
 
 
     /**
-     * Contructor de jugador vacio
-     */
-    public Jugador() {
-        this(null, null, null);
-    }
-
-
-    /**
-     * Contructor de jugador con 3 parametros
+     * Contructor de jugador con 6 parámetros
      * @param nombre
      * @param procedencia
      * @param peso
+     * @param altura
+     * @param posicion
+     * @param equipo
      */
-    public Jugador(String nombre, String procedencia, String peso) {
-        this.Nombre = nombre;
-        this.Procedencia = procedencia;
-        this.Peso = peso;
+    public Jugador(String nombre, String procedencia, String altura, String peso, String posicion, String equipo) {
+        this.nombre = nombre;
+        this.peso = peso;
+        this.procedencia = procedencia;
+        this.altura = altura;
+        this.posicion = posicion;
+        this.equipo = equipo;
     }
 
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        Nombre = nombre;
+        nombre = nombre;
     }
 
     public String getProcedencia() {
-        return Procedencia;
+        return procedencia;
     }
 
     public void setProcedencia(String procedencia) {
-        Procedencia = procedencia;
+        procedencia = procedencia;
     }
 
     public String getPeso() {
-        return Peso;
+        return peso;
     }
 
     public void setPeso(String peso) {
-        Peso = peso;
+        peso = peso;
     }
 
+    public String getAltura() {
+        return altura;
+    }
+
+    public void setAltura(String altura) {
+        this.altura = altura;
+    }
+
+    public String getEquipo() {
+        return equipo;
+    }
+
+    public void setEquipo(String equipo) {
+        this.equipo = equipo;
+    }
+
+    public String getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(String posicion) {
+        this.posicion = posicion;
+    }
 
     @Override
     public String toString() {
         return "Jugador{" +
-                "Nombre='" + Nombre + '\'' +
-                ", Procedencia='" + Procedencia + '\'' +
-                ", Peso='" + Peso + '\'' +
+                "nombre='" + nombre + '\'' +
+                ", procedencia='" + procedencia + '\'' +
+                ", peso='" + peso + '\'' +
+                ", altura='" + altura + '\'' +
+                ", equipo='" + equipo + '\'' +
+                ", posicion='" + posicion + '\'' +
                 '}';
     }
 

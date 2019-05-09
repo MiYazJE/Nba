@@ -6,17 +6,20 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="728.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorMain">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="728.0" prefWidth="1224.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorMain">
    <children>
       <Button fx:id="btnConectar" layoutX="22.0" layoutY="27.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="117.0" style="-fx-background-color: lightblue; -fx-text-fill: #FFF;" text="Conectar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TableView fx:id="tablaJugadores" layoutX="236.0" layoutY="21.0" prefHeight="607.0" prefWidth="581.0">
+      <TableView fx:id="tablaJugadores" layoutX="145.0" layoutY="21.0" prefHeight="607.0" prefWidth="988.0">
         <columns>
-          <TableColumn prefWidth="214.0" text="Nombre" />
-            <TableColumn prefWidth="195.0" text="Procedencia" />
-            <TableColumn prefWidth="170.0" text="Peso" />
+            <TableColumn fx:id="col_nombre" prefWidth="214.0" text="Nombre" />
+            <TableColumn fx:id="col_procedencia" prefWidth="195.0" text="Procedencia" />
+            <TableColumn fx:id="col_altura" prefWidth="170.0" text="Altura" />
+            <TableColumn fx:id="col_peso" prefWidth="107.0" text="Peso" />
+            <TableColumn fx:id="col_posicion" prefWidth="109.0" text="Posición" />
+            <TableColumn fx:id="col_nombreEquipo" prefWidth="191.0" text="Equipo" />
         </columns>
       </TableView>
    </children>
