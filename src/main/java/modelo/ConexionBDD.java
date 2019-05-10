@@ -53,7 +53,7 @@ public class ConexionBDD {
         return rs;
     }
 
-    public Connection getStatement() {
+    public Connection getConection() {
         return this.con;
     }
 

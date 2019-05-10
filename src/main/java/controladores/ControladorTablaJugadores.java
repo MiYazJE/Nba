@@ -19,7 +19,6 @@ import modelo.*;
 public class ControladorTablaJugadores implements Initializable {
 
 
-	@FXML private Button btnConectar;
 	@FXML private TableView<Jugador> tablaJugadores;
 	@FXML private TableColumn<Jugador, String> col_nombre;
 	@FXML private TableColumn<Jugador, String> col_procedencia;
@@ -36,13 +35,7 @@ public class ControladorTablaJugadores implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		// ABRIR CONEXION CON LA BASE DE DATOS
-		conexion.abrirConexion();
-
-		// EVENTO BOTON CONEXION BDDD
-		btnConectar.setOnMouseClicked(e -> {
-			leerTablaJugadores();
-		});
+		leerTablaJugadores();
 
 		col_nombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
 		col_procedencia.setCellValueFactory(new PropertyValueFactory<>("Procedencia"));
@@ -60,7 +53,7 @@ public class ControladorTablaJugadores implements Initializable {
 
 		try {
 
-			Statement stmt = conexion.getStatement().createStatement();
+			Statement stmt = conexion.getConection().createStatement();
 			ResultSet rs   = conexion.realizarConsulta("SELECT Nombre, Procedencia, Altura, Peso, Posicion, Nombre_equipo FROM jugadores");
 
 			while (rs.next()) {
