@@ -95,7 +95,7 @@ public class ControladorTablaJugadores implements Initializable {
 				if (jugador.getNombre().contains( newValue ))
 					return true;
 
-				if (jugador.getProcedencia().contains( newValue ))
+				if (jugador.getProcedencia() != null && jugador.getProcedencia().contains( newValue ))
 					return true;
 
 				if (jugador.getEquipo().contains( newValue ))
