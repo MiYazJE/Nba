@@ -18,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import modelo.*;
 
 public class ControladorTablaJugadores implements Initializable {
@@ -43,7 +42,24 @@ public class ControladorTablaJugadores implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		leerTablaJugadores();
+		cargarPropiedadesTablaJugadores();
 
+		// TESTEANDO -> Añadiendo un nuevo jugador a la tabla jugadores.
+		addPlayer.setOnMouseClicked( e -> {
+			Jugador player = new Jugador("Ruben Saiz", "España", "1.72", "85", "Portero", "Real Madrid");
+			jugadores.add( player );
+			System.out.println("Adding " + player.getNombre() + " to the table.");
+		});
+
+		// Añadir filtrado a la tabla jugadores
+		generarFiltradoTabla();
+	}
+
+	/**
+	 * Aqui se crean las propiedades de las columnas de la tabla jugadores.
+	 * A cada una de las columnas se les indica que atributo del objeto Jugadores van a leer.
+	 */
+	private void cargarPropiedadesTablaJugadores() {
 		col_nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 		col_procedencia.setCellValueFactory(new PropertyValueFactory<>("procedencia"));
 		col_peso.setCellValueFactory(new PropertyValueFactory<>("peso"));
@@ -53,17 +69,24 @@ public class ControladorTablaJugadores implements Initializable {
 
 		// AGREGAR EL OBSERVABLE LIST A TABLA JUGADORES
 		tablaJugadores.setItems( jugadores );
+	}
 
-		// BORRAR DE AQUI HACIA ABAJO
-		addPlayer.setOnMouseClicked( e -> {
-			Jugador player = new Jugador("Ruben Saiz", "España", "1.72", "85", "Portero", "Real Madrid");
-			jugadores.add( player );
-			System.out.println("Adding " + player.getNombre() + " to the table.");
-		});
+	/**
+	 * Genera un evento para que la tabla vaya buscando las coincidencias que
+	 * se van escribiendo en el textField buscarNombre.
+	 */
+	private void generarFiltradoTabla() {
 
-		// TODO hacer que el textfield buscarNombre filtre la tabla
+		/* Creamos el siguiente filtrado para la busqueda de la tabla jugadores:
+				1.- Busqueda por nombre.
+				2.- Busqueda por procedencia.
+				3.- Busqueda por equipo.
+				4.- Busqueda por posicion.
+		 */
 		FilteredList<Jugador> filter = new FilteredList<>(jugadores, e -> true);
 		buscarNombre.textProperty().addListener((observableValue, oldValue, newValue) -> {
+
+			System.out.println("Observable value - " + observableValue + "\nOld Value - " + oldValue + "\nNewValue - " + newValue);
 
 			filter.setPredicate((Predicate<? super Jugador>) jugador -> {
 				if (newValue == null || newValue.isEmpty())
@@ -72,8 +95,13 @@ public class ControladorTablaJugadores implements Initializable {
 				if (jugador.getNombre().contains( newValue ))
 					return true;
 
-				return jugador.getEquipo().contains( newValue );
+				if (jugador.getProcedencia().contains( newValue ))
+					return true;
 
+				if (jugador.getEquipo().contains( newValue ))
+					return true;
+
+				return jugador.getPosicion().contains( newValue );
 			});
 
 			SortedList<Jugador> datosFiltrados = new SortedList<>(filter);
@@ -83,6 +111,10 @@ public class ControladorTablaJugadores implements Initializable {
 
 	}
 
+	/**
+	 * Se leen de la base de datos "nba" todos los campos de la tabla "Jugadores" y se añaden al
+	 * observableList jugadores.
+	 */
 	private void leerTablaJugadores() {
 
 		try {
