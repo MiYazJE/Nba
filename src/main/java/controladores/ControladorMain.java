@@ -3,6 +3,7 @@ package controladores;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -51,17 +52,23 @@ public class ControladorMain implements Initializable {
         cajaTablaJugadores.setVisible(true);
     }
 
+    /**
+     * Mostrar una tabla con todos los jugadores de la Nba que por defecto
+     * estará invisible, la vista de la tabla será agregada a cajaTablaJugadores.
+     */
     private void cargarTablaJugadores() {
 
-        AnchorPane panel = new AnchorPane();
+        // AnchorPane panel = new AnchorPane();
+
+        Parent ventanaNueva = null;
 
         try {
-            panel = FXMLLoader.load(getClass().getResource("/fxml/TablaJugadores.fxml"));
+            ventanaNueva = FXMLLoader.load(getClass().getResource("/fxml/TablaJugadores.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        cajaTablaJugadores.getChildren().add(panel);
+        cajaTablaJugadores.getChildren().add( ventanaNueva );
 
         mostrarTablaJugadores();
     }
