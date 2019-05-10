@@ -1,4 +1,4 @@
-package modelo;
+package dominio;
 
 /**
  * Objeto jugador

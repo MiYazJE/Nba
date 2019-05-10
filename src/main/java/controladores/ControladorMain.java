@@ -3,11 +3,9 @@ package controladores;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import modelo.ConexionBDD;
 
 import java.io.IOException;
@@ -18,8 +16,11 @@ public class ControladorMain implements Initializable {
 
     @FXML AnchorPane cajaTablaJugadores;
     @FXML Button botonJugadores;
+    @FXML Button botonEstadisticas;
+    @FXML Button botonEquipos;
 
-    private ConexionBDD conexion = new ConexionBDD();
+
+    public static ConexionBDD conexion = new ConexionBDD();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -30,6 +31,14 @@ public class ControladorMain implements Initializable {
         botonJugadores.setOnMouseClicked(e -> {
             // Cargar la tabla jugadores
             cargarTablaJugadores();
+        });
+
+        botonEquipos.setOnMouseClicked(e -> {
+            esconderTablaJugadores();
+        });
+
+        botonEstadisticas.setOnMouseClicked(e -> {
+            esconderTablaJugadores();
         });
 
     }
@@ -44,16 +53,16 @@ public class ControladorMain implements Initializable {
 
     private void cargarTablaJugadores() {
 
-        Parent root = null;
+        AnchorPane panel = new AnchorPane();
 
         try {
-            root = FXMLLoader.load(getClass().getResource("/fxml/TablaJugadores.fxml"));
+            panel = FXMLLoader.load(getClass().getResource("/fxml/TablaJugadores.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //cajaTablaJugadores = new AnchorPane();
-        //cajaTablaJugadores.getChildren().add(root);
+        cajaTablaJugadores.getChildren().add(panel);
+
         mostrarTablaJugadores();
     }
 
