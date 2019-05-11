@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import modelo.ConexionBDD;
@@ -34,42 +35,56 @@ public class ControladorLogin implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        // Iniciar sesion al teclear ENTER
+        fieldPassword.setOnKeyPressed(key -> {
+            if (key.getCode().equals(KeyCode.ENTER)) {
+                verificarInicioDeSesion();
+            }
+        });
+
+        // Iniciar sesion al presionar el boton submit
         submit.setOnAction(e -> {
-
-            String user = fieldUsuario.getText();
-            String pass = fieldPassword.getText();
-
-            if (!user.isEmpty() && !pass.isEmpty()){
-
-                conexion = new ConexionBDD(user, pass);
-                if (conexion.abrirConexion()) {
-                    // TODO Lanzar ventana succes login
-
-                    System.out.println("Iniciando sesion...");
-                    iniciarSesion();
-                    System.out.println("Sesion iniciada.");
-
-                    Stage stage = (Stage) submit.getScene().getWindow();
-                    stage.close();
-                }
-                else {
-                    // Ventana error no existe el usuario sql
-
-                }
-
-            }
-            else {
-                Alert alerta = new Alert(Alert.AlertType.ERROR);
-                alerta.setContentText("Por favor, rellene todos los campos.");
-                alerta.setHeaderText("Error campos incompletos");
-                alerta.showAndWait();
-            }
-
-
+            verificarInicioDeSesion();
         });
 
     }
 
+    private void verificarInicioDeSesion() {
+
+        String user = fieldUsuario.getText();
+        String pass = fieldPassword.getText();
+
+        if (!user.isEmpty() && !pass.isEmpty()){
+
+            conexion = new ConexionBDD(user, pass);
+            if (conexion.abrirConexion()) {
+                // TODO Lanzar ventana succes login
+
+                System.out.println("Iniciando sesion...");
+                iniciarSesion();
+                System.out.println("Sesion iniciada.");
+
+                Stage stage = (Stage) submit.getScene().getWindow();
+                stage.close();
+            }
+            else {
+                // Ventana error no existe el usuario sql
+
+            }
+
+        }
+        else {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setContentText("Por favor, rellene todos los campos.");
+            alerta.setHeaderText("Error campos incompletos");
+            alerta.showAndWait();
+        }
+
+    }
+
+    /**
+     * Entrar a la interfaz principal
+     */
     private void iniciarSesion() {
 
         Stage stage = new Stage();
