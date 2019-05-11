@@ -6,7 +6,10 @@ public class ConexionBDD {
 
     public static Connection con;
     private ResultSet rs;
-
+    private String URL = "jdbc:mysql://localhost:3306/nba";
+    // WINDOWS -> "root" | LINUX -> "Roo|"
+    private String password;
+    private String usuario;
 
     /**
      * Contructor vacio
@@ -20,28 +23,21 @@ public class ConexionBDD {
      * @param user
      * @param pass
      */
-    /*public ConexionBDD(String user, String pass) {
-        this.user = user;
-        this.pass = pass;
-    }*/
+    public ConexionBDD(String user, String pass) {
+        this.usuario  = user;
+        this.password = pass;
+    }
 
-    private static final String URL = "jdbc:mysql://localhost:3306/nba";
-    private static final String USERNAME = "root";
-    // WINDOWS -> "root" | LINUX -> "Roo|"
-    private static final String PASSWORD = "root";
-
-
-    public static boolean abrirConexion() {
+    public boolean abrirConexion() {
 
         try {
 
             // Establece la conexión
-            con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("Conexion con la base de datos exitosa.");
+            con = DriverManager.getConnection(URL, usuario, password);
+            System.out.println("Conexion exitosa, logeado en la base de datos NBA.");
             return true;
 
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
 
