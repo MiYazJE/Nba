@@ -155,14 +155,14 @@ public class ControladorTablaJugadores implements Initializable {
 		Parent root = null;
 
 		try {
-			root = FXMLLoader.load(getClass().getResource("/fxml/DialogoCreacionJugador.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/fxml/CreacionJugador.fxml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		stage.setScene(new Scene(root));
 		stage.getIcons().add(new Image("/imagenes/player.png"));
-		stage.setTitle("Creación Usuario");
+		stage.setTitle("Creación Jugador");
 		stage.setResizable(false);
 		stage.show();
 	}

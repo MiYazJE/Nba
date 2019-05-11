@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -9,12 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="647.0" prefWidth="442.0" style="-fx-background-color: linear-gradient(to bottom, #0765AF, #D83248);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorDialogoCreacionJugador">
+<AnchorPane prefHeight="647.0" prefWidth="442.0" style="-fx-background-color: linear-gradient(to bottom, #0765AF, #D83248);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorCreacionJugador">
    <children>
       <VBox layoutX="-3.0" layoutY="-1.0" prefHeight="642.0" prefWidth="444.0" spacing="20.0">
          <children>
-            <JFXTextField focusColor="WHITE" promptText="Nombre del Jugador" style="-fx-text-fill: white;" unFocusColor="WHITE">
+            <JFXTextField fx:id="fieldNombre" focusColor="WHITE" labelFloat="true" promptText="Nombre del Jugador" style="-fx-text-fill: white;" unFocusColor="WHITE">
                <padding>
                   <Insets left="10.0" right="10.0" top="20.0" />
                </padding>
@@ -25,7 +25,7 @@
                   <Insets left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField focusColor="WHITE" promptText="Pais " style="-fx-text-fill: white;" unFocusColor="WHITE">
+            <JFXTextField fx:id="fieldProcedencia" focusColor="WHITE" labelFloat="true" promptText="Pais " style="-fx-text-fill: white;" unFocusColor="WHITE">
                <padding>
                   <Insets left="10.0" right="10.0" top="20.0" />
                </padding>
@@ -36,7 +36,7 @@
                   <Insets left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField focusColor="WHITE" promptText="Altura" style="-fx-text-fill: white;" unFocusColor="WHITE">
+            <JFXTextField fx:id="fieldAltura" focusColor="WHITE" labelFloat="true" promptText="Altura" style="-fx-text-fill: white;" unFocusColor="WHITE">
                <padding>
                   <Insets left="10.0" right="10.0" top="20.0" />
                </padding>
@@ -47,7 +47,7 @@
                   <Insets left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField focusColor="WHITE" promptText="Peso" style="-fx-text-fill: white;" unFocusColor="WHITE">
+            <JFXTextField fx:id="fieldPeso" focusColor="WHITE" labelFloat="true" promptText="Peso" style="-fx-text-fill: white;" unFocusColor="WHITE">
                <padding>
                   <Insets left="10.0" right="10.0" top="20.0" />
                </padding>
@@ -58,7 +58,7 @@
                   <Insets left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField focusColor="WHITE" promptText="Posicion" style="-fx-text-fill: white;" unFocusColor="WHITE">
+            <JFXTextField fx:id="fieldPosicion" focusColor="WHITE" labelFloat="true" promptText="Posicion" style="-fx-text-fill: white;" unFocusColor="WHITE">
                <padding>
                   <Insets left="10.0" right="10.0" top="20.0" />
                </padding>
@@ -69,20 +69,14 @@
                   <Insets left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField focusColor="WHITE" promptText="Nombre del Equipo" style="-fx-text-fill: white;" unFocusColor="WHITE">
-               <padding>
-                  <Insets left="10.0" right="10.0" top="20.0" />
-               </padding>
-               <font>
-                  <Font size="21.0" />
-               </font>
+            <JFXComboBox fx:id="comboEquipo" focusColor="WHITE" prefHeight="39.0" prefWidth="404.0" promptText="  Equipo" style="-fx-text-fill: white; -fx-font-size: 21px;" unFocusColor="WHITE">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
-            </JFXTextField>
+            </JFXComboBox>
             <HBox prefHeight="95.0" prefWidth="444.0">
                <children>
-                  <JFXButton alignment="CENTER" prefHeight="142.0" prefWidth="207.0" text="GUARDAR" textAlignment="CENTER" textFill="WHITE">
+                  <JFXButton fx:id="btnGuardar" alignment="CENTER" prefHeight="142.0" prefWidth="207.0" text="GUARDAR" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -96,7 +90,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
-                  <JFXButton alignment="CENTER" prefHeight="142.0" prefWidth="214.0" text="CANCELAR" textAlignment="CENTER" textFill="WHITE">
+                  <JFXButton fx:id="btnCerrar" alignment="CENTER" prefHeight="142.0" prefWidth="214.0" text="CANCELAR" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
                      </font>

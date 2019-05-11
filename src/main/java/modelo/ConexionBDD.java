@@ -7,6 +7,14 @@ public class ConexionBDD {
     public static Connection con;
     private ResultSet rs;
 
+
+    /**
+     * Contructor vacio
+     */
+    public ConexionBDD() {
+
+    }
+
     /**
      * Constructor con 2 parámetros, el usuario y la contraseña de la base de datos mysql.
      * @param user

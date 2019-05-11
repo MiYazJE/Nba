@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import modelo.ConexionBDD;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,6 +41,7 @@ public class ControladorMain implements Initializable {
     }
 
     private void esconderTablaJugadores() {
+        cajaTablaJugadores.getChildren().clear();
         cajaTablaJugadores.setVisible(false);
         imagenPrincipal.setVisible(true);
     }
