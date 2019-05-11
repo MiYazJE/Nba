@@ -1,6 +1,8 @@
 package controladores;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -13,11 +15,16 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import modelo.*;
 
 public class ControladorTablaJugadores implements Initializable {
@@ -34,21 +41,18 @@ public class ControladorTablaJugadores implements Initializable {
 	@FXML private JFXTextField buscarNombre;
 
 	// Encargado de realizar las conexiones con la BDDD
-	private ConexionBDD conexion = ControladorMain.conexion;
-
-	ObservableList<Jugador> jugadores = FXCollections.observableArrayList();
+	private ConexionBDD conexion = new ConexionBDD();
+	private ObservableList<Jugador> jugadores = FXCollections.observableArrayList();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		leerTablaJugadores();
 		cargarPropiedadesTablaJugadores();
+		leerTablaJugadores();
 
-		// TESTEANDO -> Añadiendo un nuevo jugador a la tabla jugadores.
+		// Abrir dialogo para la creacion de un nuevo jugador
 		addPlayer.setOnMouseClicked( e -> {
-			Jugador player = new Jugador("Ruben Saiz", "España", "1.72", "85", "Portero", "Real Madrid");
-			jugadores.add( player );
-			System.out.println("Adding " + player.getNombre() + " to the table.");
+			abrirVentanaCreacionJugador();
 		});
 
 		// Añadir filtrado a la tabla jugadores
@@ -86,8 +90,7 @@ public class ControladorTablaJugadores implements Initializable {
 		FilteredList<Jugador> filter = new FilteredList<>(jugadores, e -> true);
 		buscarNombre.textProperty().addListener((observableValue, oldValue, newValue) -> {
 
-			System.out.println("Observable value - " + observableValue + "\nOld Value - " + oldValue + "\nNewValue - " + newValue);
-
+			// System.out.println("Observable value - " + observableValue + "\nOld Value - " + oldValue + "\nNewValue - " + newValue);
 			filter.setPredicate((Predicate<? super Jugador>) jugador -> {
 				if (newValue == null || newValue.isEmpty())
 					return true;
@@ -99,6 +102,9 @@ public class ControladorTablaJugadores implements Initializable {
 					return true;
 
 				if (jugador.getEquipo().contains( newValue ))
+					return true;
+
+				if (jugador.getPeso().contains( newValue ))
 					return true;
 
 				return jugador.getPosicion().contains( newValue );
@@ -119,7 +125,8 @@ public class ControladorTablaJugadores implements Initializable {
 
 		try {
 
-			ResultSet rs   = conexion.realizarConsulta("SELECT Nombre, Procedencia, Altura, Peso, Posicion, Nombre_equipo FROM jugadores");
+			PreparedStatement ps = conexion.con.prepareCall("SELECT * FROM jugadores");
+			ResultSet rs = conexion.realizarConsulta( ps );
 
 			while (rs.next()) {
 
@@ -140,6 +147,24 @@ public class ControladorTablaJugadores implements Initializable {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void abrirVentanaCreacionJugador() {
+
+		Stage stage = new Stage();
+		Parent root = null;
+
+		try {
+			root = FXMLLoader.load(getClass().getResource("/fxml/DialogoCreacionJugador.fxml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		stage.setScene(new Scene(root));
+		stage.getIcons().add(new Image("/imagenes/player.png"));
+		stage.setTitle("Creación Usuario");
+		stage.setResizable(false);
+		stage.show();
 	}
 
 }

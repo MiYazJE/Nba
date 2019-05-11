@@ -4,8 +4,7 @@ import java.sql.*;
 
 public class ConexionBDD {
 
-    private Connection con;
-    private Statement stmt;
+    public static Connection con;
     private ResultSet rs;
 
     /**
@@ -24,47 +23,45 @@ public class ConexionBDD {
     private static final String PASSWORD = "root";
 
 
-    public void abrirConexion() {
+    public static boolean abrirConexion() {
 
         try {
 
             // Establece la conexión
             con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            System.out.println("Conexion con la base de datos exitosa.");
+            return true;
 
-            // Ejecuta la consulta
-            stmt = con.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
 
+    }
+
+    public static void cerrarConexion() {
+
+        try {
+            con.close();
+            System.out.println("Cerrando la conexion con la base de datos.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void cerrarConexion() {
-
-        try {
-            this.con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public ResultSet realizarConsulta(String consulta) {
+    public ResultSet realizarConsulta(PreparedStatement ps) {
 
         try {
 
-            rs = stmt.executeQuery( consulta );
+            rs = ps.executeQuery();
+            System.out.println("Consulta realizada correctamente.");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return rs;
-    }
-
-    public Connection getConection() {
-        return this.con;
     }
 
 }

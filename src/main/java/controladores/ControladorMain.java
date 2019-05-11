@@ -19,14 +19,11 @@ public class ControladorMain implements Initializable {
     @FXML Button botonJugadores;
     @FXML Button botonEstadisticas;
     @FXML Button botonEquipos;
-
-
-    public static ConexionBDD conexion = new ConexionBDD();
+    @FXML ImageView imagenPrincipal;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        conexion.abrirConexion();
         esconderTablaJugadores();
 
         botonJugadores.setOnMouseClicked(e -> {
@@ -46,15 +43,17 @@ public class ControladorMain implements Initializable {
 
     private void esconderTablaJugadores() {
         cajaTablaJugadores.setVisible(false);
+        imagenPrincipal.setVisible(true);
     }
 
     private void mostrarTablaJugadores() {
         cajaTablaJugadores.setVisible(true);
+        imagenPrincipal.setVisible(false);
     }
 
     /**
-     * Mostrar una tabla con todos los jugadores de la Nba que por defecto
-     * estará invisible, la vista de la tabla será agregada a cajaTablaJugadores.
+     * Mostrar una tabla con todos los jugadores de la Nba,
+     * la vista de la tabla será agregada a cajaTablaJugadores.
      */
     private void cargarTablaJugadores() {
 
