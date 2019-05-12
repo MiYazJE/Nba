@@ -3,9 +3,7 @@
  */
 package controladores;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -73,10 +71,8 @@ public class ControladorCreacionJugador implements Initializable {
 
             // Lanzar una ventana de error cuando algun campo este vacio
             Alert alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setHeaderText("Error");
             alerta.setContentText("Por favor ingrese todos los campos.");
             alerta.showAndWait();
-
         }
 
     }

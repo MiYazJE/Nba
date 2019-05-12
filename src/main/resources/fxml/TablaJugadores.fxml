@@ -6,14 +6,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="980.0" stylesheets="@../estilos/estilosTabla.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorTablaJugadores">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="728.0" prefWidth="986.0" stylesheets="@../estilos/estilosTabla.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorTablaJugadores">
    <children>
-      <TableView fx:id="tablaJugadores" layoutX="1.0" layoutY="91.0" prefHeight="607.0" prefWidth="979.0">
+      <TableView fx:id="tablaJugadores" layoutX="4.0" layoutY="118.0" prefHeight="607.0" prefWidth="979.0">
           <placeholder>
               <Label text="No se han encontrado coincidencias" />
           </placeholder>
@@ -23,21 +24,43 @@
             <TableColumn fx:id="col_altura" prefWidth="174.0" text="Altura" />
             <TableColumn fx:id="col_peso" prefWidth="147.0" text="Peso" />
             <TableColumn fx:id="col_posicion" prefWidth="141.0" text="Posicion" />
-            <TableColumn fx:id="col_nombreEquipo" prefWidth="151.0" text="Equipo" />
+            <TableColumn fx:id="col_nombreEquipo" prefWidth="169.0" text="Equipo" />
         </columns>
       </TableView>
-      <Button fx:id="addPlayer" layoutX="14.0" layoutY="25.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="191.0" text="Agregar nuevo jugador">
+      <Button fx:id="addPlayer" alignment="TOP_CENTER" layoutX="127.0" layoutY="6.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="176.0" styleClass="btnSlideLeft" text="Agregar nuevo jugador">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <JFXTextField fx:id="buscarNombre" alignment="CENTER" focusColor="WHITE" layoutX="246.0" layoutY="28.0" prefHeight="32.0" prefWidth="191.0" promptText="Buscar..." style="-fx-text-fill: white;" unFocusColor="WHITE">
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <JFXTextField fx:id="buscarNombre" alignment="CENTER" focusColor="WHITE" layoutX="775.0" layoutY="29.0" prefHeight="47.0" prefWidth="191.0" promptText="Buscar..." style="-fx-text-fill: white; -fx-prompt-text-fill: white;" unFocusColor="WHITE">
          <font>
             <Font size="15.0" />
          </font></JFXTextField>
-      <ImageView fitHeight="26.0" fitWidth="24.0" layoutX="14.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="196.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/player.png" />
          </image>
+         <effect>
+            <ColorAdjust brightness="1.0" />
+         </effect>
+      </ImageView>
+      <Button fx:id="btnEliminar" alignment="TOP_CENTER" layoutX="4.0" layoutY="6.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="107.0" styleClass="btnSlideLeft" text="Eliminar">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="39.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/eliminar.png" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="1.0" />
+         </effect>
       </ImageView>
    </children>
 </AnchorPane>
