@@ -7,11 +7,25 @@ import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import modelo.ConexionBDD;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,11 +43,9 @@ public class ControladorCreacionJugador implements Initializable {
     @FXML private JFXButton btnCerrar;
     @FXML private JFXComboBox<String> comboEquipo;
 
-
     private ConexionBDD conexion = new ConexionBDD();
     private ResultSet rs;
     private ObservableList<String> equipos = FXCollections.observableArrayList();
-    private ControladorTablaJugadores tabla = new ControladorTablaJugadores();
 
 
     @Override
@@ -56,7 +68,8 @@ public class ControladorCreacionJugador implements Initializable {
     }
 
     /**
-     * Valida si los datos introducidos estan bien, si es asi lo añadira a la base de datos.
+     * Valida si los datos introducidos estan bien, si es asi lo añadira a la base de datosy mostrara un mensaje,
+     * sino muestra mensaje de error.
      */
     private void tramitarJugador() {
         if (!fieldNombre.getText().isEmpty() &&
@@ -67,40 +80,20 @@ public class ControladorCreacionJugador implements Initializable {
             !comboEquipo.getValue().isEmpty()) {
             // Añadir nuevo jugador a la base de datos
 
-            String update = "insert into jugadores (codigo, nombre, procedencia, altura, peso, posicion, nombre_equipo) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?);";
-            try {
+            boolean estadoConsulta = consultaCreacionJugador();
 
-                PreparedStatement ps = ConexionBDD.con.prepareStatement( update );
-                String codigo = obtenerSiguienteCodigo();
-                ps.setString(1, codigo);
-                ps.setString(2, fieldNombre.getText());
-                ps.setString(3, fieldProcedencia.getText());
-                ps.setString(4, fieldAltura.getText());
-                ps.setString(5, fieldPeso.getText());
-                ps.setString(6, fieldPosicion.getText());
-                ps.setString(7, comboEquipo.getValue());
-
-                if (conexion.agregarJugador(ps)) {
-                    // TODO Ventana jugador agregado
-
-                    // Actualizar la tabla
-
-                    tabla.leerTablaJugadores();
-
-                }
-                else {
-                    // TODO Ventana error al agregar jugador
-
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (estadoConsulta) {
+                avisoJugadorAgregado(fieldNombre.getText());
+                // Cerrar ventana
+                ((Stage)comboEquipo.getScene().getWindow()).close();
+            }
+            else {
+                // Mensaje de error
+                errorCrearJugador();
             }
 
         }
         else {
-
             // Lanzar una ventana de error cuando algun campo este vacio
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setContentText("Por favor ingrese todos los campos.");
@@ -108,6 +101,43 @@ public class ControladorCreacionJugador implements Initializable {
         }
 
     }
+
+    /**
+     * Lanzar ventana con mensaje de error al insertar jugador
+     */
+    private void errorCrearJugador() {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setContentText("Error al añadir el jugador.");
+        alerta.showAndWait();
+    }
+
+    /**
+     * Abre una ventana con un mensaje que indica que se ha insertado correctamente el usuario
+     * @param nombreJugador
+     */
+    private void avisoJugadorAgregado(String nombreJugador) {
+
+        Stage stage = new Stage();
+        HBox caja = new HBox();
+        Scene scene = new Scene(caja, 450, 200);
+        stage.setScene(scene);
+
+        ImageView imageView = new ImageView( new Image("/imagenes/succes.png") );
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
+
+        Label label = new Label("El jugador '" + nombreJugador + "' ha sido agregado\na la base de datos correctamente");
+        label.setFont(new Font("Quicksand", 16));
+
+        caja.setAlignment(Pos.CENTER);
+        caja.setSpacing(20);
+        caja.getChildren().addAll(imageView, label);
+
+        stage.initStyle(StageStyle.UTILITY);
+        stage.setResizable(false);
+        stage.show();
+    }
+
 
     /**
      * Recoger de la base de datos todos los nombres de los equipos en un ResultSet
@@ -124,6 +154,35 @@ public class ControladorCreacionJugador implements Initializable {
         }
 
         cargarEquipos();
+    }
+
+    /**
+     * Realizar consulta, crear un nuevo jugador
+     * @return boolean
+     */
+    private boolean consultaCreacionJugador() {
+
+        try {
+
+            String update = "insert into jugadores (codigo, nombre, procedencia, altura, peso, posicion, nombre_equipo) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?);";
+
+            PreparedStatement ps = ConexionBDD.con.prepareStatement( update );
+            String codigo = obtenerSiguienteCodigo();
+            ps.setString(1, codigo);
+            ps.setString(2, fieldNombre.getText());
+            ps.setString(3, fieldProcedencia.getText());
+            ps.setString(4, fieldAltura.getText());
+            ps.setString(5, fieldPeso.getText());
+            ps.setString(6, fieldPosicion.getText());
+            ps.setString(7, comboEquipo.getValue());
+
+            return conexion.agregarJugador(ps);
+
+        } catch(SQLException e) {
+            return false;
+        }
+
     }
 
     /**

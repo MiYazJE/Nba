@@ -125,7 +125,7 @@ public class ControladorLogin implements Initializable {
      * @param valor
      * @return ImageView
      */
-    private ImageView cambiarBrillo(ImageView imagen, int valor) {
+    private ImageView cambiarBrillo(ImageView imagen, double valor) {
 
         ColorAdjust color = new ColorAdjust();
         color.setBrightness(valor);
