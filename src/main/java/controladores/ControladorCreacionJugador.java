@@ -9,11 +9,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -23,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import modelo.ConexionBDD;
 
 import java.io.IOException;
@@ -42,6 +43,10 @@ public class ControladorCreacionJugador implements Initializable {
     @FXML private JFXButton btnGuardar;
     @FXML private JFXButton btnCerrar;
     @FXML private JFXComboBox<String> comboEquipo;
+    @FXML private ImageView infoPosicion;
+    @FXML private ImageView infoPeso;
+    @FXML private ImageView infoAltura;
+
 
     private ConexionBDD conexion = new ConexionBDD();
     private ResultSet rs;
@@ -50,6 +55,11 @@ public class ControladorCreacionJugador implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // Mostrar informacion de los campos al ser presionado
+        insertalToolTip(infoPosicion, "Longitud máxima: 4 carácteres");
+        insertalToolTip(infoPeso, "Debe de ser un numero");
+        insertalToolTip(infoAltura, "Debe de ser un número y\n longitud máxima: 5 carácteres");
 
         // Rellenar los equipos en la lista equipos
         consultarEquipos();
@@ -65,6 +75,17 @@ public class ControladorCreacionJugador implements Initializable {
             stage.close();
         });
 
+    }
+
+    /**
+     * Agregar tooltip con el mensaje que le pases
+     * @param mensaje
+     */
+    private void insertalToolTip(ImageView imagen, String mensaje) {
+        Tooltip tooltip = new Tooltip(mensaje);
+        tooltip.setFont(new Font("Quicksand", 14));
+        tooltip.setShowDelay(Duration.millis(300));
+        Tooltip.install(imagen, tooltip);
     }
 
     /**
@@ -157,6 +178,26 @@ public class ControladorCreacionJugador implements Initializable {
     }
 
     /**
+     * Cargar en un combobox todos los nombres de los equipos recojidos de un resultset
+     */
+    private void cargarEquipos() {
+
+        String nombre;
+
+        try {
+
+            while (rs.next()) {
+                nombre = rs.getString("Nombre");
+                equipos.add(nombre);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
      * Realizar consulta, crear un nuevo jugador
      * @return boolean
      */
@@ -181,26 +222,6 @@ public class ControladorCreacionJugador implements Initializable {
 
         } catch(SQLException e) {
             return false;
-        }
-
-    }
-
-    /**
-     * Cargar en un combobox todos los nombres de los equipos recojidos de un resultset
-     */
-    private void cargarEquipos() {
-
-        String nombre;
-
-        try {
-
-            while (rs.next()) {
-                nombre = rs.getString("Nombre");
-                equipos.add(nombre);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
     }

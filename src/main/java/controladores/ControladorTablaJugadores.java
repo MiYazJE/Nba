@@ -17,6 +17,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,7 +25,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import modelo.*;
 
 public class ControladorTablaJugadores implements Initializable {
@@ -119,19 +122,21 @@ public class ControladorTablaJugadores implements Initializable {
 				if (newValue == null || newValue.isEmpty())
 					return true;
 
-				if (jugador.getNombre().contains( newValue ))
+				String valor = newValue.toLowerCase();
+
+				if (jugador.getNombre().toLowerCase().contains( valor ))
 					return true;
 
-				if (jugador.getProcedencia() != null && jugador.getProcedencia().contains( newValue ))
+				if (jugador.getProcedencia() != null && jugador.getProcedencia().toLowerCase().contains( valor ))
 					return true;
 
-				if (jugador.getEquipo().contains( newValue ))
+				if (jugador.getEquipo().toLowerCase().contains( valor ))
 					return true;
 
-				if (jugador.getPeso().contains( newValue ))
+				if (jugador.getPeso().toLowerCase().contains( valor ))
 					return true;
 
-				return jugador.getPosicion().contains( newValue );
+				return jugador.getPosicion().toLowerCase().contains( valor );
 			});
 
 			SortedList<Jugador> datosFiltrados = new SortedList<>(filter);
@@ -174,6 +179,9 @@ public class ControladorTablaJugadores implements Initializable {
 
 	}
 
+	/**
+	 * Abre una ventana con inputs para la creacion del jugador
+	 */
 	private void abrirVentanaCreacionJugador() {
 
 		Stage stage = new Stage();
@@ -185,10 +193,13 @@ public class ControladorTablaJugadores implements Initializable {
 			e.printStackTrace();
 		}
 
-		stage.setScene(new Scene(root));
+		Scene scene = new Scene( root );
+		stage.setScene( scene );
+		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.getIcons().add(new Image("/imagenes/player.png"));
 		stage.setTitle("Creación Jugador");
 		stage.setResizable(false);
+
 		stage.show();
 	}
 
