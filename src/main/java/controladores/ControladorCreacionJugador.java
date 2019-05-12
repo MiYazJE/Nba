@@ -33,6 +33,7 @@ public class ControladorCreacionJugador implements Initializable {
     private ConexionBDD conexion = new ConexionBDD();
     private ResultSet rs;
     private ObservableList<String> equipos = FXCollections.observableArrayList();
+    private ControladorTablaJugadores tabla = new ControladorTablaJugadores();
 
 
     @Override
@@ -65,6 +66,37 @@ public class ControladorCreacionJugador implements Initializable {
             !fieldPosicion.getText().isEmpty() &&
             !comboEquipo.getValue().isEmpty()) {
             // Añadir nuevo jugador a la base de datos
+
+            String update = "insert into jugadores (codigo, nombre, procedencia, altura, peso, posicion, nombre_equipo) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?);";
+            try {
+
+                PreparedStatement ps = ConexionBDD.con.prepareStatement( update );
+                String codigo = obtenerSiguienteCodigo();
+                ps.setString(1, codigo);
+                ps.setString(2, fieldNombre.getText());
+                ps.setString(3, fieldProcedencia.getText());
+                ps.setString(4, fieldAltura.getText());
+                ps.setString(5, fieldPeso.getText());
+                ps.setString(6, fieldPosicion.getText());
+                ps.setString(7, comboEquipo.getValue());
+
+                if (conexion.agregarJugador(ps)) {
+                    // TODO Ventana jugador agregado
+
+                    // Actualizar la tabla
+
+                    tabla.leerTablaJugadores();
+
+                }
+                else {
+                    // TODO Ventana error al agregar jugador
+
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
         }
         else {
@@ -114,5 +146,26 @@ public class ControladorCreacionJugador implements Initializable {
 
     }
 
+    /**
+     * Obtiene el siguiente codigo respecto a el ultimo codigo insertado en la base de datos en la tabla jugadores
+     * @return String
+     */
+    private String obtenerSiguienteCodigo() {
+
+        String codigo = "";
+        try {
+
+            PreparedStatement ps = conexion.con.prepareStatement("SELECT MAX(codigo) FROM jugadores;");
+            ResultSet rs = conexion.realizarConsulta( ps );
+            while (rs.next()) codigo = rs.getString(1);
+            codigo = String.valueOf(Integer.valueOf(codigo) + 1);
+            return codigo;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "";
+        }
+
+    }
 
 }

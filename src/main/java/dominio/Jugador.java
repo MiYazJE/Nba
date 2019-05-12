@@ -30,6 +30,7 @@ public class Jugador {
         this.altura = altura;
         this.posicion = posicion;
         this.equipo = equipo;
+        pulgadasToMetros();
     }
 
 
@@ -91,6 +92,56 @@ public class Jugador {
                 ", equipo='" + equipo + '\'' +
                 ", posicion='" + posicion + '\'' +
                 '}';
+    }
+
+    /**
+     * Convertir la altura de pies-pulgadas a metros
+     */
+    private void pulgadasToMetros() {
+
+        /*
+            Multiplicar los pies por 30.48
+            Multiplicar las pulgadas por 2.54
+            Metros = pies + pulgadas
+         */
+
+        this.altura = altura.trim();
+
+        double pies     = 0;
+        double pulgadas = 0;
+        double metros   = 0;
+
+        if (altura.contains("-")) {
+            // PIES Y PULGADAS -> "5-7"
+
+            pies     = Integer.valueOf(altura.split("-")[0]);
+            pulgadas = Integer.valueOf(altura.split("-")[1]);
+
+            pies *= 30.48;
+            pulgadas *= 2.54;
+            metros = pies + pulgadas;
+        }
+        else {
+            // SOLO PIES -> "50"
+            pies *= 30.48;
+            metros = pies;
+        }
+
+        this.altura = String.valueOf( metros );
+        refrescarAltura();
+    }
+
+    /**
+     * Parsea el contenido de altura:
+     *  1.- 1.43 -> 1,43
+     *  2.- 1.433333434 -> 1,43
+     */
+    private void refrescarAltura() {
+        this.altura = altura.replace(".", ",");
+        if (altura.contains(",") && altura.length() > 4) {
+            this.altura = altura.substring(0, 5);
+        }
+        this.altura = altura + " cm";
     }
 
 }

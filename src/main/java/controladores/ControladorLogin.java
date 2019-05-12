@@ -43,16 +43,22 @@ public class ControladorLogin implements Initializable {
 
         // Color blanco a la imagen salir
         imgSalir.setOnMouseEntered(e -> {
-            ColorAdjust color = new ColorAdjust();
-            color.setBrightness(1);
-            imgSalir.setEffect(color);
+            cambiarBrillo(imgSalir, 1);
         });
 
         // Color negro a la imagen salir
         imgSalir.setOnMouseExited(e -> {
-            ColorAdjust color = new ColorAdjust();
-            color.setBrightness(0);
-            imgSalir.setEffect(color);
+            cambiarBrillo(imgSalir, 0);
+        });
+
+        // Color blanco a la imagen info
+        imgInfo.setOnMouseEntered(e -> {
+            cambiarBrillo(imgInfo, 1);
+        });
+
+        // Color negro a la imagen info
+        imgInfo.setOnMouseExited(e -> {
+            cambiarBrillo(imgInfo, 0);
         });
 
         // Salir de la aplicacion
@@ -97,17 +103,35 @@ public class ControladorLogin implements Initializable {
             }
             else {
                 // Ventana error no existe el usuario sql
-
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setContentText("El usuario ['" + user + "'] no esta registrado.\nO la contraseña no es correcta");
+                alerta.setHeaderText("Usuario o contraseña erroneos.");
+                alerta.showAndWait();
             }
 
         }
         else {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setContentText("Por favor, rellene todos los campos.");
-            alerta.setHeaderText("Error campos incompletos");
+            alerta.setHeaderText("Campos incompletos");
             alerta.showAndWait();
         }
 
+    }
+
+    /**
+     * Cambiar brillo de una imagen
+     * @param imagen
+     * @param valor
+     * @return ImageView
+     */
+    private ImageView cambiarBrillo(ImageView imagen, int valor) {
+
+        ColorAdjust color = new ColorAdjust();
+        color.setBrightness(valor);
+        imagen.setEffect(color);
+
+        return imagen;
     }
 
     /**

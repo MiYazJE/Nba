@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
@@ -53,6 +54,11 @@ public class ControladorTablaJugadores implements Initializable {
 		cargarPropiedadesTablaJugadores();
 		leerTablaJugadores();
 
+		//Evento boton eliminar el jugador
+		btnEliminar.setOnAction(e -> {
+			eliminarJugador();
+		});
+
 		// Evento refrescar, recoger todos los jugadores de la base de datos
 		btnRefrescar.setOnAction(e -> {
 			buscarNombre.setText("");
@@ -67,6 +73,16 @@ public class ControladorTablaJugadores implements Initializable {
 
 		// Añadir filtrado a la tabla jugadores
 		generarFiltradoTabla();
+	}
+
+	/**
+	 * Elimina el jugador seleccionado en la tabla
+	 */
+	private void eliminarJugador() {
+
+
+
+
 	}
 
 	/**
@@ -131,7 +147,7 @@ public class ControladorTablaJugadores implements Initializable {
 	 * Se leen de la base de datos "nba" todos los campos de la tabla "Jugadores" y se añaden al
 	 * observableList jugadores.
 	 */
-	private void leerTablaJugadores() {
+	public void leerTablaJugadores() {
 
 		try {
 
@@ -150,8 +166,9 @@ public class ControladorTablaJugadores implements Initializable {
 				Jugador jugador = new Jugador(nombre, procedencia, altura, peso, posicion, nombreEquipo);
 				jugadores.add( jugador );
 
-				System.out.println("Adding " + jugador.getNombre() + " to the table.");
 			}
+
+			System.out.println("Jugadores cargados en la tabla.");
 
 		} catch (SQLException e) {
 			e.printStackTrace();

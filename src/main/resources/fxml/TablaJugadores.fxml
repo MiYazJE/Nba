@@ -27,7 +27,7 @@
             <TableColumn fx:id="col_nombreEquipo" prefWidth="169.0" text="Equipo" />
         </columns>
       </TableView>
-      <Button fx:id="addPlayer" alignment="TOP_CENTER" layoutX="248.0" layoutY="12.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="176.0" styleClass="btnSlideLeft" text="Agregar nuevo jugador">
+      <Button fx:id="addPlayer" alignment="TOP_CENTER" layoutX="248.0" layoutY="12.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="176.0" styleClass="btnSlideLeft" text="Agregar jugador">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
