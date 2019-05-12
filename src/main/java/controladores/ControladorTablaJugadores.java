@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import dominio.Jugador;
 import javafx.collections.FXCollections;
@@ -38,6 +39,8 @@ public class ControladorTablaJugadores implements Initializable {
 	@FXML private TableColumn<Jugador, String> col_nombreEquipo;
 
 	@FXML private Button addPlayer;
+	@FXML private Button btnRefrescar;
+	@FXML private Button btnEliminar;
 	@FXML private JFXTextField buscarNombre;
 
 	// Encargado de realizar las conexiones con la BDDD
@@ -49,6 +52,13 @@ public class ControladorTablaJugadores implements Initializable {
 
 		cargarPropiedadesTablaJugadores();
 		leerTablaJugadores();
+
+		// Evento refrescar, recoger todos los jugadores de la base de datos
+		btnRefrescar.setOnAction(e -> {
+			buscarNombre.setText("");
+			jugadores.clear();
+			leerTablaJugadores();
+		});
 
 		// Abrir dialogo para la creacion de un nuevo jugador
 		addPlayer.setOnMouseClicked( e -> {
