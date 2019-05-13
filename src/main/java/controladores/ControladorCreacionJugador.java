@@ -218,7 +218,7 @@ public class ControladorCreacionJugador implements Initializable {
             ps.setString(6, fieldPosicion.getText());
             ps.setString(7, comboEquipo.getValue());
 
-            return conexion.agregarJugador(ps);
+            return conexion.realizarUpdate( ps );
 
         } catch(SQLException e) {
             return false;

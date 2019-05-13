@@ -69,43 +69,22 @@ public class ConexionBDD {
     }
 
     /**
-     * Agrega a la base de datos un nuevo jugador.
+     * Realiza una consulta de tipo update.
      * @param ps
      * @return boolean
      */
-    public boolean agregarJugador(PreparedStatement ps) {
+    public boolean realizarUpdate(PreparedStatement ps) {
 
         try {
 
             ps.executeUpdate();
-            System.out.println("Jugador agregado correctamente.");
+            System.out.println("Actualizacion realizada correctamente.");
             return true;
 
         } catch (SQLException e) {
-            System.out.println("Problemas al agregar el jugador a la base de datos.");
+            System.out.println("Problemas al realizar la consulta de actualizacion.");
             return false;
         }
-
-    }
-
-    /**
-     * Elimina de la base de datos un jugador
-     * @param ps
-     * @return boolean
-     */
-    public boolean eliminarJugador(PreparedStatement ps) {
-
-        try {
-
-            ps.executeUpdate();
-            System.out.println("Jugador eliminado correctamente");
-            return true;
-
-        } catch (SQLException e) {
-            System.out.println("Problemas al eliminar el jugador");
-            return false;
-        }
-
 
     }
 

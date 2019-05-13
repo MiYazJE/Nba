@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
@@ -17,14 +18,15 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -43,6 +45,7 @@ public class ControladorTablaJugadores implements Initializable {
 	@FXML private Button addPlayer;
 	@FXML private Button btnRefrescar;
 	@FXML private Button btnEliminar;
+	@FXML private Button btnDetalles;
 	@FXML private JFXTextField buscarNombre;
 
 	// Encargado de realizar las conexiones con la BDDD
@@ -58,6 +61,11 @@ public class ControladorTablaJugadores implements Initializable {
 		//Evento boton eliminar el jugador
 		btnEliminar.setOnAction(e -> {
 			eliminarJugador();
+		});
+
+		// Evento mostrar detalles del jugador
+		btnDetalles.setOnAction(e -> {
+			mostrarDetallesJugador();
 		});
 
 		// Evento refrescar, recoger todos los jugadores de la base de datos
@@ -77,14 +85,75 @@ public class ControladorTablaJugadores implements Initializable {
 	}
 
 	/**
-	 * Elimina el jugador seleccionado en la tabla
+	 * Si hay algun campo seleccionado en la tabla eliminara el jugador seleccionado en la tabla.
+	 * Sino mostrara un mensaje de error.
 	 */
 	private void eliminarJugador() {
 
+		Jugador jugador = tablaJugadores.getSelectionModel().getSelectedItem();
 
+		// Si el jugador esta null significa que no hay ninguna fila seleccionada en la tabla
+		if (jugador == null) {
 
+			// Mensaje de error
+			Alert alerta = new Alert(Alert.AlertType.ERROR);
+			alerta.setContentText("Debes de seleccionar un jugador en la tabla.");
+			alerta.showAndWait();
+		}
+		else {
+
+			// Preguntar si esta seguro
+			Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+			alerta.setHeaderText(null);
+			alerta.setContentText("Estas seguro que quieres eliminar al jugador '" + jugador.getNombre() + "'\n" +
+								  "permanentemente de la base de datos?");
+
+			ButtonType eliminarJugador = new ButtonType("Eliminar");
+			ButtonType cancelar = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+			alerta.getButtonTypes().setAll(eliminarJugador, cancelar);
+
+			Optional<ButtonType> resultado = alerta.showAndWait();
+			if (resultado.get() == eliminarJugador) {
+
+				// Eliminar jugador
+				boolean estado = consultaEliminarJugador(jugador.getNombre());
+				if (estado) {
+					// Consulta realizada
+					infoJugadorEliminado(jugador.getNombre());
+					System.out.println("El jugador " + jugador.getNombre() + "ha sido eliminado correctamente.");
+					jugadores.remove(jugador);
+				}
+				else {
+					// Mensaje de error
+					Alert mensajeError = new Alert(Alert.AlertType.ERROR);
+					mensajeError.setContentText("Han habido problemas a la hora de eliminar el jugador.\n" +
+												"Ponte en contacto con el administrador.");
+					mensajeError.showAndWait();
+				}
+
+			}
+
+		}
 
 	}
+
+	/**
+	 * Realizar consulta para eliminar un jugador a la base de datos.
+	 */
+	private boolean consultaEliminarJugador(String nombreJugador) {
+
+		try {
+
+			PreparedStatement ps = conexion.con.prepareStatement("delete from jugadores where nombre = ?");
+			ps.setString(1, nombreJugador);
+			return conexion.realizarUpdate( ps );
+
+		} catch(SQLException e ) {
+			return false;
+		}
+
+	}
+
 
 	/**
 	 * Aqui se crean las propiedades de las columnas de la tabla jugadores.
@@ -201,6 +270,39 @@ public class ControladorTablaJugadores implements Initializable {
 		stage.setResizable(false);
 
 		stage.show();
+	}
+
+	private void infoJugadorEliminado(String nombreJugador) {
+
+		Stage stage = new Stage();
+		HBox caja = new HBox();
+		Scene scene = new Scene(caja, 450, 200);
+		stage.setScene(scene);
+
+		ImageView imageView = new ImageView( new Image("/imagenes/succes.png") );
+		imageView.setFitWidth(100);
+		imageView.setFitHeight(100);
+
+		Label label = new Label("El jugador '" + nombreJugador + "' ha sido eliminado\nde la base de datos correctamente");
+		label.setFont(new Font("Quicksand", 16));
+
+		caja.setAlignment(Pos.CENTER);
+		caja.setSpacing(20);
+		caja.getChildren().addAll(imageView, label);
+
+		stage.initStyle(StageStyle.UTILITY);
+		stage.setResizable(false);
+		stage.show();
+	}
+
+	/**
+	 * Abre una ventana y muestra las estadisticas del jugador mas detalladamente
+	 */
+	private void mostrarDetallesJugador() {
+
+
+
+
 	}
 
 }

@@ -27,7 +27,7 @@
             <TableColumn fx:id="col_nombreEquipo" prefWidth="169.0" text="Equipo" />
         </columns>
       </TableView>
-      <Button fx:id="addPlayer" alignment="TOP_CENTER" layoutX="248.0" layoutY="12.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="176.0" styleClass="btnSlideLeft" text="Agregar jugador">
+      <Button fx:id="addPlayer" alignment="TOP_CENTER" layoutX="4.0" layoutY="15.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="176.0" styleClass="btnSlideLeft" text="Crear jugador">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -38,7 +38,7 @@
          <font>
             <Font size="15.0" />
          </font></JFXTextField>
-      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="317.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="73.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/player.png" />
          </image>
@@ -49,7 +49,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Button fx:id="btnEliminar" alignment="TOP_CENTER" layoutX="124.0" layoutY="12.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="107.0" styleClass="btnSlideLeft" text="Eliminar">
+      <Button fx:id="btnEliminar" alignment="TOP_CENTER" layoutX="195.0" layoutY="15.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="160.0" styleClass="btnSlideLeft" text="Eliminar seleccionado">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -57,7 +57,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="159.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="256.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/eliminar.png" />
          </image>
@@ -68,7 +68,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Button fx:id="btnRefrescar" alignment="TOP_CENTER" layoutX="3.0" layoutY="12.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="107.0" styleClass="btnSlideLeft" text="Refrescar">
+      <Button fx:id="btnRefrescar" alignment="TOP_CENTER" layoutX="573.0" layoutY="15.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="107.0" styleClass="btnSlideLeft" text="Refrescar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -76,9 +76,28 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="38.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="608.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/refresh.png" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="1.0" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Button fx:id="btnDetalles" alignment="TOP_CENTER" layoutX="381.0" layoutY="15.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="169.0" styleClass="btnSlideLeft" text="Ver detalles del jugador">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="447.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/detalles.png" />
          </image>
          <effect>
             <ColorAdjust brightness="1.0" />
