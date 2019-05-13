@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="744.0" prefWidth="1043.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="245.0" prefWidth="1043.0">
+         <children>
+            <JFXTextField fx:id="nombre" alignment="CENTER" layoutX="24.0" layoutY="36.0" />
+            <JFXTextField fx:id="posicion" layoutX="197.0" layoutY="36.0" prefHeight="26.0" prefWidth="55.0" />
+            <ImageView fitHeight="190.0" fitWidth="146.0" layoutX="33.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/logosNba/atlantaHawks.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

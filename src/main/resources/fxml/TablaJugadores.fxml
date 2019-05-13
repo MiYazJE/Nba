@@ -12,19 +12,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="728.0" prefWidth="986.0" stylesheets="@../estilos/estilosTabla.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorTablaJugadores">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="728.0" prefWidth="1048.0" stylesheets="@../estilos/estilosTabla.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorTablaJugadores">
    <children>
-      <TableView fx:id="tablaJugadores" layoutX="4.0" layoutY="118.0" prefHeight="607.0" prefWidth="979.0">
+      <TableView fx:id="tablaJugadores" layoutX="4.0" layoutY="118.0" prefHeight="607.0" prefWidth="1048.0">
           <placeholder>
               <Label text="No se han encontrado coincidencias" />
           </placeholder>
         <columns>
-            <TableColumn fx:id="col_nombre" prefWidth="133.0" text="Nombre" />
-            <TableColumn fx:id="col_procedencia" prefWidth="200.0" text="Procedencia" />
-            <TableColumn fx:id="col_altura" prefWidth="174.0" text="Altura" />
-            <TableColumn fx:id="col_peso" prefWidth="147.0" text="Peso" />
-            <TableColumn fx:id="col_posicion" prefWidth="141.0" text="Posicion" />
-            <TableColumn fx:id="col_nombreEquipo" prefWidth="169.0" text="Equipo" />
+            <TableColumn fx:id="col_nombre" prefWidth="206.0" text="Nombre" />
+            <TableColumn fx:id="col_procedencia" prefWidth="218.0" text="Procedencia" />
+            <TableColumn fx:id="col_altura" prefWidth="117.0" text="Altura" />
+            <TableColumn fx:id="col_peso" prefWidth="157.0" text="Peso" />
+            <TableColumn fx:id="col_posicion" prefWidth="150.0" text="Posicion" />
+            <TableColumn fx:id="col_nombreEquipo" prefWidth="180.0" text="Equipo" />
         </columns>
       </TableView>
       <Button fx:id="addPlayer" alignment="TOP_CENTER" layoutX="4.0" layoutY="15.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="176.0" styleClass="btnSlideLeft" text="Crear jugador">
@@ -34,7 +34,7 @@
          <font>
             <Font size="14.0" />
          </font></Button>
-      <JFXTextField fx:id="buscarNombre" alignment="CENTER" focusColor="WHITE" layoutX="775.0" layoutY="29.0" prefHeight="47.0" prefWidth="191.0" promptText="Buscar..." style="-fx-text-fill: white; -fx-prompt-text-fill: white;" unFocusColor="WHITE">
+      <JFXTextField fx:id="buscarNombre" alignment="CENTER" focusColor="WHITE" layoutX="835.0" layoutY="32.0" prefHeight="47.0" prefWidth="191.0" promptText="Buscar..." style="-fx-text-fill: white; -fx-prompt-text-fill: white;" unFocusColor="WHITE">
          <font>
             <Font size="15.0" />
          </font></JFXTextField>

@@ -48,6 +48,9 @@ public class ControladorTablaJugadores implements Initializable {
 	@FXML private Button btnDetalles;
 	@FXML private JFXTextField buscarNombre;
 
+	@FXML private JFXTextField nombre;
+	@FXML private JFXTextField posicion;
+
 	// Encargado de realizar las conexiones con la BDDD
 	private ConexionBDD conexion = new ConexionBDD();
 	private ObservableList<Jugador> jugadores = FXCollections.observableArrayList();
@@ -300,8 +303,13 @@ public class ControladorTablaJugadores implements Initializable {
 	 */
 	private void mostrarDetallesJugador() {
 
+		Jugador jugador = tablaJugadores.getSelectionModel().getSelectedItem();
+		if (jugador != null) {
 
+			ControladorJugador controlador = new ControladorJugador( jugador );
+			controlador.showStage();
 
+		}
 
 	}
 

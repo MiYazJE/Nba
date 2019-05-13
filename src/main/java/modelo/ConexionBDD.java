@@ -6,8 +6,8 @@ public class ConexionBDD {
 
     public static Connection con;
     private ResultSet rs;
-    private String URL = "jdbc:mysql://localhost:3306/nba";
-    // WINDOWS -> "root" | LINUX -> "Roo|"
+    // private String URL = "jdbc:mysql://localhost:3306/nba";
+    private final String URL = "jdbc:mysql://localhost/nba?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT";
     private String password;
     private String usuario;
 
@@ -33,6 +33,9 @@ public class ConexionBDD {
         try {
 
             // Establece la conexión
+            /*
+            jdbc:mysql://localhost/db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+             */
             con = DriverManager.getConnection(URL, usuario, password);
             System.out.println("Conexion exitosa, logeado en la base de datos NBA.");
             return true;

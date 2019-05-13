@@ -67,9 +67,12 @@ public class ControladorLogin implements Initializable {
             ((Stage)((Node)e.getSource()).getScene().getWindow()).close();
         });
 
-
-
         // Iniciar sesion al teclear ENTER
+        fieldUsuario.setOnKeyPressed(key -> {
+            if (key.getCode().equals(KeyCode.ENTER)) {
+                verificarInicioDeSesion();
+            }
+        });
         fieldPassword.setOnKeyPressed(key -> {
             if (key.getCode().equals(KeyCode.ENTER)) {
                 verificarInicioDeSesion();

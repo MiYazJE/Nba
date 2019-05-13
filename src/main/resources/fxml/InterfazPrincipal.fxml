@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="818.0" prefWidth="1401.0" stylesheets="@../estilos/estilosPrincipales.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorMain">
+<AnchorPane prefHeight="825.0" prefWidth="1563.0" stylesheets="@../estilos/estilosPrincipales.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorMain">
    <children>
-      <AnchorPane layoutX="298.0" prefHeight="818.0" prefWidth="1103.0" style="-fx-background-color: linear-gradient(to left, #0765AF, #D83248);;">
+      <AnchorPane layoutX="298.0" prefHeight="823.0" prefWidth="1272.0" style="-fx-background-color: linear-gradient(to left, #0765AF, #D83248);;">
          <children>
-            <HBox alignment="CENTER" layoutY="-2.0" prefHeight="825.0" prefWidth="1103.0">
+            <HBox alignment="CENTER" layoutX="85.0" layoutY="-1.0" prefHeight="825.0" prefWidth="1103.0">
                <children>
                   <AnchorPane prefHeight="830.0" prefWidth="1008.0">
                      <children>

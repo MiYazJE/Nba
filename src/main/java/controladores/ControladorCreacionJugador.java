@@ -98,7 +98,7 @@ public class ControladorCreacionJugador implements Initializable {
             !fieldAltura.getText().isEmpty() &&
             !fieldPeso.getText().isEmpty() &&
             !fieldPosicion.getText().isEmpty() &&
-            !comboEquipo.getValue().isEmpty()) {
+            comboEquipo.getValue() != null) {
             // Añadir nuevo jugador a la base de datos
 
             boolean estadoConsulta = consultaCreacionJugador();
