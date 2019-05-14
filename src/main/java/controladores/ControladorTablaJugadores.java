@@ -306,7 +306,7 @@ public class ControladorTablaJugadores implements Initializable {
 		Jugador jugador = tablaJugadores.getSelectionModel().getSelectedItem();
 		if (jugador != null) {
 
-			ControladorJugador controlador = new ControladorJugador( jugador );
+			ControladorJugador controlador = new ControladorJugador( jugador, this );
 			controlador.showStage();
 
 		}
