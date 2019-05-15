@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControladorJugador implements Initializable {
+public class ControladorDeteallesJugador implements Initializable {
 
     @FXML private JFXTextField nombre;
     @FXML private JFXTextField posicion;
@@ -26,7 +26,7 @@ public class ControladorJugador implements Initializable {
     private Stage stage;
 
 
-    public ControladorJugador(Jugador jugador, ControladorTablaJugadores tabla) {
+    public ControladorDeteallesJugador(Jugador jugador, ControladorTablaJugadores tabla) {
         init();
         this.jugador = jugador;
         cargarDatosJugador();
@@ -111,8 +111,6 @@ public class ControladorJugador implements Initializable {
         ruta += ".png";
         return ruta;
     }
-
-
 
     public void showStage() {
         this.stage.showAndWait();

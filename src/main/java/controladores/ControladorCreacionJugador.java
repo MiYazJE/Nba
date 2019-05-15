@@ -47,10 +47,40 @@ public class ControladorCreacionJugador implements Initializable {
     @FXML private ImageView infoPeso;
     @FXML private ImageView infoAltura;
 
-
     private ConexionBDD conexion = new ConexionBDD();
     private ResultSet rs;
     private ObservableList<String> equipos = FXCollections.observableArrayList();
+
+    private ControladorTablaJugadores tabla;
+    private Stage stage;
+
+    public ControladorCreacionJugador(ControladorTablaJugadores tabla) {
+        this.tabla = tabla;
+        init();
+    }
+
+    /**
+     * Asignar vista y controlador a esta clase
+     */
+    private void init() {
+
+        this.stage = new Stage();
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CreacionJugador.fxml"));
+            loader.setController(this);
+            this.stage.setScene(new Scene(loader.load()));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void showStage() {
+        this.stage.showAndWait();
+    }
 
 
     @Override

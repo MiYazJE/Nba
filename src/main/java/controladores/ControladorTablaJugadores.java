@@ -256,7 +256,7 @@ public class ControladorTablaJugadores implements Initializable {
 	 */
 	private void abrirVentanaCreacionJugador() {
 
-		Stage stage = new Stage();
+		/*Stage stage = new Stage();
 		Parent root = null;
 
 		try {
@@ -272,7 +272,11 @@ public class ControladorTablaJugadores implements Initializable {
 		stage.setTitle("Creación Jugador");
 		stage.setResizable(false);
 
-		stage.show();
+		stage.show();*/
+
+		ControladorCreacionJugador conCreacion = new ControladorCreacionJugador(this);
+		conCreacion.showStage();
+
 	}
 
 	private void infoJugadorEliminado(String nombreJugador) {
@@ -306,9 +310,8 @@ public class ControladorTablaJugadores implements Initializable {
 		Jugador jugador = tablaJugadores.getSelectionModel().getSelectedItem();
 		if (jugador != null) {
 
-			ControladorJugador controlador = new ControladorJugador( jugador, this );
+			ControladorDeteallesJugador controlador = new ControladorDeteallesJugador( jugador, this );
 			controlador.showStage();
-
 		}
 
 	}
