@@ -1,12 +1,12 @@
 package controladores;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
 import dominio.Jugador;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -17,8 +17,8 @@ import java.util.ResourceBundle;
 
 public class ControladorDeteallesJugador implements Initializable {
 
-    @FXML private JFXTextField nombre;
-    @FXML private JFXTextField posicion;
+    @FXML private TextField nombre;
+    @FXML private TextField procedencia;
     @FXML private ImageView imagen;
     @FXML private JFXButton btnEditar;
 
@@ -60,7 +60,7 @@ public class ControladorDeteallesJugador implements Initializable {
     private void cargarDatosJugador() {
 
         nombre.setText(jugador.getNombre());
-        posicion.setText(jugador.getPosicion());
+        procedencia.setText(jugador.getProcedencia());
         imagen.setImage(new Image(rutaImagenEquipo(jugador.getEquipo())));
 
     }

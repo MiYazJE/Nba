@@ -2,6 +2,8 @@ package interfaz;
 
 import java.io.IOException;
 
+import controladores.ControladorDeteallesJugador;
+import dominio.Jugador;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +21,7 @@ public class Aplicacion extends Application {
 	public void start(Stage ventana) {
 
 		Parent root = null;
-
+/*
 		try {
 			root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
 		} catch (IOException e) {
@@ -45,6 +47,12 @@ public class Aplicacion extends Application {
 		ventana.setResizable(false);
 
 		ventana.show();
+
+ */
+		Jugador j1 = new Jugador("Ruben Saiz", "Spain", "5-7", "321", "V", "Lakers");
+		ControladorDeteallesJugador vista = new ControladorDeteallesJugador( j1 );
+		vista.showStage();
+
 	}
 
 	public static void main(String[] args) {
