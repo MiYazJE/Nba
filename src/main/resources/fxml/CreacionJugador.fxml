@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="682.0" prefWidth="442.0" style="-fx-background-color: linear-gradient(to bottom, #0765AF, #D83248);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="682.0" prefWidth="442.0" style="-fx-background-color: linear-gradient(to bottom, #0765AF, #D83248);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorCreacionJugador">
    <children>
       <VBox layoutX="-3.0" layoutY="-1.0" prefHeight="681.0" prefWidth="444.0" spacing="20.0">
          <children>

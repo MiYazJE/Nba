@@ -25,8 +25,7 @@ public class ControladorDeteallesJugador implements Initializable {
     private Jugador jugador;
     private Stage stage;
 
-
-    public ControladorDeteallesJugador(Jugador jugador, ControladorTablaJugadores tabla) {
+    public ControladorDeteallesJugador(Jugador jugador) {
         init();
         this.jugador = jugador;
         cargarDatosJugador();
