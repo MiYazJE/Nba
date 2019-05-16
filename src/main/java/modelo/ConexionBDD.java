@@ -19,7 +19,7 @@ public class ConexionBDD {
     }
 
     /**
-     * Constructor con 2 parámetros, el usuario y la contraseña de la base de datos mysql.
+     * Constructor con 2 parametros, el usuario y la contrasenya de la base de datos mysql.
      * @param user
      * @param pass
      */
@@ -32,7 +32,7 @@ public class ConexionBDD {
 
         try {
 
-            // Establece la conexión
+            // Establece la conexion
             /*
             jdbc:mysql://localhost/db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
              */
