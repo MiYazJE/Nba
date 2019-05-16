@@ -31,6 +31,7 @@ public class Jugador {
         this.posicion = posicion;
         this.equipo = equipo;
         pulgadasToMetros();
+        librasToKg();
     }
 
 
@@ -142,6 +143,17 @@ public class Jugador {
             this.altura = altura.substring(0, 5);
         }
         this.altura = altura + " cm";
+    }
+
+    /**
+     * Convierte el peso en libras a Kg
+     */
+    private void librasToKg() {
+
+        double kg = Integer.valueOf(this.peso);
+        kg = kg * 0.453592;
+        this.peso = String.valueOf((int)kg);
+
     }
 
 }

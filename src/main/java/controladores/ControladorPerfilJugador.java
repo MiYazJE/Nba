@@ -1,67 +1,82 @@
+/**
+ * @author Ruben Saiz
+ */
 package controladores;
 
-import com.jfoenix.controls.JFXButton;
 import dominio.Jugador;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControladorDeteallesJugador implements Initializable {
+public class ControladorPerfilJugador implements Initializable {
 
-    @FXML private TextField nombre;
-    @FXML private TextField procedencia;
-    @FXML private ImageView imagen;
-    @FXML private JFXButton btnEditar;
+    @FXML private Text nombreJugador;
+    @FXML private Text procedencia;
+    @FXML private Text altura;
+    @FXML private Text peso;
+    @FXML private Text posicion;
+    @FXML private Text nombreEquipo;
+    @FXML private ImageView imgEquipo;
 
     private Jugador jugador;
-    private Stage stage;
+    private Parent root;
 
-    public ControladorDeteallesJugador(Jugador jugador) {
-        init();
+    public ControladorPerfilJugador(Jugador jugador) {
         this.jugador = jugador;
-        cargarDatosJugador();
+        init();
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        cargarInformacionJugador();
+    }
+
+    /**
+     * Define la vista y el controlador
+     */
     private void init() {
 
-        this.stage = new Stage();
-
+        root = null;
         try {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlantillaJugador.fxml"));
-            loader.setController(this);
-            this.stage.setScene(new Scene(loader.load()));
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PerfilJugador.fxml"));
+            loader.setController( this );
+            root = (Parent) loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-
-
+    /**
+     * Devuelve el parent de esta vista
+     * @return Parent
+     */
+    public Parent getRoot() {
+        return this.root;
     }
 
     /**
-     * Carga los datos del jugador en los diferentes campos, tambien agrega una imagen de su equipo
+     * Carga la informacion del jugador
      */
-    private void cargarDatosJugador() {
+    private void cargarInformacionJugador() {
 
-        nombre.setText(jugador.getNombre());
-        procedencia.setText(jugador.getProcedencia());
-        imagen.setImage(new Image(rutaImagenEquipo(jugador.getEquipo())));
+        this.nombreJugador.setText(jugador.getNombre());
+        this.altura.setText(jugador.getAltura());
+        this.nombreEquipo.setText(jugador.getEquipo());
+        this.peso.setText(jugador.getPeso());
+        this.procedencia.setText(jugador.getProcedencia());
+        this.posicion.setText(jugador.getPosicion());
+        imgEquipo.setImage(new Image(rutaImagenEquipo(jugador.getEquipo())));
 
     }
 
@@ -109,10 +124,6 @@ public class ControladorDeteallesJugador implements Initializable {
 
         ruta += ".png";
         return ruta;
-    }
-
-    public void showStage() {
-        this.stage.showAndWait();
     }
 
 }

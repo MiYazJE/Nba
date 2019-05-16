@@ -86,7 +86,7 @@ public class ConexionBDD {
             return true;
 
         } catch (SQLException e) {
-            System.out.println("Problemas al realizar la consulta de actualizacion.");
+            e.printStackTrace();
             return false;
         }
 

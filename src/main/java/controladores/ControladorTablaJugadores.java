@@ -19,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -328,7 +327,7 @@ public class ControladorTablaJugadores implements Initializable {
 		Jugador jugador = tablaJugadores.getSelectionModel().getSelectedItem();
 		if (jugador != null) {
 
-			ControladorDeteallesJugador controlador = new ControladorDeteallesJugador( jugador );
+			ControladorDetallesJugador controlador = new ControladorDetallesJugador( jugador );
 			controlador.showStage();
 		}
 		else {

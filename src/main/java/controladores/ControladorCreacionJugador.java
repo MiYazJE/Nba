@@ -218,7 +218,7 @@ public class ControladorCreacionJugador implements Initializable {
     }
 
     /**
-     * Obtiene el siguiente codigo respecto a el ultimo codigo insertado en la base de datos en la tabla jugadores
+     * Suma 1 al ultimo codigo de la tabla jugadores en la base de datos
      * @return String
      */
     private String obtenerSiguienteCodigo() {

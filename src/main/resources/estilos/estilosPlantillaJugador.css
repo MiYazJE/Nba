@@ -1,7 +1,7 @@
 
-/* Estilos textFields */
+/* Estilos textFields
 .text-field {
-    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-color: tranparent;
     -fx-background-insets: 0, 0 0 0 0 ;
     -fx-background-radius: 0 ;
 }
@@ -10,4 +10,15 @@
 }
 .text-field .text {
     -fx-text-alignment: center;
+}
+*/
+.btnSlideLeft{
+    -fx-background-color: #0a3765;
+    -fx-text-fill: white;
+    -fx-cursor: HAND;
+    -fx-border-color: white;
+}
+
+.btnSlideLeft:hover {
+    -fx-background-color: #0b4074;
 }
