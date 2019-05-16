@@ -44,13 +44,14 @@ public class ControladorTablaJugadores implements Initializable {
 	@FXML private TableColumn<Jugador, String> col_nombreEquipo;
 
 	@FXML private Button addPlayer;
-	@FXML private Button btnRefrescar;
 	@FXML private Button btnEliminar;
 	@FXML private Button btnDetalles;
 	@FXML private JFXTextField buscarNombre;
 
-	@FXML private JFXTextField nombre;
-	@FXML private JFXTextField posicion;
+	@FXML private ImageView imgCreacionJugador;
+	@FXML private ImageView imgEliminarJugador;
+	@FXML private ImageView imgEstadisticas;
+
 
     // Encargado de realizar las conexiones con la BDDD
     private ConexionBDD conexion = new ConexionBDD();
@@ -63,6 +64,9 @@ public class ControladorTablaJugadores implements Initializable {
 		cargarPropiedadesTablaJugadores();
 		leerTablaJugadores();
 
+		// Eventos imagenes
+		cargarEventosImagenes();
+
 		//Evento boton eliminar el jugador
 		btnEliminar.setOnAction(e -> {
 			eliminarJugador();
@@ -73,20 +77,33 @@ public class ControladorTablaJugadores implements Initializable {
 			mostrarDetallesJugador();
 		});
 
-		// Evento refrescar, recoger todos los jugadores de la base de datos
-		btnRefrescar.setOnAction(e -> {
-			buscarNombre.setText("");
-			jugadores.clear();
-			leerTablaJugadores();
-		});
-
 		// Abrir dialogo para la creacion de un nuevo jugador
 		addPlayer.setOnMouseClicked( e -> {
 			abrirVentanaCreacionJugador();
+			leerTablaJugadores();
 		});
 
 		// Añadir filtrado a la tabla jugadores
 		generarFiltradoTabla();
+	}
+
+	/**
+	 * Generar eventos al hacer click sobre las imagenes encima de los botones
+	 */
+	private void cargarEventosImagenes() {
+
+		imgCreacionJugador.setOnMouseClicked(e -> {
+			abrirVentanaCreacionJugador();
+		});
+
+		imgEliminarJugador.setOnMouseClicked(e -> {
+			eliminarJugador();
+		});
+
+		imgEstadisticas.setOnMouseClicked(e -> {
+			mostrarDetallesJugador();
+		});
+
 	}
 
 	/**
@@ -100,10 +117,7 @@ public class ControladorTablaJugadores implements Initializable {
 		// Si el jugador esta null significa que no hay ninguna fila seleccionada en la tabla
 		if (jugador == null) {
 
-			// Mensaje de error
-			Alert alerta = new Alert(Alert.AlertType.ERROR);
-			alerta.setContentText("Debes de seleccionar un jugador en la tabla.");
-			alerta.showAndWait();
+			mensajeJugadorNoSeleccionado();
 		}
 		else {
 
@@ -276,6 +290,11 @@ public class ControladorTablaJugadores implements Initializable {
 		stage.setResizable(false);
 
 		stage.show();
+
+		stage.setOnHiding(e -> {
+			leerTablaJugadores();
+		});
+
 	}
 
 	private void infoJugadorEliminado(String nombreJugador) {
@@ -309,10 +328,25 @@ public class ControladorTablaJugadores implements Initializable {
 		Jugador jugador = tablaJugadores.getSelectionModel().getSelectedItem();
 		if (jugador != null) {
 
-			ControladorJugador controlador = new ControladorJugador( jugador, this );
+			ControladorDeteallesJugador controlador = new ControladorDeteallesJugador( jugador );
 			controlador.showStage();
-
 		}
+		else {
+			//Mensaje error, no se ha seleccionado ningun jugador
+			mensajeJugadorNoSeleccionado();
+		}
+
+	}
+
+	/**
+	 * Muestra un mensaje de error que notifica que no has seleccionado ningun jugador.
+	 */
+	private void mensajeJugadorNoSeleccionado() {
+
+		// Mensaje de error
+		Alert alerta = new Alert(Alert.AlertType.ERROR);
+		alerta.setContentText("Debes de seleccionar un jugador en la tabla.");
+		alerta.showAndWait();
 
 	}
 

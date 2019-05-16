@@ -26,6 +26,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import modelo.ConexionBDD;
 
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -47,11 +48,9 @@ public class ControladorCreacionJugador implements Initializable {
     @FXML private ImageView infoPeso;
     @FXML private ImageView infoAltura;
 
-
     private ConexionBDD conexion = new ConexionBDD();
     private ResultSet rs;
     private ObservableList<String> equipos = FXCollections.observableArrayList();
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,7 +62,6 @@ public class ControladorCreacionJugador implements Initializable {
 
         // Rellenar los equipos en la lista equipos
         consultarEquipos();
-        comboEquipo.setItems( equipos );
 
         btnGuardar.setOnAction(e -> {
             tramitarJugador();
@@ -106,7 +104,7 @@ public class ControladorCreacionJugador implements Initializable {
             if (estadoConsulta) {
                 avisoJugadorAgregado(fieldNombre.getText());
                 // Cerrar ventana
-                ((Stage)comboEquipo.getScene().getWindow()).close();
+                cerrarVentana();
             }
             else {
                 // Mensaje de error
@@ -121,6 +119,13 @@ public class ControladorCreacionJugador implements Initializable {
             alerta.showAndWait();
         }
 
+    }
+
+    /**
+     * Cierra la ventana actual
+     */
+    private void cerrarVentana() {
+        ((Stage)comboEquipo.getScene().getWindow()).close();
     }
 
     /**
@@ -159,7 +164,6 @@ public class ControladorCreacionJugador implements Initializable {
         stage.show();
     }
 
-
     /**
      * Recoger de la base de datos todos los nombres de los equipos en un ResultSet
      */
@@ -170,26 +174,13 @@ public class ControladorCreacionJugador implements Initializable {
             PreparedStatement ps = conexion.con.prepareCall("SELECT Nombre FROM equipos;");
             rs = conexion.realizarConsulta(ps);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        cargarEquipos();
-    }
-
-    /**
-     * Cargar en un combobox todos los nombres de los equipos recojidos de un resultset
-     */
-    private void cargarEquipos() {
-
-        String nombre;
-
-        try {
-
+            String nombre;
             while (rs.next()) {
                 nombre = rs.getString("Nombre");
                 equipos.add(nombre);
             }
+
+            comboEquipo.setItems( equipos );
 
         } catch (SQLException e) {
             e.printStackTrace();

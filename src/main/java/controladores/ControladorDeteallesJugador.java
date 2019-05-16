@@ -1,12 +1,12 @@
 package controladores;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
 import dominio.Jugador;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -15,18 +15,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControladorJugador implements Initializable {
+public class ControladorDeteallesJugador implements Initializable {
 
-    @FXML private JFXTextField nombre;
-    @FXML private JFXTextField posicion;
+    @FXML private TextField nombre;
+    @FXML private TextField procedencia;
     @FXML private ImageView imagen;
     @FXML private JFXButton btnEditar;
 
     private Jugador jugador;
     private Stage stage;
 
-
-    public ControladorJugador(Jugador jugador, ControladorTablaJugadores tabla) {
+    public ControladorDeteallesJugador(Jugador jugador) {
         init();
         this.jugador = jugador;
         cargarDatosJugador();
@@ -61,7 +60,7 @@ public class ControladorJugador implements Initializable {
     private void cargarDatosJugador() {
 
         nombre.setText(jugador.getNombre());
-        posicion.setText(jugador.getPosicion());
+        procedencia.setText(jugador.getProcedencia());
         imagen.setImage(new Image(rutaImagenEquipo(jugador.getEquipo())));
 
     }
@@ -111,8 +110,6 @@ public class ControladorJugador implements Initializable {
         ruta += ".png";
         return ruta;
     }
-
-
 
     public void showStage() {
         this.stage.showAndWait();

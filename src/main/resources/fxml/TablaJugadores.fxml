@@ -38,7 +38,7 @@
          <font>
             <Font size="15.0" />
          </font></JFXTextField>
-      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="73.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgCreacionJugador" fitHeight="89.0" fitWidth="38.0" layoutX="73.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/player.png" />
          </image>
@@ -57,28 +57,9 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="256.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgEliminarJugador" fitHeight="89.0" fitWidth="38.0" layoutX="256.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/eliminar.png" />
-         </image>
-         <effect>
-            <ColorAdjust brightness="1.0" />
-         </effect>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <Button fx:id="btnRefrescar" alignment="TOP_CENTER" layoutX="573.0" layoutY="15.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="107.0" styleClass="btnSlideLeft" text="Refrescar">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="608.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../imagenes/refresh.png" />
          </image>
          <effect>
             <ColorAdjust brightness="1.0" />
@@ -95,7 +76,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fitHeight="89.0" fitWidth="38.0" layoutX="447.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgEstadisticas" fitHeight="89.0" fitWidth="38.0" layoutX="447.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/detalles.png" />
          </image>
