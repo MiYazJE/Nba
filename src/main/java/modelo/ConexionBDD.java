@@ -41,6 +41,7 @@ public class ConexionBDD {
             return true;
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
 

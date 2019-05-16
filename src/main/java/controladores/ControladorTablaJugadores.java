@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -51,9 +52,10 @@ public class ControladorTablaJugadores implements Initializable {
 	@FXML private JFXTextField nombre;
 	@FXML private JFXTextField posicion;
 
-	// Encargado de realizar las conexiones con la BDDD
-	private ConexionBDD conexion = new ConexionBDD();
-	private ObservableList<Jugador> jugadores = FXCollections.observableArrayList();
+    // Encargado de realizar las conexiones con la BDDD
+    private ConexionBDD conexion = new ConexionBDD();
+    private ObservableList<Jugador> jugadores = FXCollections.observableArrayList();
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -175,7 +177,7 @@ public class ControladorTablaJugadores implements Initializable {
 	}
 
 	/**
-	 * Genera un evento para que la tabla vaya buscando las coincidencias que
+	 * Genera un filtro para que la tabla vaya buscando las coincidencias que
 	 * se van escribiendo en el textField buscarNombre.
 	 */
 	private void generarFiltradoTabla() {
@@ -184,7 +186,8 @@ public class ControladorTablaJugadores implements Initializable {
 				1.- Busqueda por nombre.
 				2.- Busqueda por procedencia.
 				3.- Busqueda por equipo.
-				4.- Busqueda por posicion.
+				4.- Busqueda por peso.
+				5.- Busqueda por posicion.
 		 */
 		FilteredList<Jugador> filter = new FilteredList<>(jugadores, e -> true);
 		buscarNombre.textProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -299,7 +302,7 @@ public class ControladorTablaJugadores implements Initializable {
 	}
 
 	/**
-	 * Abre una ventana y muestra las estadisticas del jugador mas detalladamente
+	 * Abre una ventana y muestra las estadisticas del jugador detalladamente
 	 */
 	private void mostrarDetallesJugador() {
 

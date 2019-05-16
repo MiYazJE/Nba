@@ -70,8 +70,6 @@ public class ControladorMain implements Initializable {
      */
     private void cargarTablaJugadores() {
 
-        // AnchorPane panel = new AnchorPane();
-
         Parent ventanaNueva = null;
 
         try {
