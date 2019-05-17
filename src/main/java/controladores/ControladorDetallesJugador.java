@@ -26,6 +26,8 @@ public class ControladorDetallesJugador implements Initializable {
 
     private Jugador jugador;
     private Stage stage;
+    // Vista del perfil
+    private ControladorPerfilJugador perfil;
 
     /**
      * Contruye este objeto pasandole un Jugador de parametro
@@ -82,7 +84,7 @@ public class ControladorDetallesJugador implements Initializable {
      */
     private void mostrarPerfil() {
         this.contenedor.getChildren().clear();
-        ControladorPerfilJugador perfil = new ControladorPerfilJugador(this.jugador);
+        perfil = new ControladorPerfilJugador(this.jugador);
         this.contenedor.getChildren().add(perfil.getRoot());
     }
 
@@ -90,6 +92,7 @@ public class ControladorDetallesJugador implements Initializable {
      * Inserta dentro del contenedor AnchorPane la vista estadisticas
      */
     private void mostrarEstadisticas() {
+        this.jugador = perfil.getJugador();
         this.contenedor.getChildren().clear();
         ControladorEstadisticas estadisticas = new ControladorEstadisticas(this.jugador);
         this.contenedor.getChildren().add(estadisticas.getRoot());

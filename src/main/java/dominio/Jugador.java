@@ -13,7 +13,6 @@ public class Jugador {
     private String equipo;
     private String posicion;
 
-
     /**
      * Contructor de jugador con 6 parámetros
      * @param nombre
@@ -108,9 +107,9 @@ public class Jugador {
 
         this.altura = altura.trim();
 
-        double pies     = 0;
-        double pulgadas = 0;
-        double metros   = 0;
+        double pies = 0;
+        double pulgadas;
+        double metros;
 
         if (altura.contains("-")) {
             // PIES Y PULGADAS -> "5-7"

@@ -38,7 +38,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnEliminar" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="81.0" prefWidth="160.0" styleClass="btnSlideLeft" text="Eliminar seleccionado">
+            <Button fx:id="btnEliminar" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="81.0" prefWidth="187.0" styleClass="btnSlideLeft" text="Eliminar seleccionado">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -46,7 +46,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnDetalles" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="81.0" prefWidth="169.0" styleClass="btnSlideLeft" text="Ver detalles del jugador">
+            <Button fx:id="btnDetalles" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="81.0" prefWidth="204.0" styleClass="btnSlideLeft" text="Ver detalles del jugador">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -71,7 +71,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="imgEliminarJugador" fitHeight="89.0" fitWidth="38.0" layoutX="256.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgEliminarJugador" fitHeight="89.0" fitWidth="38.0" layoutX="275.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/eliminar.png" />
          </image>
@@ -82,7 +82,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="imgEstadisticas" fitHeight="89.0" fitWidth="38.0" layoutX="447.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgEstadisticas" fitHeight="89.0" fitWidth="38.0" layoutX="490.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/detalles.png" />
          </image>

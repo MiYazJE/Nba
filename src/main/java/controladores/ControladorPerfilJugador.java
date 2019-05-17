@@ -3,6 +3,7 @@
  */
 package controladores;
 
+import com.jfoenix.controls.JFXTextField;
 import dominio.Jugador;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,24 +12,35 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
+import modelo.ConexionBDD;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControladorPerfilJugador implements Initializable {
 
-    @FXML private Text nombreJugador;
-    @FXML private Text procedencia;
-    @FXML private Text altura;
-    @FXML private Text peso;
-    @FXML private Text posicion;
-    @FXML private Text nombreEquipo;
+    @FXML private Text textNombreJugador;
+    @FXML private Text textProcendencia;
+    @FXML private Text textAltura;
+    @FXML private Text textPeso;
+    @FXML private Text textPosicion;
+    @FXML private Text textEquipo;
     @FXML private ImageView imgEquipo;
+    @FXML private JFXTextField buscarJugador;
 
     private Jugador jugador;
     private Parent root;
+    private List<String> nombreJugadores;
+    ConexionBDD conexion = new ConexionBDD();
 
     public ControladorPerfilJugador(Jugador jugador) {
         this.jugador = jugador;
@@ -38,8 +50,81 @@ public class ControladorPerfilJugador implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        // Cargar todos los jugadores en una lista
+        nombreJugadores = cargarJugadores();
+
+        // Autocompleta a medida de que escribes
+        TextFields.bindAutoCompletion(buscarJugador, nombreJugadores);
+
+        //  Al presionar ENTER, busca el jugador escrito
+        buscarJugador.setOnKeyPressed(key -> {
+            if (key.getCode().equals(KeyCode.ENTER)) {
+                String name = buscarJugador.getText();
+                if (!name.isEmpty() && nombreJugadores.contains(name)) {
+                   consultaJugador(buscarJugador.getText());
+                   cargarInformacionJugador();
+                   buscarJugador.clear();
+                }
+            }
+        });
+
+        // Cargar todos los datos del jugador en los campos
         cargarInformacionJugador();
     }
+
+    /**
+     * Buscar un jugador en la base de datos por el nombre.
+     */
+    private void consultaJugador(String nombreJugador) {
+
+        try {
+
+            PreparedStatement ps = conexion.con.prepareStatement(
+                    "SELECT * FROM jugadores WHERE Nombre LIKE ?;");
+            ps.setString(1, nombreJugador);
+            ResultSet rs = conexion.realizarConsulta( ps );
+
+            while (rs.next()) {
+                String nombre = rs.getString("Nombre");
+                String procendencia = rs.getString("Procedencia");
+                String altura = rs.getString("Altura");
+                String peso = rs.getString("Peso");
+                String posicion = rs.getString("Posicion");
+                String nombreEquipo = rs.getString("Nombre_equipo");
+                this.jugador = new Jugador(nombre, procendencia, altura, peso, posicion, nombreEquipo);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Hace una consulta a la base de datos, trae todos los nombres de los jugadores
+     * y los introduce en una lista nombreJugadores
+     * @return List
+     */
+    private List<String> cargarJugadores() {
+
+        List<String> nombres = new ArrayList<>();
+        try {
+
+            PreparedStatement ps = conexion.con.prepareStatement("SELECT Nombre FROM jugadores;");
+            ResultSet rs = conexion.realizarConsulta( ps );
+
+            while (rs.next()) {
+                String nombre = rs.getString("Nombre");
+                nombres.add( nombre );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nombres;
+    }
+
 
     /**
      * Define la vista y el controlador
@@ -70,13 +155,13 @@ public class ControladorPerfilJugador implements Initializable {
      */
     private void cargarInformacionJugador() {
 
-        this.nombreJugador.setText(jugador.getNombre());
-        this.altura.setText(jugador.getAltura());
-        this.nombreEquipo.setText(jugador.getEquipo());
-        this.peso.setText(jugador.getPeso());
-        this.procedencia.setText(jugador.getProcedencia());
-        this.posicion.setText(jugador.getPosicion());
-        imgEquipo.setImage(new Image(rutaImagenEquipo(jugador.getEquipo())));
+        this.textNombreJugador.setText(this.jugador.getNombre());
+        this.textAltura.setText(this.jugador.getAltura());
+        this.textEquipo.setText(this.jugador.getEquipo());
+        this.textPeso.setText(this.jugador.getPeso());
+        this.textProcendencia.setText(this.jugador.getProcedencia());
+        this.textPosicion.setText(this.jugador.getPosicion());
+        imgEquipo.setImage(new Image(rutaImagenEquipo(this.jugador.getEquipo())));
 
     }
 
@@ -124,6 +209,13 @@ public class ControladorPerfilJugador implements Initializable {
 
         ruta += ".png";
         return ruta;
+    }
+
+    /**
+     * Devuelve el jugador
+     */
+    public Jugador getJugador() {
+        return this.jugador;
     }
 
 }
