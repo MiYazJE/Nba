@@ -3,16 +3,14 @@ package dominio;
 public class Estadisticas {
 
     private String temporada;
-    private String jugador;
     private String puntosPartido;
     private String asistenciasPartido;
     private String taponesPartido;
     private String rebotesPartido;
 
-    public Estadisticas(String temporada, String jugador, String puntosPartido, String asistenciasPartido,
+    public Estadisticas(String temporada, String puntosPartido, String asistenciasPartido,
                         String taponesPartido, String rebotesPartido) {
         this.temporada = temporada;
-        this.jugador = jugador;
         this.puntosPartido = puntosPartido;
         this.asistenciasPartido = asistenciasPartido;
         this.taponesPartido = taponesPartido;
@@ -25,14 +23,6 @@ public class Estadisticas {
 
     public void setTemporada(String temporada) {
         this.temporada = temporada;
-    }
-
-    public String getJugador() {
-        return jugador;
-    }
-
-    public void setJugador(String jugador) {
-        this.jugador = jugador;
     }
 
     public String getPuntosPartido() {
@@ -71,7 +61,6 @@ public class Estadisticas {
     public String toString() {
         return "Estadisticas{" +
                 "temporada='" + temporada + '\'' +
-                ", jugador='" + jugador + '\'' +
                 ", puntosPartido='" + puntosPartido + '\'' +
                 ", asistenciasPartido='" + asistenciasPartido + '\'' +
                 ", taponesPartido='" + taponesPartido + '\'' +

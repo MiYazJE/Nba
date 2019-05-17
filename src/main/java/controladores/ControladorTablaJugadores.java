@@ -115,7 +115,6 @@ public class ControladorTablaJugadores implements Initializable {
 
 		// Si el jugador esta null significa que no hay ninguna fila seleccionada en la tabla
 		if (jugador == null) {
-
 			mensajeJugadorNoSeleccionado();
 		}
 		else {
@@ -134,11 +133,10 @@ public class ControladorTablaJugadores implements Initializable {
 			if (resultado.get() == eliminarJugador) {
 
 				// Eliminar jugador
-				boolean estado = consultaEliminarJugador(jugador.getNombre());
-				if (estado) {
+				boolean estadoConsulta = consultaEliminarJugador(jugador.getNombre());
+				if (estadoConsulta) {
 					// Consulta realizada
 					infoJugadorEliminado(jugador.getNombre());
-					System.out.println("El jugador " + jugador.getNombre() + "ha sido eliminado correctamente.");
 					jugadores.remove(jugador);
 				}
 				else {
@@ -314,9 +312,10 @@ public class ControladorTablaJugadores implements Initializable {
 		caja.setSpacing(20);
 		caja.getChildren().addAll(imageView, label);
 
-		stage.initStyle(StageStyle.UTILITY);
+		stage.initModality(Modality.WINDOW_MODAL);
 		stage.setResizable(false);
 		stage.show();
+		System.out.println("El jugador " + nombreJugador + "ha sido eliminado correctamente.");
 	}
 
 	/**

@@ -159,7 +159,7 @@ public class ControladorCreacionJugador implements Initializable {
         caja.setSpacing(20);
         caja.getChildren().addAll(imageView, label);
 
-        stage.initStyle(StageStyle.UTILITY);
+        stage.initModality(Modality.WINDOW_MODAL);
         stage.setResizable(false);
         stage.show();
     }

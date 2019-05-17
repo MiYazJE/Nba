@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import modelo.ConexionBDD;
 
 import java.io.IOException;
@@ -33,6 +34,8 @@ public class ControladorEstadisticas implements Initializable {
     @FXML private TableColumn<Estadisticas, String> col_TaponesPartido;
     @FXML private TableColumn<Estadisticas, String> col_RebotesPartido;
 
+    @FXML private Text nombre;
+
     private Jugador jugador;
     private Parent root;
     private ConexionBDD conexion = new ConexionBDD();
@@ -47,6 +50,8 @@ public class ControladorEstadisticas implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         propiedadesTabla();
         leerTabaEstadisticas();
+        nombre.setText(nombre.getText() + jugador.getNombre());
+
     }
 
     /**
@@ -93,17 +98,14 @@ public class ControladorEstadisticas implements Initializable {
             ps.setString(1, this.jugador.getNombre());
             ResultSet rs = conexion.realizarConsulta( ps );
 
-            // temporada | jugador | Puntos_por_partido | Asistencias_por_partido | Tapones_por_partido
-            // Rebotes_por_partido
             while (rs.next()) {
                 String temporada = rs.getString("temporada");
-                String jugador = rs.getString("jugador");
                 String puntosPartido = rs.getString("Puntos_por_partido");
                 String asistenciasPartido = rs.getString("Asistencias_por_partido");
                 String taponesPartido = rs.getString("Tapones_por_partido");
                 String rebotesPartido = rs.getString("Rebotes_por_partido");
-                Estadisticas estadisticas = new Estadisticas(temporada, jugador,
-                        puntosPartido, asistenciasPartido, taponesPartido, rebotesPartido);
+                Estadisticas estadisticas = new Estadisticas(temporada, puntosPartido,
+                        asistenciasPartido, taponesPartido, rebotesPartido);
                 estadisticasJugador.add( estadisticas );
             }
 

@@ -26,7 +26,7 @@ public class ControladorDetallesJugador implements Initializable {
 
     private Jugador jugador;
     private Stage stage;
-    // Vista del perfil
+    // Vista del controlador perfil
     private ControladorPerfilJugador perfil;
 
     /**

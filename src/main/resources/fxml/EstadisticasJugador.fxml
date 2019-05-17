@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<?import javafx.scene.control.Label?>
 <AnchorPane prefHeight="818.0" prefWidth="1147.0" style="-fx-background-color: linear-gradient(to bottom, #0765AF, #D83248);" stylesheets="@../estilos/estilosTabla.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView fx:id="tablaEstadisticas" layoutX="32.0" layoutY="68.0" prefHeight="415.0" prefWidth="1076.0">
+      <TableView fx:id="tablaEstadisticas" layoutX="36.0" layoutY="214.0" prefHeight="507.0" prefWidth="1076.0">
+        <placeholder>
+            <Label text="No se han encontrado coincidencias" />
+        </placeholder>
         <columns>
           <TableColumn fx:id="col_Temporada" prefWidth="111.0" text="Temporada" />
           <TableColumn fx:id="col_Jugador" prefWidth="121.0" text="Jugador" />
@@ -17,9 +21,11 @@
             <TableColumn fx:id="col_TaponesPartido" prefWidth="201.0" text="Tapones por Partido" />
             <TableColumn fx:id="col_RebotesPartido" prefWidth="218.0" text="Rebotes por Partido" />
         </columns>
-          <placeholder>
-              <Label text="No existen estadísticas de ese jugador." />
-          </placeholder>
       </TableView>
+      <Text fx:id="nombre" fill="WHITE" layoutX="36.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estadísticas de " wrappingWidth="1076.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
