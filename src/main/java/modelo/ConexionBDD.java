@@ -32,10 +32,6 @@ public class ConexionBDD {
 
         try {
 
-            // Establece la conexion
-            /*
-            jdbc:mysql://localhost/db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-             */
             con = DriverManager.getConnection(URL, usuario, password);
             System.out.println("Conexion exitosa, logeado en la base de datos NBA.");
             return true;

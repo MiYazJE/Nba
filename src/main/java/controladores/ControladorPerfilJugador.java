@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import modelo.ConexionBDD;
 import org.controlsfx.control.textfield.TextFields;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -36,6 +37,7 @@ public class ControladorPerfilJugador implements Initializable {
     @FXML private Text textEquipo;
     @FXML private ImageView imgEquipo;
     @FXML private JFXTextField buscarJugador;
+    @FXML private ImageView imgBuscar;
 
     private Jugador jugador;
     private Parent root;
@@ -47,6 +49,22 @@ public class ControladorPerfilJugador implements Initializable {
         init();
     }
 
+    /**
+     * Define la vista y el controlador
+     */
+    private void init() {
+
+        root = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PerfilJugador.fxml"));
+            loader.setController( this );
+            root = (Parent) loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -56,20 +74,34 @@ public class ControladorPerfilJugador implements Initializable {
         // Autocompleta a medida de que escribes
         TextFields.bindAutoCompletion(buscarJugador, nombreJugadores);
 
-        //  Al presionar ENTER, busca el jugador escrito
+        // Actualizar el jugador buscado por el actual
         buscarJugador.setOnKeyPressed(key -> {
             if (key.getCode().equals(KeyCode.ENTER)) {
-                String name = buscarJugador.getText();
-                if (!name.isEmpty() && nombreJugadores.contains(name)) {
-                   consultaJugador(buscarJugador.getText());
-                   cargarInformacionJugador();
-                   buscarJugador.clear();
-                }
+                actualizarJugador();
             }
+        });
+
+        imgBuscar.setOnMousePressed(e -> {
+            actualizarJugador();
         });
 
         // Cargar todos los datos del jugador en los campos
         cargarInformacionJugador();
+    }
+
+
+    private void actualizarJugador() {
+        if (verificarEquipoaBuscar()) {
+            consultaJugador(buscarJugador.getText());
+            cargarInformacionJugador();
+            buscarJugador.clear();
+        }
+    }
+
+    private boolean verificarEquipoaBuscar() {
+        String nombreField = buscarJugador.getText();
+        return !nombreField.isEmpty() &&
+                nombreJugadores.contains(nombreField);
     }
 
     /**
@@ -101,8 +133,24 @@ public class ControladorPerfilJugador implements Initializable {
     }
 
     /**
+     * Carga la informacion del jugador
+     */
+    private void cargarInformacionJugador() {
+
+        this.textNombreJugador.setText(this.jugador.getNombre());
+        this.textAltura.setText(this.jugador.getAltura());
+        this.textEquipo.setText(this.jugador.getEquipo());
+        this.textPeso.setText(this.jugador.getPeso());
+        this.textProcendencia.setText(this.jugador.getProcedencia());
+        this.textPosicion.setText(this.jugador.getPosicion());
+        imgEquipo.setImage( getImagen(this.jugador.getEquipo() ));
+
+        // Recuperar esto cuando no consigas cargar las imagenes desde la base de datos
+        //imgEquipo.setImage(new Image(rutaImagenEquipo(this.jugador.getEquipo())));
+    }
+
+    /**
      * Hace una consulta a la base de datos, trae todos los nombres de los jugadores
-     * y los introduce en una lista nombreJugadores
      * @return List
      */
     private List<String> cargarJugadores() {
@@ -125,44 +173,34 @@ public class ControladorPerfilJugador implements Initializable {
         return nombres;
     }
 
-
     /**
-     * Define la vista y el controlador
+     * Lee la ruta de una imagen desde la base de datos, crea una imagen y la devuelve
+     * @param nombreEquipo
+     * @return
      */
-    private void init() {
+    private Image getImagen(String nombreEquipo) {
 
-        root = null;
+        String ruta = "/imagenes/logosNba/lakers.png";
+
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PerfilJugador.fxml"));
-            loader.setController( this );
-            root = (Parent) loader.load();
-        } catch (IOException e) {
+
+            PreparedStatement ps = conexion.con.prepareStatement(
+                    "SELECT Imagen FROM Equipos WHERE Nombre = ?");
+
+            ps.setString(1, nombreEquipo);
+
+            ResultSet rs = conexion.realizarConsulta( ps );
+
+            while (rs.next()) ruta = rs.getString("Imagen");
+            System.out.println("Leyendo imagen -> '" + ruta + "'");
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-    }
-
-    /**
-     * Devuelve el parent de esta vista
-     * @return Parent
-     */
-    public Parent getRoot() {
-        return this.root;
-    }
-
-    /**
-     * Carga la informacion del jugador
-     */
-    private void cargarInformacionJugador() {
-
-        this.textNombreJugador.setText(this.jugador.getNombre());
-        this.textAltura.setText(this.jugador.getAltura());
-        this.textEquipo.setText(this.jugador.getEquipo());
-        this.textPeso.setText(this.jugador.getPeso());
-        this.textProcendencia.setText(this.jugador.getProcedencia());
-        this.textPosicion.setText(this.jugador.getPosicion());
-        imgEquipo.setImage(new Image(rutaImagenEquipo(this.jugador.getEquipo())));
-
+        Image imagen = new Image("file:" + ruta);
+        return imagen;
+        // return ruta;
     }
 
     /**
@@ -187,7 +225,7 @@ public class ControladorPerfilJugador implements Initializable {
             case "Hornets": ruta+= "charlotteHornets"; break;
             case "Jazz": ruta += "utahJazz"; break;
             case "Kings": ruta += ""; break;
-            case "Knicks": ruta += "newYorkNicks"; break;
+            case "Knicks": ruta += "newYorknicks"; break;
             case "Lakers": ruta += "losAngelesLakers"; break;
             case "Magig": ruta += "orlandoMagic"; break;
             case "Mavericks": ruta += "dallasMaverick"; break;
@@ -216,6 +254,14 @@ public class ControladorPerfilJugador implements Initializable {
      */
     public Jugador getJugador() {
         return this.jugador;
+    }
+
+    /**
+     * Devuelve el parent de esta vista
+     * @return Parent
+     */
+    public Parent getRoot() {
+        return this.root;
     }
 
 }

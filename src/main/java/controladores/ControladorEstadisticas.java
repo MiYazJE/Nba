@@ -28,7 +28,6 @@ public class ControladorEstadisticas implements Initializable {
 
     @FXML private TableView<Estadisticas> tablaEstadisticas;
     @FXML private TableColumn<Estadisticas, String> col_Temporada;
-    @FXML private TableColumn<Estadisticas, String> col_Jugador;
     @FXML private TableColumn<Estadisticas, String> col_PuntosPartido;
     @FXML private TableColumn<Estadisticas, String> col_AsistenciasPartido;
     @FXML private TableColumn<Estadisticas, String> col_TaponesPartido;
@@ -46,28 +45,6 @@ public class ControladorEstadisticas implements Initializable {
         init();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        propiedadesTabla();
-        leerTabaEstadisticas();
-        nombre.setText(nombre.getText() + jugador.getNombre());
-
-    }
-
-    /**
-     * Define las propiedades de la tabla estadisticas:
-     *  - Indica a cada columna que atributo de Estadisticas va a obtener
-     */
-    private void propiedadesTabla() {
-        col_Temporada.setCellValueFactory(new PropertyValueFactory<>("temporada"));
-        col_Jugador.setCellValueFactory(new PropertyValueFactory<>("jugador"));
-        col_PuntosPartido.setCellValueFactory(new PropertyValueFactory<>("puntosPartido"));
-        col_AsistenciasPartido.setCellValueFactory(new PropertyValueFactory<>("asistenciasPartido"));
-        col_TaponesPartido.setCellValueFactory(new PropertyValueFactory<>("taponesPartido"));
-        col_RebotesPartido.setCellValueFactory(new PropertyValueFactory<>("rebotesPartido"));
-        tablaEstadisticas.setItems( this.estadisticasJugador );
-    }
-
     /**
      * Define la vista y el controlador de esta clase
      */
@@ -82,6 +59,27 @@ public class ControladorEstadisticas implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        propiedadesTabla();
+        leerTabaEstadisticas();
+        nombre.setText(nombre.getText() + jugador.getNombre());
+
+    }
+
+    /**
+     * Define las propiedades de la tabla estadisticas:
+     *  - Indica a cada columna que atributo de Estadisticas va a obtener
+     */
+    private void propiedadesTabla() {
+        col_Temporada.setCellValueFactory(new PropertyValueFactory<>("temporada"));
+        col_PuntosPartido.setCellValueFactory(new PropertyValueFactory<>("puntosPartido"));
+        col_AsistenciasPartido.setCellValueFactory(new PropertyValueFactory<>("asistenciasPartido"));
+        col_TaponesPartido.setCellValueFactory(new PropertyValueFactory<>("taponesPartido"));
+        col_RebotesPartido.setCellValueFactory(new PropertyValueFactory<>("rebotesPartido"));
+        tablaEstadisticas.setItems( this.estadisticasJugador );
     }
 
     /**

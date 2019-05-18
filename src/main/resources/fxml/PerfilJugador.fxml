@@ -5,6 +5,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -170,5 +172,16 @@
          </cursor>
       </JFXButton>
       <JFXTextField fx:id="buscarJugador" focusColor="WHITE" labelFloat="true" layoutX="126.0" layoutY="37.0" prefHeight="47.0" prefWidth="296.0" promptText="Buscar un jugador..." style="-fx-font-size: 20px; -fx-prompt-text-fill: white; -fx-text-fill: black;" unFocusColor="WHITE" />
+      <ImageView fx:id="imgBuscar" fitHeight="33.0" fitWidth="33.0" layoutX="389.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/busqueda.png" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="1.0" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </AnchorPane>

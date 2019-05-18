@@ -51,7 +51,6 @@ public class ControladorTablaJugadores implements Initializable {
 	@FXML private ImageView imgEliminarJugador;
 	@FXML private ImageView imgEstadisticas;
 
-
     // Encargado de realizar las conexiones con la BDDD
     private ConexionBDD conexion = new ConexionBDD();
     private ObservableList<Jugador> jugadores = FXCollections.observableArrayList();
@@ -160,7 +159,7 @@ public class ControladorTablaJugadores implements Initializable {
 
 		try {
 
-			PreparedStatement ps = conexion.con.prepareStatement("delete from jugadores where nombre = ?");
+			PreparedStatement ps = conexion.con.prepareStatement("FicherosCarpetas from jugadores where nombre = ?");
 			ps.setString(1, nombreJugador);
 			return conexion.realizarUpdate( ps );
 

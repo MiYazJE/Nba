@@ -6,7 +6,7 @@ package controladores;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import interfaz.Aplicacion;
+import modelo.FicherosCarpetas;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,9 +18,7 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import modelo.ConexionBDD;
 
 import java.io.IOException;
@@ -37,6 +35,7 @@ public class ControladorLogin implements Initializable {
 
     private ConexionBDD conexion;
     protected static Stage ventana;
+    private FicherosCarpetas generarFicheros = new FicherosCarpetas();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -95,14 +94,15 @@ public class ControladorLogin implements Initializable {
 
             conexion = new ConexionBDD(user, pass);
             if (conexion.abrirConexion()) {
-                // TODO Lanzar ventana succes login
 
-                System.out.println("Iniciando sesion...");
+                generarFicheros.crearFicheros();
+
                 iniciarSesion();
-                System.out.println("Sesion iniciada.");
+                System.out.println("Iniciando sesion...");
 
                 Stage stage = (Stage) submit.getScene().getWindow();
                 stage.close();
+
             }
             else {
                 // Ventana error no existe el usuario sql
