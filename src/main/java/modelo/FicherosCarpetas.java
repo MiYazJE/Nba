@@ -10,6 +10,7 @@ import java.nio.file.StandardCopyOption;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 
 public class FicherosCarpetas {
@@ -23,6 +24,7 @@ public class FicherosCarpetas {
     public boolean crearFicheros() {
 
         File carpeta = new File("imagenesNba");
+
         crearCampoImagen();
 
         if (!carpeta.exists()) {
@@ -49,6 +51,8 @@ public class FicherosCarpetas {
                     "alter table equipos add Imagen varchar(250);");
             conexion.realizarUpdate( ps );
 
+        } catch (SQLSyntaxErrorException e) {
+            e.printStackTrace();
         } catch(SQLException e) {
             e.printStackTrace();
         }
@@ -91,7 +95,7 @@ public class FicherosCarpetas {
 
             for (String nombre : nombres) {
                 InputStream source = getClass().getResourceAsStream("/imagenes/logosNba/" + nombre + ".png");
-                Files.copy(source, Paths.get( this.rutaAbsoluta + "\\" + nombre + ".png" ), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(source, Paths.get( this.rutaAbsoluta + File.separator + nombre + ".png" ), StandardCopyOption.REPLACE_EXISTING);
             }
 
             return true;
@@ -113,7 +117,7 @@ public class FicherosCarpetas {
         try {
 
             PreparedStatement ps = conexion.con.prepareStatement(
-                    "SELECT Nombre FROM Equipos;");
+                    "SELECT Nombre FROM equipos;");
             ResultSet rs = conexion.realizarConsulta( ps );
 
             while (rs.next()) {
@@ -141,8 +145,8 @@ public class FicherosCarpetas {
                 String nombre = file.substring(0, file.length() - 4); // file("76ers.png") -> "76ers"
 
                 PreparedStatement ps = conexion.con.prepareStatement(
-                                    "UPDATE EQUIPOS SET Imagen = ? WHERE Nombre = ?;");
-                ps.setString(1, this.rutaAbsoluta + "\\" + nombre + ".png");
+                                    "UPDATE equipos SET imagen = ? WHERE nombre = ?;");
+                ps.setString(1, this.rutaAbsoluta + File.separator + nombre + ".png");
                 ps.setString(2, nombre);
 
                 conexion.realizarUpdate( ps );

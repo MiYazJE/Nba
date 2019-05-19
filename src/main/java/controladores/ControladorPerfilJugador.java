@@ -185,13 +185,13 @@ public class ControladorPerfilJugador implements Initializable {
         try {
 
             PreparedStatement ps = conexion.con.prepareStatement(
-                    "SELECT Imagen FROM Equipos WHERE Nombre = ?");
+                    "SELECT imagen FROM equipos WHERE nombre = ?");
 
             ps.setString(1, nombreEquipo);
 
             ResultSet rs = conexion.realizarConsulta( ps );
 
-            while (rs.next()) ruta = rs.getString("Imagen");
+            while (rs.next()) ruta = rs.getString("imagen");
             System.out.println("Leyendo imagen -> '" + ruta + "'");
 
         } catch (SQLException e) {
