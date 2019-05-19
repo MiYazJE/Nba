@@ -25,9 +25,8 @@ public class FicherosCarpetas {
 
         File carpeta = new File("imagenesNba");
 
-        crearCampoImagen();
-
         if (!carpeta.exists()) {
+            crearCampoImagen();
             if (carpeta.mkdir()) {
                 this.rutaAbsoluta = carpeta.getAbsolutePath();
                 System.out.println("Creando carpeta en: " + this.rutaAbsoluta);
@@ -47,16 +46,19 @@ public class FicherosCarpetas {
 
         try {
 
+            PreparedStatement pst = conexion.con.prepareStatement(
+                    "alter table Equipos DROP COLUMN Imagen;");
+            conexion.realizarUpdate( pst );
+
             PreparedStatement ps = conexion.con.prepareStatement(
                     "alter table equipos add Imagen varchar(250);");
             conexion.realizarUpdate( ps );
 
         } catch (SQLSyntaxErrorException e) {
-            e.printStackTrace();
+            System.out.println("Puede que la columa Imagen ya existiera.\nO puede que no.");
         } catch(SQLException e) {
             e.printStackTrace();
         }
-
 
     }
 

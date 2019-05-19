@@ -12,6 +12,7 @@ public class Jugador {
     private String altura;
     private String equipo;
     private String posicion;
+    private String codigo;
 
     /**
      * Contructor de jugador con 6 parámetros
@@ -29,10 +30,18 @@ public class Jugador {
         this.altura = altura;
         this.posicion = posicion;
         this.equipo = equipo;
-        pulgadasToMetros();
-        librasToKg();
+        //pulgadasToMetros();
+        //librasToKg();
     }
 
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
     public String getNombre() {
         return nombre;

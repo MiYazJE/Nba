@@ -3,12 +3,14 @@
  */
 package controladores;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import dominio.Jugador;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,24 +31,28 @@ import java.util.ResourceBundle;
 
 public class ControladorPerfilJugador implements Initializable {
 
-    @FXML private Text textNombreJugador;
-    @FXML private Text textProcendencia;
-    @FXML private Text textAltura;
-    @FXML private Text textPeso;
-    @FXML private Text textPosicion;
-    @FXML private Text textEquipo;
-    @FXML private ImageView imgEquipo;
+    @FXML private JFXTextField textNombreJugador;
+    @FXML private JFXTextField textProcendencia;
+    @FXML private JFXTextField textAltura;
+    @FXML private JFXTextField textPeso;
+    @FXML private JFXTextField textPosicion;
+    @FXML private JFXTextField textEquipo;
     @FXML private JFXTextField buscarJugador;
+    @FXML private ImageView imgEquipo;
     @FXML private ImageView imgBuscar;
+    @FXML private JFXButton btnEditar;
+    @FXML private JFXButton btnGuardar;
 
     private Jugador jugador;
     private Parent root;
     private List<String> nombreJugadores;
     ConexionBDD conexion = new ConexionBDD();
+    private boolean modificado;
 
     public ControladorPerfilJugador(Jugador jugador) {
         this.jugador = jugador;
         init();
+        this.modificado = false;
     }
 
     /**
@@ -85,6 +91,15 @@ public class ControladorPerfilJugador implements Initializable {
             actualizarJugador();
         });
 
+        btnEditar.setOnAction(e -> {
+            editable( true );
+            obtenerCodigoJugador();
+        });
+
+        btnGuardar.setOnAction(e -> {
+            verificarConsulta();
+        });
+
         // Cargar todos los datos del jugador en los campos
         cargarInformacionJugador();
     }
@@ -95,6 +110,7 @@ public class ControladorPerfilJugador implements Initializable {
             consultaJugador(buscarJugador.getText());
             cargarInformacionJugador();
             buscarJugador.clear();
+            editable( false );
         }
     }
 
@@ -201,6 +217,130 @@ public class ControladorPerfilJugador implements Initializable {
         Image imagen = new Image("file:" + ruta);
         return imagen;
         // return ruta;
+    }
+
+    /**
+     * Cambia la propiedad "editable" por la que tu especifiques
+     * @param estado
+     */
+    private void editable(boolean estado) {
+        textNombreJugador.setEditable( estado );
+        textProcendencia.setEditable( estado );
+        textAltura.setEditable( estado );
+        textPeso.setEditable( estado );
+        textPosicion.setEditable( estado );
+        textEquipo.setEditable( estado );
+        this.modificado = estado;
+    }
+
+    /**
+     *  Obtiene el codigo del jugador actual
+     */
+    private void obtenerCodigoJugador() {
+
+        try {
+
+            PreparedStatement ps = conexion.con.prepareStatement(
+                    "SELECT codigo FROM jugadores where nombre LIKE ?;");
+
+            ps.setString(1, this.jugador.getNombre());
+
+            ResultSet rs =conexion.realizarConsulta( ps );
+
+            String codigo = "";
+            while (rs.next()) codigo = rs.getString("codigo");
+            this.jugador.setCodigo( codigo );
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Verifica si la consulta realizada es correcta
+     */
+    private void verificarConsulta() {
+
+        if (!this.modificado) {
+            alertaError("No has modificado ningún campo.");
+        }
+        else {
+
+            if (!this.textNombreJugador.getText().isEmpty() &&
+                !this.textEquipo.getText().isEmpty() &&
+                !this.textPosicion.getText().isEmpty() &&
+                !this.textAltura.getText().isEmpty() &&
+                !this.textProcendencia.getText().isEmpty() &&
+                !this.textPeso.getText().isEmpty()) {
+
+                Jugador jugadorModificado = new Jugador(textNombreJugador.getText(), textProcendencia.getText(),
+                        textAltura.getText(), textPeso.getText(), textPosicion.getText(), textEquipo.getText());
+                jugadorModificado.setCodigo(this.jugador.getCodigo());
+
+                if (actualizacionJugador( jugadorModificado )) {
+                    alertaInformacion("El jugador ha sido modificado");
+                }
+                else {
+                    alertaError("Han habido problemas actualizando la información.");
+                }
+
+            }
+
+        }
+
+    }
+
+    /**
+     * Realiza una consulta en la base de datos y actualiza los datos el jugador
+     */
+    private boolean actualizacionJugador(Jugador newJugador) {
+
+        try {
+
+            PreparedStatement ps = conexion.con.prepareStatement(
+                    "UPDATE jugadores SET nombre = ? AND procedencia = ? AND altura = ?" +
+                        "AND peso = ? AND posicion = ? AND nombre_equipo = ? " +
+                        "WHERE codigo = ?");
+
+            // TODO tira excepcion
+            ps.setString(1, newJugador.getNombre());
+            ps.setString(2, newJugador.getProcedencia());
+            ps.setString(3, newJugador.getAltura());
+            ps.setInt(4, Integer.valueOf(newJugador.getPeso()));
+            ps.setString(5, newJugador.getPosicion());
+            ps.setString(6, newJugador.getEquipo());
+            ps.setInt(7, Integer.valueOf(newJugador.getCodigo()));
+
+            return conexion.realizarUpdate( ps );
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    /**
+     * Crea una ventana de informacion con el mensaje que le indiques
+     * @param mensaje
+     */
+    private void alertaInformacion(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setContentText( mensaje );
+        alerta.setHeaderText("INFROMACIÓN");
+        alerta.showAndWait();
+    }
+
+    /**
+     * Crea una ventana de error con el mensaje que le indiques
+     * @param mensaje
+     */
+    private void alertaError(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setContentText( mensaje );
+        alerta.setHeaderText("ERROR");
+        alerta.showAndWait();
     }
 
     /**
