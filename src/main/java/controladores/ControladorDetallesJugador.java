@@ -25,7 +25,7 @@ public class ControladorDetallesJugador implements Initializable {
     @FXML private AnchorPane contenedor;
 
     private Jugador jugador;
-    private Stage stage;
+    protected static Stage stage;
     // Vista del controlador perfil
     private ControladorPerfilJugador perfil;
 
@@ -43,17 +43,17 @@ public class ControladorDetallesJugador implements Initializable {
      */
     private void init() {
 
-        this.stage = new Stage();
+        stage = new Stage();
 
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlantillaJugador.fxml"));
             loader.setController(this);
-            this.stage.setScene(new Scene(loader.load()));
-            this.stage.getIcons().add(new Image("/imagenes/detalles.png"));
-            this.stage.setTitle("Detalles del jugador");
-            this.stage.setResizable( false );
-            this.stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            stage.getIcons().add(new Image("/imagenes/detalles.png"));
+            stage.setTitle("Detalles del jugador");
+            stage.setResizable( false );
+            stage.initModality(Modality.APPLICATION_MODAL);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -99,7 +99,7 @@ public class ControladorDetallesJugador implements Initializable {
     }
 
     public void showStage() {
-        this.stage.showAndWait();
+        stage.show();
     }
 
 }

@@ -327,6 +327,11 @@ public class ControladorTablaJugadores implements Initializable {
 
 			ControladorDetallesJugador controlador = new ControladorDetallesJugador( jugador );
 			controlador.showStage();
+
+			controlador.stage.setOnHiding(e -> {
+				leerTablaJugadores();
+			});
+
 		}
 		else {
 			//Mensaje error, no se ha seleccionado ningun jugador

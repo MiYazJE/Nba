@@ -97,17 +97,14 @@ public class ControladorCreacionJugador implements Initializable {
             !fieldPeso.getText().isEmpty() &&
             !fieldPosicion.getText().isEmpty() &&
             comboEquipo.getValue() != null) {
-            // Añadir nuevo jugador a la base de datos
 
             boolean estadoConsulta = consultaCreacionJugador();
 
             if (estadoConsulta) {
                 avisoJugadorAgregado(fieldNombre.getText());
-                // Cerrar ventana
                 cerrarVentana();
             }
             else {
-                // Mensaje de error
                 errorCrearJugador();
             }
 

@@ -6,6 +6,8 @@ package controladores;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import dominio.Jugador;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -45,7 +47,7 @@ public class ControladorPerfilJugador implements Initializable {
 
     private Jugador jugador;
     private Parent root;
-    private List<String> nombreJugadores;
+    private ObservableList<String> nombreJugadores = FXCollections.observableArrayList();
     ConexionBDD conexion = new ConexionBDD();
     private boolean modificado;
 
@@ -75,10 +77,10 @@ public class ControladorPerfilJugador implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         // Cargar todos los jugadores en una lista
-        nombreJugadores = cargarJugadores();
+        cargarJugadores();
 
         // Autocompleta a medida de que escribes
-        TextFields.bindAutoCompletion(buscarJugador, nombreJugadores);
+        generarAutoCompletado();
 
         // Actualizar el jugador buscado por el actual
         buscarJugador.setOnKeyPressed(key -> {
@@ -100,10 +102,15 @@ public class ControladorPerfilJugador implements Initializable {
             verificarConsulta();
         });
 
+
+
         // Cargar todos los datos del jugador en los campos
         cargarInformacionJugador();
     }
 
+    private void generarAutoCompletado() {
+        TextFields.bindAutoCompletion(buscarJugador, nombreJugadores);
+    }
 
     private void actualizarJugador() {
         if (verificarEquipoaBuscar()) {
@@ -167,11 +174,11 @@ public class ControladorPerfilJugador implements Initializable {
 
     /**
      * Hace una consulta a la base de datos, trae todos los nombres de los jugadores
-     * @return List
      */
-    private List<String> cargarJugadores() {
+    private void cargarJugadores() {
 
         List<String> nombres = new ArrayList<>();
+
         try {
 
             PreparedStatement ps = conexion.con.prepareStatement("SELECT Nombre FROM jugadores;");
@@ -186,7 +193,7 @@ public class ControladorPerfilJugador implements Initializable {
             e.printStackTrace();
         }
 
-        return nombres;
+        nombreJugadores.setAll( nombres );
     }
 
     /**
@@ -280,6 +287,9 @@ public class ControladorPerfilJugador implements Initializable {
 
                 if (actualizacionJugador( jugadorModificado )) {
                     alertaInformacion("El jugador ha sido modificado");
+                    refrescarJugador( jugadorModificado );
+                    generarAutoCompletado();
+                    cargarInformacionJugador();
                 }
                 else {
                     alertaError("Han habido problemas actualizando la información.");
@@ -299,8 +309,8 @@ public class ControladorPerfilJugador implements Initializable {
         try {
 
             PreparedStatement ps = conexion.con.prepareStatement(
-                    "UPDATE jugadores SET nombre = ? AND procedencia = ? AND altura = ?" +
-                        "AND peso = ? AND posicion = ? AND nombre_equipo = ? " +
+                    "UPDATE jugadores SET nombre = ?, procedencia = ?, altura = ?" +
+                        ", peso = ?, posicion = ?, nombre_equipo = ? " +
                         "WHERE codigo = ?");
 
             // TODO tira excepcion
@@ -341,6 +351,16 @@ public class ControladorPerfilJugador implements Initializable {
         alerta.setContentText( mensaje );
         alerta.setHeaderText("ERROR");
         alerta.showAndWait();
+    }
+
+    /**
+     * El jugador modificado pasa a ser el actual
+     * Eliminamos el anterior de la lista e introducimos el nuevo
+     */
+    private void refrescarJugador(Jugador jugadorModificado) {
+        this.nombreJugadores.remove( this.jugador.getNombre() );
+        this.nombreJugadores.add( jugadorModificado.getNombre() );
+        this.jugador = jugadorModificado;
     }
 
     /**
