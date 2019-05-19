@@ -3,11 +3,14 @@
  */
 package modelo;
 
-import org.apache.commons.io.FileUtils;
 import java.io.*;
-import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class FicherosCarpetas {
 
@@ -18,7 +21,9 @@ public class FicherosCarpetas {
      * Crea una carpeta necesaria para la aplicacion
      */
     public boolean crearFicheros() {
+
         File carpeta = new File("imagenesNba");
+        crearCampoImagen();
 
         if (!carpeta.exists()) {
             if (carpeta.mkdir()) {
@@ -31,6 +36,24 @@ public class FicherosCarpetas {
         }
 
         return false;
+    }
+
+    /**
+     * Añade una columna llamada imagen a la tabla equipos
+     */
+    private void crearCampoImagen() {
+
+        try {
+
+            PreparedStatement ps = conexion.con.prepareStatement(
+                    "alter table equipos add Imagen varchar(250);");
+            conexion.realizarUpdate( ps );
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     /**
@@ -56,29 +79,58 @@ public class FicherosCarpetas {
     }
 
     /**
-     * Genera las imagenes necesarias de la aplicación a la carpeta del usuario
+     * Genera las imagenes utilizadas por la aplicacion
      * @return boolean
      */
     public boolean moverImagenes() {
 
-        URL location = FicherosCarpetas.class.getProtectionDomain()
-                .getCodeSource().getLocation();
-        File srcDir = new File(location.getPath() + "imagenes/logosNba");
-        File destDir = new File(this.rutaAbsoluta);
+
+       ArrayList<String> nombres = getNombresEquipos();
 
         try {
-            FileUtils.copyDirectory(srcDir, destDir);
-            System.out.println("Copiando imagenes a '" + this.rutaAbsoluta + "'");
+
+            for (String nombre : nombres) {
+                InputStream source = getClass().getResourceAsStream("/imagenes/logosNba/" + nombre + ".png");
+                Files.copy(source, Paths.get( this.rutaAbsoluta + "\\" + nombre + ".png" ), StandardCopyOption.REPLACE_EXISTING);
+            }
+
             return true;
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
             return false;
         }
 
     }
 
     /**
-     * Inserta en la base de datos la ruta a las imagenes generadas
+     * Consultar todos los nombes de los equipos de la nba
+     */
+    private ArrayList<String> getNombresEquipos() {
+
+        ArrayList<String> listaNombres = new ArrayList<>();
+
+        try {
+
+            PreparedStatement ps = conexion.con.prepareStatement(
+                    "SELECT Nombre FROM Equipos;");
+            ResultSet rs = conexion.realizarConsulta( ps );
+
+            while (rs.next()) {
+                String nombre = rs.getString("Nombre");
+                listaNombres.add( nombre.toLowerCase() );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listaNombres;
+    }
+
+
+    /**
+     * Inserta en la base de datos la ruta de cada una de las imagenes utilizadas
      */
     private void insertarImagenestoNba() {
 
