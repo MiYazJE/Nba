@@ -26,8 +26,8 @@ public class FicherosCarpetas {
         File carpeta = new File("imagenesNba");
 
         if (!carpeta.exists()) {
-            crearCampoImagen();
             if (carpeta.mkdir()) {
+                crearCampoImagen();
                 this.rutaAbsoluta = carpeta.getAbsolutePath();
                 System.out.println("Creando carpeta en: " + this.rutaAbsoluta);
                 moverImagenes();

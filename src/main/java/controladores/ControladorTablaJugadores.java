@@ -159,7 +159,7 @@ public class ControladorTablaJugadores implements Initializable {
 
 		try {
 
-			PreparedStatement ps = conexion.con.prepareStatement("FicherosCarpetas from jugadores where nombre = ?");
+			PreparedStatement ps = conexion.con.prepareStatement("Delete from jugadores where nombre = ?");
 			ps.setString(1, nombreJugador);
 			return conexion.realizarUpdate( ps );
 
@@ -236,6 +236,8 @@ public class ControladorTablaJugadores implements Initializable {
 	 * observableList jugadores.
 	 */
 	public void leerTablaJugadores() {
+
+		jugadores.clear();
 
 		try {
 

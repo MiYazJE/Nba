@@ -4,6 +4,7 @@
 package controladores;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import dominio.Jugador;
 import javafx.collections.FXCollections;
@@ -24,10 +25,12 @@ import org.controlsfx.control.textfield.TextFields;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -44,12 +47,16 @@ public class ControladorPerfilJugador implements Initializable {
     @FXML private ImageView imgBuscar;
     @FXML private JFXButton btnEditar;
     @FXML private JFXButton btnGuardar;
+    @FXML private JFXComboBox<String> comboPosicion;
 
     private Jugador jugador;
     private Parent root;
     private ObservableList<String> nombreJugadores = FXCollections.observableArrayList();
     ConexionBDD conexion = new ConexionBDD();
     private boolean modificado;
+    private ArrayList<String> posiciones = new ArrayList<>(Arrays.asList(
+            "F-G", "G-F", "C", "G", "F", "C-F", "F-C", "V"
+    ));
 
     public ControladorPerfilJugador(Jugador jugador) {
         this.jugador = jugador;
@@ -94,7 +101,7 @@ public class ControladorPerfilJugador implements Initializable {
         });
 
         btnEditar.setOnAction(e -> {
-            editable( true );
+            editarComponentes();
             obtenerCodigoJugador();
         });
 
@@ -102,7 +109,8 @@ public class ControladorPerfilJugador implements Initializable {
             verificarConsulta();
         });
 
-
+        mostrarComboBox( false );
+        mostrarElementos( true );
 
         // Cargar todos los datos del jugador en los campos
         cargarInformacionJugador();
@@ -276,13 +284,13 @@ public class ControladorPerfilJugador implements Initializable {
 
             if (!this.textNombreJugador.getText().isEmpty() &&
                 !this.textEquipo.getText().isEmpty() &&
-                !this.textPosicion.getText().isEmpty() &&
+                !this.comboPosicion.getValue().isEmpty() &&
                 !this.textAltura.getText().isEmpty() &&
                 !this.textProcendencia.getText().isEmpty() &&
                 !this.textPeso.getText().isEmpty()) {
 
                 Jugador jugadorModificado = new Jugador(textNombreJugador.getText(), textProcendencia.getText(),
-                        textAltura.getText(), textPeso.getText(), textPosicion.getText(), textEquipo.getText());
+                        textAltura.getText(), textPeso.getText(), comboPosicion.getValue(), textEquipo.getText());
                 jugadorModificado.setCodigo(this.jugador.getCodigo());
 
                 if (actualizacionJugador( jugadorModificado )) {
@@ -407,6 +415,22 @@ public class ControladorPerfilJugador implements Initializable {
 
         ruta += ".png";
         return ruta;
+    }
+
+    private void mostrarComboBox(boolean estado) {
+        comboPosicion.setVisible( estado );
+    }
+
+    private void mostrarElementos(boolean estado) {
+        textPosicion.setVisible( estado );
+    }
+
+    private void editarComponentes() {
+        editable( true );
+        mostrarComboBox( true );
+        mostrarElementos( false );
+        comboPosicion.setItems( FXCollections.observableArrayList( posiciones ) );
+        comboPosicion.setValue( textPosicion.getText() );
     }
 
     /**

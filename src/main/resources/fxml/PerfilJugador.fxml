@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -14,9 +15,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1147.0" style="-fx-background-color: linear-gradient(to bottom, #0765AF, #D83248);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="830.0" prefWidth="1147.0" style="-fx-background-color: linear-gradient(to bottom, #0765AF, #D83248);" stylesheets="@../estilos/estilosPlantillaJugador.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="imgEquipo" fitHeight="356.0" fitWidth="384.0" layoutX="82.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgEquipo" fitHeight="356.0" fitWidth="384.0" layoutX="126.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true" />
       <VBox layoutX="631.0" layoutY="37.0" prefHeight="594.0" prefWidth="458.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="47.0" prefWidth="457.0" style="-fx-background-color: black; -fx-border-color: white;" text="DATOS PERSONALES" textAlignment="CENTER" textFill="WHITE">
@@ -86,16 +87,25 @@
             </VBox>
             <VBox style="-fx-border-color: white; -fx-background-color: rgba(51,51,51,0.2);">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="POSICION" textAlignment="CENTER" wrappingWidth="455.9830722808838">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="POSICIÓN" textAlignment="CENTER" wrappingWidth="455.9830722808838">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <JFXTextField fx:id="textPosicion" alignment="CENTER" editable="false" focusColor="WHITE" prefHeight="36.0" prefWidth="281.0" style="-fx-text-fill: white;" text="V-G" unFocusColor="#4d4d4d00">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </JFXTextField>
+                  <AnchorPane>
+                     <children>
+                        <JFXTextField fx:id="textPosicion" alignment="CENTER" editable="false" focusColor="WHITE" prefHeight="39.0" prefWidth="455.0" style="-fx-text-fill: white;" text="V-G" unFocusColor="#4d4d4d00">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXComboBox fx:id="comboPosicion" focusColor="WHITE" layoutY="5.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="39.0" prefWidth="455.0" style="-fx-text-fill: red;" styleClass="combo-box" unFocusColor="WHITE">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </JFXComboBox>
+                     </children>
+                  </AnchorPane>
                </children>
                <VBox.margin>
                   <Insets top="20.0" />

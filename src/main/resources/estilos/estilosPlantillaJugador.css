@@ -22,3 +22,12 @@
 .btnSlideLeft:hover {
     -fx-background-color: #0b4074;
 }
+
+.combo-box {
+    -fx-text-fill: white;
+    -fx-fill: white;
+    -fx-prompt-text-fill: white;
+    -fx-prompt-fill: white;
+    -fx-font-size: 20px;
+    -fx-background-color:  rgba(51,51,51,0.5);
+}
