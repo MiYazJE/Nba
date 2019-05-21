@@ -20,7 +20,6 @@ public class ControladorMain implements Initializable {
 
     @FXML AnchorPane cajaTablaJugadores;
     @FXML Button botonJugadores;
-    @FXML Button botonEstadisticas;
     @FXML Button botonEquipos;
     @FXML ImageView imagenPrincipal;
 
@@ -44,10 +43,6 @@ public class ControladorMain implements Initializable {
         });
 
         botonEquipos.setOnMouseClicked(e -> {
-            esconderTablaJugadores();
-        });
-
-        botonEstadisticas.setOnMouseClicked(e -> {
             esconderTablaJugadores();
         });
 

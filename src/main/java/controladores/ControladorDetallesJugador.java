@@ -51,7 +51,7 @@ public class ControladorDetallesJugador implements Initializable {
             loader.setController(this);
             stage.setScene(new Scene(loader.load()));
             stage.getIcons().add(new Image("/imagenes/detalles.png"));
-            stage.setTitle("Detalles del jugador");
+            stage.setTitle("Detalles del jugador " + this.jugador.getNombre());
             stage.setResizable( false );
             stage.initModality(Modality.APPLICATION_MODAL);
 
