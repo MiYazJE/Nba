@@ -3,13 +3,16 @@
  */
 package controladores;
 
-import com.jfoenix.controls.JFXButton;
 import dominio.Equipo;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import modelo.ConexionBDD;
 
 import java.net.URL;
@@ -23,7 +26,8 @@ public class ControladorEquipos implements Initializable {
 
     @FXML FlowPane contenedor;
 
-    private ArrayList<Equipo> listaEquipos;
+    private ArrayList<Equipo> equiposEste;
+    private ArrayList<Equipo> equiposOste;
     private ConexionBDD conexion = new ConexionBDD();
 
     @Override
@@ -37,43 +41,97 @@ public class ControladorEquipos implements Initializable {
      */
     private void obtenerEquipos() {
 
-        this.listaEquipos = new ArrayList<>();
+        this.equiposEste = new ArrayList<>();
+        this.equiposOste = new ArrayList<>();
+
+        consultaEquipos(this.equiposEste, "East");
+        consultaEquipos(this.equiposOste, "West");
+    }
+
+    private void consultaEquipos(ArrayList<Equipo> equipos, String zona) {
+
+        PreparedStatement ps = null;
+        ResultSet rs;
+        String nombre, ciudad, conferencia, division, imagen;
 
         try {
 
-            PreparedStatement ps = conexion.con.prepareStatement(
-                    "SELECT * FROM equipos;");
+            ps = conexion.con.prepareStatement(
+                   "SELECT * FROM equipos WHERE conferencia = ?;");
+            ps.setString(1, zona);
 
-            ResultSet rs = conexion.realizarConsulta( ps );
+            rs = conexion.realizarConsulta( ps );
 
             while (rs.next()) {
-
-                String nombre = rs.getString("nombre");
-                String ciudad = rs.getString("ciudad");
-                String conferencia = rs.getString("conferencia");
-                String division = rs.getString("division");
-                String imagen = rs.getString("imagen");
-
+                nombre = rs.getString("nombre");
+                ciudad = rs.getString("ciudad");
+                conferencia = rs.getString("conferencia");
+                division = rs.getString("division");
+                imagen = rs.getString("imagen");
                 Equipo equipo = new Equipo(nombre, ciudad, conferencia, division, imagen);
-                this.listaEquipos.add( equipo );
+                equipos.add( equipo );
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
 
     }
 
     private void mostrarEquipos() {
 
-        for (Equipo equipo : this.listaEquipos) {
+        int n = 3;
+        int left;
+        Parent cajaEquipo;
+
+        // EQUIPOS "ESTE"
+        HBox cajaTitulo = cajaConferencia("Este");
+        this.contenedor.getChildren().add( cajaTitulo );
+
+        for (Equipo equipo : this.equiposEste) {
 
             ControladorCajaEquipo contenedorEquipo = new ControladorCajaEquipo(equipo);
-            Parent cajaEquipo = contenedorEquipo.getRoot();
+            cajaEquipo = contenedorEquipo.getRoot();
             this.contenedor.getChildren().add( cajaEquipo );
-            FlowPane.setMargin(cajaEquipo, new Insets(20, 20, 20, 20));
+
+            left = (n % 3 == 0) ? 70 : 20;
+            FlowPane.setMargin(cajaEquipo, new Insets(20, 20, 20, left));
+            n++;
         }
 
+        // EQUIPOS OESTE
+        cajaTitulo = cajaConferencia("Oeste");
+        this.contenedor.getChildren().add( cajaTitulo );
+        FlowPane.setMargin(cajaTitulo, new Insets(40, 0, 0, 0));
+
+        n = 3;
+        for (Equipo equipo : this.equiposOste) {
+
+            ControladorCajaEquipo contenedorEquipo = new ControladorCajaEquipo(equipo);
+            cajaEquipo = contenedorEquipo.getRoot();
+            this.contenedor.getChildren().add( cajaEquipo );
+
+            left = (n % 3 == 0) ? 80 : 20;
+            FlowPane.setMargin(cajaEquipo, new Insets(20, 20, 20, left));
+            n++;
+        }
+
+    }
+
+    private HBox cajaConferencia(String conferencia) {
+
+        Text titulo = new Text("Conferencia " + conferencia);
+        titulo.setWrappingWidth(1085);
+        titulo.getStyleClass().add( "tituloEquipo" );
+        titulo.setTextAlignment(TextAlignment.CENTER);
+
+        HBox cajaTitulo = new HBox( titulo );
+        cajaTitulo.setMaxWidth(1085);
+        cajaTitulo.setMinHeight( 100 );
+        cajaTitulo.getStyleClass().add( "cajaTitulo" );
+        cajaTitulo.setAlignment(Pos.CENTER);
+
+        return cajaTitulo;
     }
 
 }
