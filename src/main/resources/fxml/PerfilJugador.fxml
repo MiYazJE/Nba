@@ -141,11 +141,20 @@
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <JFXTextField fx:id="textEquipo" alignment="CENTER" editable="false" focusColor="WHITE" prefHeight="36.0" prefWidth="281.0" style="-fx-text-fill: white;" text="Lakers" unFocusColor="#4d4d4d00">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </JFXTextField>
+                  <AnchorPane>
+                     <children>
+                        <JFXTextField fx:id="textEquipo" alignment="CENTER" editable="false" focusColor="WHITE" prefHeight="44.0" prefWidth="455.0" style="-fx-text-fill: white;" text="Lakers" unFocusColor="#4d4d4d00">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXComboBox fx:id="comboEquipos" focusColor="WHITE" layoutY="1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="39.0" prefWidth="455.0" style="-fx-text-fill: red;" styleClass="combo-box" unFocusColor="WHITE">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </JFXComboBox>
+                     </children>
+                  </AnchorPane>
                </children>
                <VBox.margin>
                   <Insets top="20.0" />

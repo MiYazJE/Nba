@@ -19,17 +19,6 @@
          <children>
             <AnchorPane>
                <children>
-                  <ImageView fx:id="infoPosicion" fitHeight="22.0" fitWidth="21.0" layoutX="14.0" layoutY="439.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imagenes/info.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <effect>
-                        <ColorAdjust brightness="1.0" />
-                     </effect>
-                  </ImageView>
                   <JFXTextField fx:id="fieldNombre" focusColor="WHITE" labelFloat="true" layoutX="32.0" layoutY="49.0" prefWidth="380.0" promptText="Nombre del Jugador" style="-fx-text-fill: white;" unFocusColor="WHITE">
                      <padding>
                         <Insets left="10.0" right="10.0" top="20.0" />
@@ -62,14 +51,6 @@
                         <Font size="21.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="fieldPosicion" focusColor="WHITE" labelFloat="true" layoutX="32.0" layoutY="413.0" prefWidth="380.0" promptText="Posicion" style="-fx-text-fill: white;" unFocusColor="WHITE">
-                     <padding>
-                        <Insets left="10.0" right="10.0" top="20.0" />
-                     </padding>
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                  </JFXTextField>
                   <JFXComboBox fx:id="comboEquipo" focusColor="WHITE" layoutX="32.0" layoutY="504.0" prefHeight="39.0" prefWidth="380.0" promptText="  Equipo" style="-fx-text-fill: white; -fx-font-size: 21px;" unFocusColor="WHITE" />
                   <ImageView fx:id="infoPeso" fitHeight="22.0" fitWidth="21.0" layoutX="14.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -93,37 +74,20 @@
                         <ColorAdjust brightness="1.0" />
                      </effect>
                   </ImageView>
+                  <JFXComboBox fx:id="comboPosiciones" focusColor="WHITE" layoutX="32.0" layoutY="430.0" prefHeight="39.0" prefWidth="380.0" promptText="  Posición" style="-fx-font-size: 21px;" unFocusColor="WHITE" />
                </children>
             </AnchorPane>
             <HBox prefHeight="91.0" prefWidth="444.0">
                <children>
-                  <JFXButton fx:id="btnGuardar" alignment="CENTER" prefHeight="98.0" prefWidth="208.0" text="GUARDAR" textAlignment="RIGHT" textFill="WHITE">
+                  <JFXButton fx:id="btnGuardar" alignment="CENTER" contentDisplay="CENTER" prefHeight="108.0" prefWidth="241.0" text="GUARDAR" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
                      </font>
-                     <padding>
-                        <Insets top="20.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
                   </JFXButton>
-                  <JFXButton fx:id="btnCerrar" alignment="CENTER" prefHeight="142.0" prefWidth="214.0" text="CANCELAR" textAlignment="RIGHT" textFill="WHITE">
+                  <JFXButton fx:id="btnCerrar" alignment="CENTER" contentDisplay="CENTER" prefHeight="108.0" prefWidth="241.0" text="CANCELAR" textFill="WHITE">
                      <font>
                         <Font size="23.0" />
                      </font>
-                     <padding>
-                        <Insets top="20.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
                   </JFXButton>
                </children>
             </HBox>

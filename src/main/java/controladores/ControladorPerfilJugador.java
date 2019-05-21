@@ -48,15 +48,17 @@ public class ControladorPerfilJugador implements Initializable {
     @FXML private JFXButton btnEditar;
     @FXML private JFXButton btnGuardar;
     @FXML private JFXComboBox<String> comboPosicion;
+    @FXML private JFXComboBox<String> comboEquipos;
 
     private Jugador jugador;
     private Parent root;
-    private ObservableList<String> nombreJugadores = FXCollections.observableArrayList();
     ConexionBDD conexion = new ConexionBDD();
     private boolean modificado;
-    private ArrayList<String> posiciones = new ArrayList<>(Arrays.asList(
+    private ObservableList<String> nombreJugadores = FXCollections.observableArrayList();
+    private ObservableList<String> posiciones = FXCollections.observableArrayList(Arrays.asList(
             "F-G", "G-F", "C", "G", "F", "C-F", "F-C", "V"
     ));
+    private ObservableList<String> equipos = FXCollections.observableArrayList();
 
     public ControladorPerfilJugador(Jugador jugador) {
         this.jugador = jugador;
@@ -83,7 +85,7 @@ public class ControladorPerfilJugador implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // Cargar todos los jugadores en una lista
+        leerNombreEquipos();
         cargarJugadores();
 
         // Autocompleta a medida de que escribes
@@ -114,6 +116,28 @@ public class ControladorPerfilJugador implements Initializable {
 
         // Cargar todos los datos del jugador en los campos
         cargarInformacionJugador();
+    }
+
+    private void leerNombreEquipos() {
+
+        try {
+
+            PreparedStatement ps = conexion.con.prepareStatement(
+                    "SELECT nombre FROM equipos;");
+
+            ResultSet rs = conexion.realizarConsulta( ps );
+
+            while (rs.next()) {
+                String equipo = rs.getString( "nombre" );
+                equipos.add( equipo );
+            }
+
+            comboEquipos.setItems( equipos );
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void generarAutoCompletado() {
@@ -185,23 +209,20 @@ public class ControladorPerfilJugador implements Initializable {
      */
     private void cargarJugadores() {
 
-        List<String> nombres = new ArrayList<>();
-
         try {
 
             PreparedStatement ps = conexion.con.prepareStatement("SELECT Nombre FROM jugadores;");
             ResultSet rs = conexion.realizarConsulta( ps );
 
             while (rs.next()) {
-                String nombre = rs.getString("Nombre");
-                nombres.add( nombre );
+                String nombreJugador = rs.getString("Nombre");
+                nombreJugadores.add( nombreJugador );
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        nombreJugadores.setAll( nombres );
     }
 
     /**
@@ -231,7 +252,6 @@ public class ControladorPerfilJugador implements Initializable {
 
         Image imagen = new Image("file:" + ruta);
         return imagen;
-        // return ruta;
     }
 
     /**
@@ -290,12 +310,14 @@ public class ControladorPerfilJugador implements Initializable {
                 !this.textPeso.getText().isEmpty()) {
 
                 Jugador jugadorModificado = new Jugador(textNombreJugador.getText(), textProcendencia.getText(),
-                        textAltura.getText(), textPeso.getText(), comboPosicion.getValue(), textEquipo.getText());
+                        textAltura.getText(), textPeso.getText(), comboPosicion.getValue(), comboEquipos.getValue());
                 jugadorModificado.setCodigo(this.jugador.getCodigo());
 
                 if (actualizacionJugador( jugadorModificado )) {
                     alertaInformacion("El jugador ha sido modificado");
                     refrescarJugador( jugadorModificado );
+                    mostrarComboBox( false );
+                    mostrarElementos( true );
                     generarAutoCompletado();
                     cargarInformacionJugador();
                 }
@@ -374,7 +396,7 @@ public class ControladorPerfilJugador implements Initializable {
     /**
      * Cargar imagen de el equipo
      */
-    private String rutaImagenEquipo(String equipo) {
+    /*private String rutaImagenEquipo(String equipo) {
 
         String ruta = "/imagenes/logosNba/";
 
@@ -415,14 +437,16 @@ public class ControladorPerfilJugador implements Initializable {
 
         ruta += ".png";
         return ruta;
-    }
+    }*/
 
     private void mostrarComboBox(boolean estado) {
         comboPosicion.setVisible( estado );
+        comboEquipos.setVisible( estado );
     }
 
     private void mostrarElementos(boolean estado) {
         textPosicion.setVisible( estado );
+        textEquipo.setVisible( estado );
     }
 
     private void editarComponentes() {
@@ -431,6 +455,7 @@ public class ControladorPerfilJugador implements Initializable {
         mostrarElementos( false );
         comboPosicion.setItems( FXCollections.observableArrayList( posiciones ) );
         comboPosicion.setValue( textPosicion.getText() );
+        comboEquipos.setValue( textEquipo.getText() );
     }
 
     /**

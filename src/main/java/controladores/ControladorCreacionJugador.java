@@ -32,6 +32,7 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class ControladorCreacionJugador implements Initializable {
@@ -40,23 +41,24 @@ public class ControladorCreacionJugador implements Initializable {
     @FXML private JFXTextField fieldProcedencia;
     @FXML private JFXTextField fieldAltura;
     @FXML private JFXTextField fieldPeso;
-    @FXML private JFXTextField fieldPosicion;
     @FXML private JFXButton btnGuardar;
     @FXML private JFXButton btnCerrar;
     @FXML private JFXComboBox<String> comboEquipo;
-    @FXML private ImageView infoPosicion;
+    @FXML private JFXComboBox<String> comboPosiciones;
     @FXML private ImageView infoPeso;
     @FXML private ImageView infoAltura;
 
     private ConexionBDD conexion = new ConexionBDD();
     private ResultSet rs;
     private ObservableList<String> equipos = FXCollections.observableArrayList();
+    private ObservableList<String> posiciones = FXCollections.observableArrayList(Arrays.asList(
+            "F-G", "G-F", "C", "G", "F", "C-F", "F-C", "V"
+    ));
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         // Mostrar informacion de los campos al ser presionado
-        insertalToolTip(infoPosicion, "Longitud máxima: 4 carácteres");
         insertalToolTip(infoPeso, "Debe de ser un numero");
         insertalToolTip(infoAltura, "Debe de ser un número y\n longitud máxima: 5 carácteres");
 
@@ -73,6 +75,7 @@ public class ControladorCreacionJugador implements Initializable {
             stage.close();
         });
 
+        comboPosiciones.setItems( posiciones );
     }
 
     /**
@@ -95,7 +98,7 @@ public class ControladorCreacionJugador implements Initializable {
             !fieldProcedencia.getText().isEmpty() &&
             !fieldAltura.getText().isEmpty() &&
             !fieldPeso.getText().isEmpty() &&
-            !fieldPosicion.getText().isEmpty() &&
+            !comboPosiciones.getValue().isEmpty() &&
             comboEquipo.getValue() != null) {
 
             boolean estadoConsulta = consultaCreacionJugador();
@@ -203,7 +206,7 @@ public class ControladorCreacionJugador implements Initializable {
             ps.setString(3, fieldProcedencia.getText());
             ps.setString(4, fieldAltura.getText());
             ps.setString(5, fieldPeso.getText());
-            ps.setString(6, fieldPosicion.getText());
+            ps.setString(6, comboPosiciones.getValue());
             ps.setString(7, comboEquipo.getValue());
 
             return conexion.realizarUpdate( ps );
