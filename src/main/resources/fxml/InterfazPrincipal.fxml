@@ -22,7 +22,7 @@
                               <Image url="@../imagenes/kisspng-2005u201306-nba-season-orlando-magic-the-nba-final-nba-professional-basketball-logo-5a750448d17113.4246774315176182488579.png" />
                            </image>
                         </ImageView>
-                        <AnchorPane fx:id="cajaTablaJugadores" layoutX="43.0" layoutY="35.0" prefHeight="725.0" prefWidth="962.0">
+                        <AnchorPane fx:id="contenedor" layoutX="43.0" layoutY="35.0" prefHeight="725.0" prefWidth="962.0">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>

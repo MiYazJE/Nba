@@ -232,7 +232,7 @@ public class ControladorPerfilJugador implements Initializable {
      */
     private Image getImagen(String nombreEquipo) {
 
-        String ruta = "/imagenes/logosNba/lakers.png";
+        String ruta = getClass().getResource("/imagenes/logosNba/lakers.png").getPath();
 
         try {
 

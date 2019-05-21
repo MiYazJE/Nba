@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class ControladorMain implements Initializable {
 
-    @FXML AnchorPane cajaTablaJugadores;
+    @FXML AnchorPane contenedor;
     @FXML Button botonJugadores;
     @FXML Button botonEquipos;
     @FXML ImageView imagenPrincipal;
@@ -35,47 +35,65 @@ public class ControladorMain implements Initializable {
             dialogoAlCerrar();
         });
 
-        esconderTablaJugadores();
+        esconderContenedor();
 
         botonJugadores.setOnMouseClicked(e -> {
             // Cargar la tabla jugadores
+            esconderContenedor();
             cargarTablaJugadores();
         });
 
         botonEquipos.setOnMouseClicked(e -> {
-            esconderTablaJugadores();
+            esconderContenedor();
+            mostrarEquipos();
         });
 
     }
 
-    private void esconderTablaJugadores() {
-        cajaTablaJugadores.getChildren().clear();
-        cajaTablaJugadores.setVisible(false);
+    private void esconderContenedor() {
+        contenedor.getChildren().clear();
+        contenedor.setVisible(false);
         imagenPrincipal.setVisible(true);
     }
 
-    private void mostrarTablaJugadores() {
-        cajaTablaJugadores.setVisible(true);
+    private void mostrarContenedor() {
+        contenedor.setVisible(true);
         imagenPrincipal.setVisible(false);
     }
 
     /**
      * Mostrar una tabla con todos los jugadores de la Nba,
-     * la vista de la tabla será agregada a cajaTablaJugadores.
+     * la vista de la tabla será agregada a contenedor.
      */
     private void cargarTablaJugadores() {
 
-        Parent ventanaNueva = null;
+        Parent ventanaJugadores = null;
 
         try {
-            ventanaNueva = FXMLLoader.load(getClass().getResource("/fxml/TablaJugadores.fxml"));
+            ventanaJugadores = FXMLLoader.load(getClass().getResource("/fxml/TablaJugadores.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        cajaTablaJugadores.getChildren().add( ventanaNueva );
+        contenedor.getChildren().add( ventanaJugadores );
+        mostrarContenedor();
+    }
 
-        mostrarTablaJugadores();
+    /**
+     * Indexar la vista de equipos en un contenedor
+     */
+    private void mostrarEquipos() {
+
+        Parent ventanaEquipos = null;
+
+        try {
+            ventanaEquipos = FXMLLoader.load(getClass().getResource("/fxml/Equipos.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        contenedor.getChildren().add( ventanaEquipos );
+        mostrarContenedor();
     }
 
     /**

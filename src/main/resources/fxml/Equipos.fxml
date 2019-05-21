@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="806.0" prefWidth="1061.0" style="-fx-background-color: transparent;" stylesheets="@../estilos/estilosEquipo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorEquipos">
+   <children>
+      <ScrollPane hbarPolicy="NEVER" prefHeight="765.0" prefWidth="1059.0" style="-fx-background-color: transparent;" styleClass="panelScroll">
+         <content>
+            <FlowPane fx:id="contenedor" prefHeight="806.0" prefWidth="1057.0" style="-fx-background-color: transparent;" />
+         </content>
+      </ScrollPane>
+   </children>
+</Pane>

@@ -1,0 +1,8 @@
+/* CSS Styles - Rubén Saiz Serrano*/
+
+.panelScroll {
+    -fx-background: transparent;
+}
+.panelScroll > .viewport {
+   -fx-background-color: transparent;
+}
