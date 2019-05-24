@@ -51,14 +51,14 @@ public class ControladorMain implements Initializable {
     }
 
     private void esconderContenedor() {
+        imagenPrincipal.setVisible(true);
         contenedor.getChildren().clear();
         contenedor.setVisible(false);
-        imagenPrincipal.setVisible(true);
     }
 
     private void mostrarContenedor() {
-        contenedor.setVisible(true);
         imagenPrincipal.setVisible(false);
+        contenedor.setVisible(true);
     }
 
     /**

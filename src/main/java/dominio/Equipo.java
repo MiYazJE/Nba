@@ -59,4 +59,15 @@ public class Equipo {
         Imagen = imagen;
     }
 
+    @Override
+    public String toString() {
+        return "Equipo{" +
+                "nombre='" + nombre + '\'' +
+                ", ciudad='" + ciudad + '\'' +
+                ", Conferencia='" + Conferencia + '\'' +
+                ", Division='" + Division + '\'' +
+                ", Imagen='" + Imagen + '\'' +
+                '}';
+    }
+
 }

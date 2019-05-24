@@ -57,7 +57,7 @@ public class ControladorCajaEquipo implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         btnPlantilla.setOnAction(e -> {
-            System.out.println("Plantilla seleccionado.");
+            System.out.println( this.equipo );
         });
 
         btnPartidos.setOnAction(e -> {

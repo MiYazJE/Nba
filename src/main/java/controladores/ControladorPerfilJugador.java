@@ -149,7 +149,6 @@ public class ControladorPerfilJugador implements Initializable {
             consultaJugador(buscarJugador.getText());
             cargarInformacionJugador();
             buscarJugador.clear();
-            editable( false );
         }
     }
 
@@ -318,6 +317,7 @@ public class ControladorPerfilJugador implements Initializable {
                     refrescarJugador( jugadorModificado );
                     mostrarComboBox( false );
                     mostrarElementos( true );
+                    editable( false );
                     generarAutoCompletado();
                     cargarInformacionJugador();
                 }

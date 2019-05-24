@@ -4,17 +4,21 @@
 package controladores;
 
 import dominio.Equipo;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import modelo.ConexionBDD;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +37,8 @@ public class ControladorEquipos implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         obtenerEquipos();
-        mostrarEquipos();
+        mostrarCargando();
+        // cargarVentana();
     }
 
     /**
@@ -78,15 +83,33 @@ public class ControladorEquipos implements Initializable {
 
     }
 
+    private void cargarVentana() {
+        mostrarCargando();
+        mostrarEquipos();
+    }
+
+    private void mostrarCargando() {
+
+        this.contenedor.getChildren().clear();
+
+        ControladorCargando cargando = new ControladorCargando();
+        this.contenedor.getChildren().add(cargando.getRoot());
+        cargando.iniciar();
+
+    }
+
     private void mostrarEquipos() {
 
         int n = 3;
         int left;
         Parent cajaEquipo;
+        this.contenedor.getChildren().clear();
 
         // EQUIPOS "ESTE"
         HBox cajaTitulo = cajaConferencia("Este");
         this.contenedor.getChildren().add( cajaTitulo );
+
+        if (this.equiposEste == null) return;
 
         for (Equipo equipo : this.equiposEste) {
 
@@ -118,6 +141,11 @@ public class ControladorEquipos implements Initializable {
 
     }
 
+    /**
+     * Genera un componente Hbox con un titulo que indica lo que le pases como parametro
+     * @param conferencia
+     * @return Hbox
+     */
     private HBox cajaConferencia(String conferencia) {
 
         Text titulo = new Text("Conferencia " + conferencia);
