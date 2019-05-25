@@ -1,9 +1,10 @@
 /**
  * @author Ruben Saiz
  */
-package controladores;
+package controladores.vistaJugadores;
 
 import com.jfoenix.controls.*;
+import dominio.Mensaje;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -108,15 +110,14 @@ public class ControladorCreacionJugador implements Initializable {
                 cerrarVentana();
             }
             else {
-                errorCrearJugador();
+                StackPane stackPane = (StackPane) this.comboPosiciones.getScene().getRoot();
+                Mensaje.mostrar(stackPane, "Han ocurrido problemas con la consulta.");
             }
 
         }
-        else {
-            // Lanzar una ventana de error cuando algun campo este vacio
-            Alert alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setContentText("Por favor ingrese todos los campos.");
-            alerta.showAndWait();
+        else {// Lanzar una ventana de error cuando algun campo este vacio
+            StackPane stackPane = (StackPane) this.comboPosiciones.getScene().getRoot();
+            Mensaje.mostrar(stackPane, "Por favor, seleccione todos los campos.");
         }
 
     }
@@ -126,15 +127,6 @@ public class ControladorCreacionJugador implements Initializable {
      */
     private void cerrarVentana() {
         ((Stage)comboEquipo.getScene().getWindow()).close();
-    }
-
-    /**
-     * Lanzar ventana con mensaje de error al insertar jugador
-     */
-    private void errorCrearJugador() {
-        Alert alerta = new Alert(Alert.AlertType.ERROR);
-        alerta.setContentText("Error al añadir el jugador.");
-        alerta.showAndWait();
     }
 
     /**

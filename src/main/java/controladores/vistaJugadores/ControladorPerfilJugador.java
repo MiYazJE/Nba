@@ -1,7 +1,7 @@
 /**
  * @author Ruben Saiz
  */
-package controladores;
+package controladores.vistaJugadores;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;

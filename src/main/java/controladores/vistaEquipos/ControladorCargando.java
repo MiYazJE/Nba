@@ -1,14 +1,10 @@
-package controladores;
+package controladores.vistaEquipos;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 
 import java.io.IOException;

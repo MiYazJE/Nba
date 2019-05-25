@@ -1,18 +1,15 @@
 /**
  * @author Ruben Saiz
  */
-package controladores;
+package controladores.vistaEquipos;
 
-import com.sun.javafx.fxml.FXMLLoaderHelper;
 import dominio.Equipo;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -61,16 +58,16 @@ public class ControladorEquipos implements Initializable, Runnable {
     /**
      * Obtiene todos los equipos de la nba
      */
-    private void obtenerEquipos() {
+    private boolean obtenerEquipos() {
 
         this.equiposEste = new ArrayList<>();
         this.equiposOste = new ArrayList<>();
 
-        consultaEquipos(this.equiposEste, "East");
-        consultaEquipos(this.equiposOste, "West");
+        return  consultaEquipos(this.equiposEste, "East") &&
+                consultaEquipos(this.equiposOste, "West");
     }
 
-    private void consultaEquipos(ArrayList<Equipo> equipos, String zona) {
+    private boolean consultaEquipos(ArrayList<Equipo> equipos, String zona) {
 
         PreparedStatement ps = null;
         ResultSet rs;
@@ -92,11 +89,13 @@ public class ControladorEquipos implements Initializable, Runnable {
                 imagen = rs.getString("imagen");
                 Equipo equipo = new Equipo(nombre, ciudad, conferencia, division, imagen);
                 equipos.add( equipo );
-                System.out.println("Equipo " + equipo.getNombre() + " leido correctamente.");
+                System.out.println("Equipo " + equipo.getNombre() + " leído correctamente.");
             }
+            return true;
 
        } catch (SQLException e) {
-           e.printStackTrace();
+            System.out.println(e.getMessage());
+            return false;
        }
 
     }
@@ -109,7 +108,8 @@ public class ControladorEquipos implements Initializable, Runnable {
     @Override
     public void run() {
 
-        obtenerEquipos();
+        // Las consultas han fallado
+        if (!obtenerEquipos()) return;
 
         int n = 3;
         int left;

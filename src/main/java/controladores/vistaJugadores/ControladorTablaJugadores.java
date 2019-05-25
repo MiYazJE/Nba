@@ -1,4 +1,4 @@
-package controladores;
+package controladores.vistaJugadores;
 
 import java.io.IOException;
 import java.net.URL;
@@ -9,11 +9,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import dominio.Jugador;
+import dominio.Mensaje;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -28,14 +26,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import modelo.*;
 
 public class ControladorTablaJugadores implements Initializable {
@@ -120,7 +115,8 @@ public class ControladorTablaJugadores implements Initializable {
 
 		// Si el jugador esta null significa que no hay ninguna fila seleccionada en la tabla
 		if (jugador == null) {
-			mensaje("Debes de seleccionar un jugador de la tabla.");
+			StackPane stackPane = (StackPane) this.buscarNombre.getScene().getRoot();
+			Mensaje.mostrar(stackPane, "Por favor seleccione un jugador de la tabla.");
 		}
 		else {
 
@@ -145,11 +141,9 @@ public class ControladorTablaJugadores implements Initializable {
 					jugadores.remove(jugador);
 				}
 				else {
-					// Mensaje de error
-					Alert mensajeError = new Alert(Alert.AlertType.ERROR);
-					mensajeError.setContentText("Han habido problemas a la hora de eliminar el jugador.\n" +
-												"Ponte en contacto con el administrador.");
-					mensajeError.showAndWait();
+					StackPane stackPane = (StackPane) this.buscarNombre.getScene().getRoot();
+					Mensaje.mostrar(stackPane, "Han habido problemas a la hora de eliminar el jugador.\n" +
+							"Ponte en contacto con el administrador.");
 				}
 
 			}
@@ -319,7 +313,7 @@ public class ControladorTablaJugadores implements Initializable {
 		caja.setSpacing(20);
 		caja.getChildren().addAll(imageView, label);
 
-		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setResizable(false);
 		stage.show();
 		System.out.println("El jugador " + nombreJugador + "ha sido eliminado correctamente.");
@@ -343,33 +337,10 @@ public class ControladorTablaJugadores implements Initializable {
 		}
 		else {
 			//Mensaje error, no se ha seleccionado ningun jugador
-			mensaje("Debes seleccionar un jugador de la tabla");
+			StackPane stackPane = (StackPane) this.buscarNombre.getScene().getRoot();
+			Mensaje.mostrar(stackPane, "Por favor seleccione un jugador de la tabla.");
 		}
 
-	}
-
-	private void mensaje(String mensaje) {
-
-		JFXDialogLayout content = new JFXDialogLayout();
-		Text titulo = new Text("ATENCIÓN!");
-		titulo.setFont(new Font(20));
-		content.setHeading(titulo);
-
-		Text textoMensaje = new Text(mensaje);
-		textoMensaje.setFont(new Font(15));
-		content.setBody(textoMensaje);
-
-		StackPane stackPane = (StackPane) this.buscarNombre.getScene().getRoot();
-		JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
-
-		JFXButton button = new JFXButton("Vale");
-		button.setStyle("-fx-background-color:  #2f2f2fa3; -fx-cursor: HAND; -fx-padding: 10px; -fx-text-fill: white;");
-		button.setOnAction(e -> {
-			dialog.close();
-		});
-
-		content.setActions(button);
-		dialog.show();
 	}
 
 }

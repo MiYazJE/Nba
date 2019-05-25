@@ -1,7 +1,7 @@
 /**
  * @author Ruben Saiz
  */
-package controladores;
+package controladores.vistaEquipos;
 
 import com.jfoenix.controls.JFXButton;
 import dominio.Equipo;
@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -30,7 +29,6 @@ public class ControladorCajaEquipo implements Initializable {
     @FXML private JFXButton btnPartidos;
 
     private Parent root;
-
     private Equipo equipo;
     private ConexionBDD conexion = new ConexionBDD();
 
@@ -58,13 +56,21 @@ public class ControladorCajaEquipo implements Initializable {
 
         btnPlantilla.setOnAction(e -> {
             System.out.println( this.equipo );
+            mostrarEquipo(btnPlantilla.getText());
         });
 
         btnPartidos.setOnAction(e -> {
-            System.out.println("Partidos seleccionado.");
+            System.out.println("Partido seleccionado.");
         });
 
         cargarInformacion();
+    }
+
+    private void mostrarEquipo(String ventana) {
+
+        ControladorDetallesEquipo detallesEquipo = new ControladorDetallesEquipo(this.equipo, ventana);
+        detallesEquipo.mostrar();
+
     }
 
     private void cargarInformacion() {

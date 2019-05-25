@@ -49,7 +49,7 @@ public class ConexionBDD {
             con.close();
             System.out.println("Cerrando la conexion con la base de datos.");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
     }
@@ -62,7 +62,7 @@ public class ConexionBDD {
             System.out.println("Consulta realizada correctamente.");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return rs;
@@ -82,7 +82,7 @@ public class ConexionBDD {
             return true;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
 
