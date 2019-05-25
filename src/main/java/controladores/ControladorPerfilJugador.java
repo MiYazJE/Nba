@@ -195,7 +195,7 @@ public class ControladorPerfilJugador implements Initializable {
         this.textAltura.setText(this.jugador.getAltura());
         this.textEquipo.setText(this.jugador.getEquipo());
         this.textPeso.setText(this.jugador.getPeso());
-        this.textProcendencia.setText(this.jugador.getProcedencia());
+        this.textProcendencia.setText((jugador.getProcedencia()));
         this.textPosicion.setText(this.jugador.getPosicion());
         imgEquipo.setImage( getImagen(this.jugador.getEquipo() ));
 
@@ -305,7 +305,8 @@ public class ControladorPerfilJugador implements Initializable {
                 !this.textEquipo.getText().isEmpty() &&
                 !this.comboPosicion.getValue().isEmpty() &&
                 !this.textAltura.getText().isEmpty() &&
-                !this.textProcendencia.getText().isEmpty() &&
+                (this.textProcendencia.getText() == null ||
+                !this.textProcendencia.getText().isEmpty()) &&
                 !this.textPeso.getText().isEmpty()) {
 
                 Jugador jugadorModificado = new Jugador(textNombreJugador.getText(), textProcendencia.getText(),
@@ -345,6 +346,7 @@ public class ControladorPerfilJugador implements Initializable {
 
             // TODO tira excepcion
             ps.setString(1, newJugador.getNombre());
+            //if (newJugador.getProcedencia() == null) newJugador.setProcedencia("");
             ps.setString(2, newJugador.getProcedencia());
             ps.setString(3, newJugador.getAltura());
             ps.setInt(4, Integer.valueOf(newJugador.getPeso()));
