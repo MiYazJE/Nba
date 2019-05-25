@@ -3,9 +3,10 @@
  */
 package controladores;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import modelo.FicherosCarpetas;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import modelo.ConexionBDD;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -106,18 +108,12 @@ public class ControladorLogin implements Initializable {
             }
             else {
                 // Ventana error no existe el usuario sql
-                Alert alerta = new Alert(Alert.AlertType.ERROR);
-                alerta.setContentText("El usuario ['" + user + "'] no esta registrado.\nO la contraseña no es correcta");
-                alerta.setHeaderText("Usuario o contraseña erroneos.");
-                alerta.showAndWait();
+                mensaje("El usuario ['" + user + "'] no esta registrado.\nO la contraseña no es correcta");
             }
 
         }
         else {
-            Alert alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setContentText("Por favor, rellene todos los campos.");
-            alerta.setHeaderText("Campos incompletos");
-            alerta.showAndWait();
+            mensaje("Debes rellenar todos los campos.");
         }
 
     }
@@ -162,6 +158,30 @@ public class ControladorLogin implements Initializable {
         stage.setResizable(false);
 
         stage.show();
+    }
+
+    private void mensaje(String mensaje) {
+
+        JFXDialogLayout content = new JFXDialogLayout();
+        Text titulo = new Text("ATENCIÓN!");
+        titulo.setFont(new Font(20));
+        content.setHeading(titulo);
+
+        Text textoMensaje = new Text(mensaje);
+        textoMensaje.setFont(new Font(15));
+        content.setBody(textoMensaje);
+
+        StackPane stackPane = (StackPane) this.imgInfo.getScene().getRoot();
+        JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+
+        JFXButton button = new JFXButton("Vale");
+        button.setStyle("-fx-background-color:  #2f2f2fa3; -fx-cursor: HAND; -fx-padding: 10px; -fx-text-fill: white;");
+        button.setOnAction(e -> {
+            dialog.close();
+        });
+
+        content.setActions(button);
+        dialog.show();
     }
 
 }

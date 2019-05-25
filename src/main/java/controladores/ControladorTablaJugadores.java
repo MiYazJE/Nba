@@ -9,6 +9,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import dominio.Jugador;
 import javafx.collections.FXCollections;
@@ -25,8 +28,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -114,7 +120,7 @@ public class ControladorTablaJugadores implements Initializable {
 
 		// Si el jugador esta null significa que no hay ninguna fila seleccionada en la tabla
 		if (jugador == null) {
-			mensajeJugadorNoSeleccionado();
+			mensaje("Debes de seleccionar un jugador de la tabla.");
 		}
 		else {
 
@@ -337,21 +343,33 @@ public class ControladorTablaJugadores implements Initializable {
 		}
 		else {
 			//Mensaje error, no se ha seleccionado ningun jugador
-			mensajeJugadorNoSeleccionado();
+			mensaje("Debes seleccionar un jugador de la tabla");
 		}
 
 	}
 
-	/**
-	 * Muestra un mensaje de error que notifica que no has seleccionado ningun jugador.
-	 */
-	private void mensajeJugadorNoSeleccionado() {
+	private void mensaje(String mensaje) {
 
-		// Mensaje de error
-		Alert alerta = new Alert(Alert.AlertType.ERROR);
-		alerta.setContentText("Debes de seleccionar un jugador en la tabla.");
-		alerta.showAndWait();
+		JFXDialogLayout content = new JFXDialogLayout();
+		Text titulo = new Text("ATENCIÓN!");
+		titulo.setFont(new Font(20));
+		content.setHeading(titulo);
 
+		Text textoMensaje = new Text(mensaje);
+		textoMensaje.setFont(new Font(15));
+		content.setBody(textoMensaje);
+
+		StackPane stackPane = (StackPane) this.buscarNombre.getScene().getRoot();
+		JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+
+		JFXButton button = new JFXButton("Vale");
+		button.setStyle("-fx-background-color:  #2f2f2fa3; -fx-cursor: HAND; -fx-padding: 10px; -fx-text-fill: white;");
+		button.setOnAction(e -> {
+			dialog.close();
+		});
+
+		content.setActions(button);
+		dialog.show();
 	}
 
 }

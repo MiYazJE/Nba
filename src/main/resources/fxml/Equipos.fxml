@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="727.0" prefWidth="1172.0" style="-fx-background-color: transparent;" stylesheets="@../estilos/estilosEquipo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorEquipos">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="727.0" prefWidth="1172.0" style="-fx-background-color: transparent;" stylesheets="@../estilos/estilosEquipo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="723.0" prefWidth="1172.0" style="-fx-background-color: transparent;" styleClass="panelScroll">
+      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="723.0" prefWidth="1172.0" style="-fx-background-color: transparent;" styleClass="panelScroll">
          <content>
             <FlowPane fx:id="contenedor" prefHeight="728.0" prefWidth="1170.0" style="-fx-background-color: transparent;" />
          </content>

@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -26,6 +27,7 @@ public class ControladorMain implements Initializable {
     private double posX;
     private double posY;
     private Stage stage = ControladorLogin.ventana;
+    private boolean esperaValida;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,6 +43,7 @@ public class ControladorMain implements Initializable {
             // Cargar la tabla jugadores
             esconderContenedor();
             cargarTablaJugadores();
+            esperaValida = false;
         });
 
         botonEquipos.setOnMouseClicked(e -> {
@@ -84,16 +87,25 @@ public class ControladorMain implements Initializable {
      */
     private void mostrarEquipos() {
 
-        Parent ventanaEquipos = null;
-
-        try {
-            ventanaEquipos = FXMLLoader.load(getClass().getResource("/fxml/Equipos.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        contenedor.getChildren().add( ventanaEquipos );
         mostrarContenedor();
+
+        ControladorEquipos equipos = new ControladorEquipos();
+        Thread hiloEquipos = new Thread(equipos);
+        hiloEquipos.start();
+        esperaValida = true;
+
+        ControladorCargando cargando = new ControladorCargando();
+        contenedor.getChildren().add(cargando.getRoot());
+
+        cargando.getTask().setOnSucceeded(e -> {
+            // Si despues de activar el hiloEquipos pulsas ver jugadores esto no tiene que ejecutarse
+            if (esperaValida) {
+                contenedor.getChildren().clear();
+                contenedor.getChildren().add(equipos.getRoot());
+                equipos.mostrar(true);
+            }
+        });
+
     }
 
     /**

@@ -1,7 +1,5 @@
 package interfaz;
 
-import controladores.ControladorDetallesJugador;
-import dominio.Jugador;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -47,12 +45,6 @@ public class Aplicacion extends Application {
 		ventana.setResizable(false);
 
 		ventana.show();
-
- 		/*
-		Jugador j1 = new Jugador("Ruben Saiz", "Spain", "5-7", "321", "V", "Lakers");
-		ControladorDetallesJugador vista = new ControladorDetallesJugador( j1 );
-		vista.showStage();
-		*/
 	}
 
 	public static void main(String[] args) {

@@ -1,5 +1,7 @@
 package controladores;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,12 +15,27 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+class Tarea extends Task<Integer> {
+
+    @Override
+    public Integer call() throws Exception {
+
+        for (int i = 1; i < 51; i++) {
+            updateProgress(i, 49);
+            Thread.sleep(50);
+        }
+
+        return 51;
+    }
+
+}
+
 public class ControladorCargando implements Initializable {
 
-    @FXML private ProgressBar barraProgreso;
     @FXML private ProgressIndicator indicadorProgreso;
 
     private Parent root;
+    private Tarea tarea;
 
     public ControladorCargando() {
         init();
@@ -40,26 +57,17 @@ public class ControladorCargando implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-    }
-
-    public void iniciar() {
-
-        for (int i = 0; i < 100; i++) {
-
-            this.barraProgreso.setProgress( i );
-            this.indicadorProgreso.setProgress( i );
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }
-
+        this.tarea = new Tarea();
+        indicadorProgreso.progressProperty().bind(tarea.progressProperty());
+        new Thread(tarea).start();
     }
 
     public Parent getRoot() {
         return this.root;
+    }
+
+    public Task<Integer> getTask() {
+        return this.tarea;
     }
 
 }

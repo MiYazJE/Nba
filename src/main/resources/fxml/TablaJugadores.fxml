@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="757.0" prefWidth="1266.0" stylesheets="@../estilos/estilosTabla.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorTablaJugadores">
    <children>
       <TableView fx:id="tablaJugadores" layoutX="4.0" layoutY="118.0" prefHeight="607.0" prefWidth="1246.0">
@@ -59,7 +60,8 @@
       <JFXTextField fx:id="buscarNombre" alignment="CENTER" focusColor="WHITE" layoutX="1059.0" layoutY="32.0" prefHeight="47.0" prefWidth="191.0" promptText="Buscar..." style="-fx-text-fill: white; -fx-prompt-text-fill: white;" unFocusColor="WHITE">
          <font>
             <Font size="15.0" />
-         </font></JFXTextField>
+         </font>
+      </JFXTextField>
       <ImageView fx:id="imgCreacionJugador" fitHeight="89.0" fitWidth="38.0" layoutX="73.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/player.png" />

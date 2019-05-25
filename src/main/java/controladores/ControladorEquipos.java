@@ -3,6 +3,7 @@
  */
 package controladores;
 
+import com.sun.javafx.fxml.FXMLLoaderHelper;
 import dominio.Equipo;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -26,19 +28,34 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class ControladorEquipos implements Initializable {
+public class ControladorEquipos implements Initializable, Runnable {
 
     @FXML FlowPane contenedor;
+    @FXML ScrollPane scroll;
 
     private ArrayList<Equipo> equiposEste;
     private ArrayList<Equipo> equiposOste;
     private ConexionBDD conexion = new ConexionBDD();
+    private Parent root;
+
+    public ControladorEquipos() {
+        init();
+    }
+
+    private void init() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/Equipos.fxml"));
+            loader.setController(this);
+            this.root = (Parent) loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        obtenerEquipos();
-        mostrarCargando();
-        // cargarVentana();
+        mostrar( false );
     }
 
     /**
@@ -75,6 +92,7 @@ public class ControladorEquipos implements Initializable {
                 imagen = rs.getString("imagen");
                 Equipo equipo = new Equipo(nombre, ciudad, conferencia, division, imagen);
                 equipos.add( equipo );
+                System.out.println("Equipo " + equipo.getNombre() + " leido correctamente.");
             }
 
        } catch (SQLException e) {
@@ -83,27 +101,19 @@ public class ControladorEquipos implements Initializable {
 
     }
 
-    private void cargarVentana() {
-        mostrarCargando();
-        mostrarEquipos();
+    public void mostrar(boolean estado) {
+        this.contenedor.setVisible(estado);
+        this.scroll.setVisible(estado);
     }
 
-    private void mostrarCargando() {
+    @Override
+    public void run() {
 
-        this.contenedor.getChildren().clear();
-
-        ControladorCargando cargando = new ControladorCargando();
-        this.contenedor.getChildren().add(cargando.getRoot());
-        cargando.iniciar();
-
-    }
-
-    private void mostrarEquipos() {
+        obtenerEquipos();
 
         int n = 3;
         int left;
         Parent cajaEquipo;
-        this.contenedor.getChildren().clear();
 
         // EQUIPOS "ESTE"
         HBox cajaTitulo = cajaConferencia("Este");
@@ -139,6 +149,7 @@ public class ControladorEquipos implements Initializable {
             n++;
         }
 
+        System.out.println("Equipos preparados para mostrar!");
     }
 
     /**
@@ -160,6 +171,10 @@ public class ControladorEquipos implements Initializable {
         cajaTitulo.setAlignment(Pos.CENTER);
 
         return cajaTitulo;
+    }
+
+    public Parent getRoot() {
+        return this.root;
     }
 
 }
