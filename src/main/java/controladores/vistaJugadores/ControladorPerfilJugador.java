@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import modelo.ConexionBDD;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -45,6 +46,7 @@ public class ControladorPerfilJugador implements Initializable {
     @FXML private JFXTextField buscarJugador;
     @FXML private ImageView imgEquipo;
     @FXML private ImageView imgBuscar;
+    @FXML private ImageView imgSalir;
     @FXML private JFXButton btnEditar;
     @FXML private JFXButton btnGuardar;
     @FXML private JFXComboBox<String> comboPosicion;
@@ -109,6 +111,10 @@ public class ControladorPerfilJugador implements Initializable {
 
         btnGuardar.setOnAction(e -> {
             verificarConsulta();
+        });
+
+        imgSalir.setOnMousePressed(e -> {
+            ((Stage)this.btnEditar.getScene().getWindow()).close();
         });
 
         mostrarComboBox( false );

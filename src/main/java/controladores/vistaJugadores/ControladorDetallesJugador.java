@@ -22,7 +22,7 @@ public class ControladorDetallesJugador implements Initializable {
     @FXML private AnchorPane contenedor;
 
     private Jugador jugador;
-    protected static Stage stage;
+    public static Stage stage;
     // Vista del controlador perfil
     private ControladorPerfilJugador perfil;
 
