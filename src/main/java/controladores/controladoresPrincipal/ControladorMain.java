@@ -1,7 +1,7 @@
-package controladores.vistaPrincipal;
+package controladores.controladoresPrincipal;
 
-import controladores.vistaEquipos.ControladorCargando;
-import controladores.vistaEquipos.ControladorEquipos;
+import controladores.controladoresEquipos.ControladorCargando;
+import controladores.controladoresEquipos.ControladorEquipos;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

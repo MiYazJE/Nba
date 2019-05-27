@@ -1,4 +1,4 @@
-package controladores.vistaJugadores;
+package controladores.controladoresJugadores;
 
 import com.jfoenix.controls.JFXButton;
 import dominio.Jugador;

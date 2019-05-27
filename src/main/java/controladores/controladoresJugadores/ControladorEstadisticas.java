@@ -1,7 +1,7 @@
 /**
  * @author Ruben Saiz
  */
-package controladores.vistaJugadores;
+package controladores.controladoresJugadores;
 
 import dominio.Estadisticas;
 import dominio.Jugador;

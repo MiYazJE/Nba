@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<StackPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.vistaPrincipal.ControladorMain">
+<StackPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.controladoresPrincipal.ControladorMain">
    <children>
       <AnchorPane prefHeight="825.0" prefWidth="1563.0" stylesheets="@../estilos/estilosPrincipales.css">
          <children>

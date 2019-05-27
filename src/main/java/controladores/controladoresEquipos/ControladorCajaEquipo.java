@@ -1,7 +1,7 @@
 /**
  * @author Ruben Saiz
  */
-package controladores.vistaEquipos;
+package controladores.controladoresEquipos;
 
 import com.jfoenix.controls.JFXButton;
 import dominio.Equipo;
@@ -60,7 +60,7 @@ public class ControladorCajaEquipo implements Initializable {
         });
 
         btnPartidos.setOnAction(e -> {
-            System.out.println("Partido seleccionado.");
+            mostrarEquipo(btnPartidos.getText());
         });
 
         cargarInformacion();

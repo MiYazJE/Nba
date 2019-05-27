@@ -1,4 +1,4 @@
-package controladores.vistaJugadores;
+package controladores.controladoresJugadores;
 
 import java.io.IOException;
 import java.net.URL;

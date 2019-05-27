@@ -1,10 +1,10 @@
 /**
  * @author Ruben Saiz
  */
-package controladores.vistaEquipos;
+package controladores.controladoresEquipos;
 
 import com.jfoenix.controls.JFXButton;
-import controladores.vistaJugadores.ControladorDetallesJugador;
+import controladores.controladoresJugadores.ControladorDetallesJugador;
 import dominio.Equipo;
 import dominio.Jugador;
 import dominio.Mensaje;
@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,7 +22,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.ConexionBDD;
 
@@ -34,10 +32,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class ControladorDetallesEquipo implements Initializable {
+public class ControladorPlantilla implements Initializable {
 
-    @FXML private JFXButton btnPlantilla;
-    @FXML private JFXButton btnPartidos;
     @FXML private JFXButton btnEditar;
     @FXML private ImageView imgVolver;
     @FXML private ImageView imgEquipo;
@@ -55,59 +51,48 @@ public class ControladorDetallesEquipo implements Initializable {
     @FXML private TableColumn<Jugador, String> col_Equipo;
 
     private ObservableList<Jugador> jugadores = FXCollections.observableArrayList();
+    private ConexionBDD conexion;
     private Equipo equipo;
     private Parent root;
-    private Stage stage;
-    private String ventanaMostrar;
-    private Scene scene;
-    private ConexionBDD conexion;
+
     private int victorias;
     private int derrotas;
 
-    public ControladorDetallesEquipo(Equipo equipo, String mostrar) {
-        this.ventanaMostrar = mostrar;
+    public ControladorPlantilla(Equipo equipo) {
         this.equipo = equipo;
         init();
     }
 
     private void init() {
-
-        this.stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/fxml/PlantillaEquipos.fxml"));
+        loader.setController(this);
 
         try {
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/DetallesEquipo.fxml"));
-            loader.setController(this);
-            this.scene = new Scene(loader.load());
-
-            this.stage.initModality(Modality.APPLICATION_MODAL);
-            this.stage.getIcons().add(new Image("/imagenes/pelota.png"));
-            this.stage.setTitle("Detalles de los " + this.equipo.getNombre() );
-            this.stage.setResizable(false);
-            this.stage.setScene(this.scene);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            this.root = (Parent) loader.load();
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
         }
+    }
 
+    public Parent getRoot() {
+        return this.root;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.conexion = new ConexionBDD();
 
         cargarPropiedadesTablaJugadores();
-        conexion = new ConexionBDD();
         leerJugadores();
-
         cargarDatos();
-
-        this.imgVolver.setOnMousePressed(e -> {
-            this.stage.close();
-        });
 
         this.btnEditar.setOnAction(e -> {
             editarJugador();
+        });
+
+        this.imgVolver.setOnMousePressed(e -> {
+            ((Stage)imgVolver.getScene().getWindow()).close();
         });
 
     }
@@ -174,7 +159,7 @@ public class ControladorDetallesEquipo implements Initializable {
                 int puntosVisitante    = rs.getInt("puntos_visitante");
                 String temporada       = rs.getString("temporada");
                 Partido partido = new Partido(equipoLocal, equipoVisitante, puntosLocal,
-                                    puntosVisitante, temporada);
+                        puntosVisitante, temporada);
 
                 if (equipoLocal.equals(this.equipo.getNombre())){
                     if (puntosLocal > puntosVisitante) victorias++;
@@ -259,10 +244,6 @@ public class ControladorDetallesEquipo implements Initializable {
             leerJugadores();
         });
 
-    }
-
-    public void mostrar() {
-        this.stage.show();
     }
 
 }

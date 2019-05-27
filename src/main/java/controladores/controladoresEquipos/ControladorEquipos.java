@@ -1,7 +1,7 @@
 /**
  * @author Ruben Saiz
  */
-package controladores.vistaEquipos;
+package controladores.controladoresEquipos;
 
 import dominio.Equipo;
 import javafx.fxml.FXML;
@@ -53,6 +53,8 @@ public class ControladorEquipos implements Initializable, Runnable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mostrar( false );
+
+
     }
 
     /**

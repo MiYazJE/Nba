@@ -1,4 +1,4 @@
-package controladores.vistaEquipos;
+package controladores.controladoresEquipos;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;

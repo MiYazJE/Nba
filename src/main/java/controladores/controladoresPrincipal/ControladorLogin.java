@@ -1,7 +1,7 @@
 /**
  * @author Ruben Saiz
  */
-package controladores.vistaPrincipal;
+package controladores.controladoresPrincipal;
 
 import com.jfoenix.controls.*;
 import dominio.Mensaje;

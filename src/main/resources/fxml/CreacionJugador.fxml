@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.vistaJugadores.ControladorCreacionJugador">
+<StackPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.controladoresJugadores.ControladorCreacionJugador">
    <children>
       <AnchorPane prefHeight="682.0" prefWidth="442.0" style="-fx-background-color: linear-gradient(to bottom, #0765AF, #D83248);">
          <children>
