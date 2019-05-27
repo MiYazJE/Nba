@@ -27,6 +27,7 @@ public class ControladorMain implements Initializable {
 
     private double posX;
     private double posY;
+    // TODO Revisar la variable estatica esta, no me gusta como esta estructurado
     private Stage stage = ControladorLogin.ventana;
     private boolean esperaValida;
 

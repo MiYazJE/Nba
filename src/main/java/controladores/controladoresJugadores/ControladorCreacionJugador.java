@@ -4,7 +4,11 @@
 package controladores.controladoresJugadores;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.validation.NumberValidator;
+import com.jfoenix.validation.RequiredFieldValidator;
 import dominio.Mensaje;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,6 +25,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import modelo.ConexionBDD;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
 
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -53,8 +59,8 @@ public class ControladorCreacionJugador implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         // Mostrar informacion de los campos al ser presionado
-        insertalToolTip(infoPeso, "Debe de ser un numero");
-        insertalToolTip(infoAltura, "Debe de ser un número y\n longitud máxima: 5 carácteres");
+        insertalToolTip(infoPeso, "Debe de ser un número entero");
+        insertalToolTip(infoAltura, "Debe de ser un número con longitud máxima de 4 carácteres");
 
         // Rellenar los equipos en la lista equipos
         consultarEquipos();
@@ -68,6 +74,8 @@ public class ControladorCreacionJugador implements Initializable {
             Stage stage = (Stage) btnCerrar.getScene().getWindow();
             stage.close();
         });
+
+        generarValidador();
 
         comboPosiciones.setItems( posiciones );
     }
@@ -109,7 +117,7 @@ public class ControladorCreacionJugador implements Initializable {
         }
         else {// Lanzar una ventana de error cuando algun campo este vacio
             StackPane stackPane = (StackPane) this.comboPosiciones.getScene().getRoot();
-            Mensaje.mostrar(stackPane, "Por favor, seleccione todos los campos.");
+            Mensaje.mostrar(stackPane, "Por favor, introduzca todos los campos.");
         }
 
     }
@@ -220,6 +228,41 @@ public class ControladorCreacionJugador implements Initializable {
             e.printStackTrace();
             return "";
         }
+
+    }
+
+    private void generarValidador() {
+
+        validadorCampoVacio(fieldAltura, "altura");
+        validadorCampoVacio(fieldNombre, "nombre");
+        validadorCampoVacio(fieldProcedencia, "país");
+
+        // Campo solo númerico
+        fieldPeso.textProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal.matches("\\d*")) {
+                fieldPeso.setText(newVal.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        // Limita el textField a 4 carácteres
+        fieldAltura.textProperty().addListener((o, oldVal, newVal) -> {
+            if (newVal.length() > 4) fieldAltura.setText(oldVal);
+        });
+
+    }
+
+    private void validadorCampoVacio(JFXTextField field, String nombre) {
+
+        RequiredFieldValidator reqInputValid = new RequiredFieldValidator();
+        reqInputValid.setMessage("El campo " + nombre + " no puede estar vacío.");
+        field.getValidators().add(reqInputValid);
+
+        field.focusedProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal) field.validate();
+        });
+
+        ValidationSupport validation = new ValidationSupport();
+        validation.registerValidator(field, Validator.createEmptyValidator(""));
 
     }
 
