@@ -3,6 +3,7 @@
  */
 package dominio;
 
+
 public class Partido {
 
     private String local;

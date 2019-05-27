@@ -106,7 +106,7 @@ public class ControladorLogin implements Initializable {
             else {
                 // Ventana error no existe el usuario sql
                 StackPane stackPane = (StackPane) this.imgInfo.getScene().getRoot();
-                Mensaje.mostrar(stackPane, "Debes rellenar todos los campos.");
+                Mensaje.mostrar(stackPane, "El usuario " + user + " no existe o la contraseña\nes erronea.");
             }
 
         }

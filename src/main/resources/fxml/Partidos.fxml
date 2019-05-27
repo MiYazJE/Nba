@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.ColorAdjust?>
@@ -10,10 +12,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="754.0" prefWidth="1037.0" style="-fx-background-color: linear-gradient(to bottom, #0765AF, #D83248);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView layoutX="12.0" layoutY="150.0" prefHeight="590.0" prefWidth="1012.0">
+      <TableView fx:id="tablaPartidos" layoutX="21.0" layoutY="136.0" prefHeight="590.0" prefWidth="990.0" stylesheets="@../estilos/estilosTabla.css">
+        <placeholder>
+            <Label text="No se han encontrado coincidencias" />
+        </placeholder>
         <columns>
-          <TableColumn prefWidth="75.0" text="C1fregrt" />
-          <TableColumn prefWidth="75.0" text="C2gtrgrt" />
+          <TableColumn fx:id="col_Local" prefWidth="210.0" text="Local" />
+          <TableColumn fx:id="col_Visitante" prefWidth="227.0" text="Visitante" />
+            <TableColumn fx:id="col_PuntosLocal" prefWidth="187.0" text="Puntos Local" />
+            <TableColumn fx:id="col_PuntosVisitante" prefWidth="177.0" text="Puntos Visitante" />
+            <TableColumn fx:id="col_Temporada" prefWidth="188.0" text="Temporada" />
         </columns>
       </TableView>
       <ImageView fx:id="imgVolver" fitHeight="28.0" fitWidth="33.0" layoutX="992.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
@@ -27,5 +35,6 @@
             <ColorAdjust brightness="1.0" />
          </effect>
       </ImageView>
+      <JFXComboBox fx:id="comboTemporada" focusColor="WHITE" layoutX="21.0" layoutY="71.0" prefHeight="32.0" prefWidth="260.0" promptText="Introduce una temporada" style="-fx-font-size: 16px; -fx-text-fill: white;" unFocusColor="WHITE" />
    </children>
 </AnchorPane>

@@ -3,6 +3,7 @@
  */
 package controladores.controladoresEquipos;
 
+import com.jfoenix.controls.JFXButton;
 import dominio.Equipo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import modelo.ConexionBDD;
@@ -53,8 +55,6 @@ public class ControladorEquipos implements Initializable, Runnable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mostrar( false );
-
-
     }
 
     /**
@@ -118,7 +118,7 @@ public class ControladorEquipos implements Initializable, Runnable {
         Parent cajaEquipo;
 
         // EQUIPOS "ESTE"
-        HBox cajaTitulo = cajaConferencia("Este");
+        VBox cajaTitulo = cajaConferencia("Este");
         this.contenedor.getChildren().add( cajaTitulo );
 
         if (this.equiposEste == null) return;
@@ -159,20 +159,37 @@ public class ControladorEquipos implements Initializable, Runnable {
      * @param conferencia
      * @return Hbox
      */
-    private HBox cajaConferencia(String conferencia) {
+    private VBox cajaConferencia(String conferencia) {
 
         Text titulo = new Text("Conferencia " + conferencia);
         titulo.setWrappingWidth(1085);
         titulo.getStyleClass().add( "tituloEquipo" );
         titulo.setTextAlignment(TextAlignment.CENTER);
 
-        HBox cajaTitulo = new HBox( titulo );
+        JFXButton boton = new JFXButton("Crear equipo");
+        boton.setMinHeight(70);
+        boton.setMinWidth(150);
+        boton.setOnAction(e -> {
+            ControladorCreacionEquipo crearEquipo = new ControladorCreacionEquipo(conferencia);
+            crearEquipo.mostrar();
+        });
+        boton.getStyleClass().add("btnSlideLeft");
+
+        VBox cajaBoton = new VBox( boton );
+        cajaBoton.setMinHeight(100);
+        cajaBoton.setMinWidth(1085);
+        cajaBoton.setAlignment(Pos.CENTER);
+
+        VBox cajaTitulo = new VBox( titulo );
         cajaTitulo.setMaxWidth(1085);
-        cajaTitulo.setMinHeight( 100 );
+        cajaTitulo.setMinHeight( 80 );
         cajaTitulo.getStyleClass().add( "cajaTitulo" );
         cajaTitulo.setAlignment(Pos.CENTER);
+        VBox.setMargin(cajaTitulo, new Insets(0, 0, 10, 0));
 
-        return cajaTitulo;
+        VBox contenedor = new VBox( cajaTitulo, cajaBoton );
+
+        return contenedor;
     }
 
     public Parent getRoot() {
