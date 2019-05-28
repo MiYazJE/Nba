@@ -39,7 +39,6 @@ public class ControladorCreacionEquipo implements Initializable {
     @FXML private JFXComboBox<String> comboDivision;
     @FXML private JFXProgressBar progressBar;
     @FXML private ProgressIndicator progressIndicator;
-    @FXML private Label labelSinImagen;
 
     public static Stage stage;
     private Parent root;
@@ -163,7 +162,6 @@ public class ControladorCreacionEquipo implements Initializable {
                 sumarProgreso();
                 imagenSumada = true;
             }
-            this.labelSinImagen.setVisible(false);
         }
 
     }
