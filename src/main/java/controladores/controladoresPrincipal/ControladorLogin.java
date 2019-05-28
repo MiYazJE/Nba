@@ -5,7 +5,10 @@ package controladores.controladoresPrincipal;
 
 import com.jfoenix.controls.*;
 import dominio.Mensaje;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import modelo.FicherosCarpetas;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +25,9 @@ import modelo.ConexionBDD;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class ControladorLogin implements Initializable {
@@ -81,6 +87,8 @@ public class ControladorLogin implements Initializable {
         submit.setOnAction(e -> {
             verificarInicioDeSesion();
         });
+
+        this.imgInfo.setOnMousePressed(e -> mostrarInfoPersonal());
 
     }
 
@@ -157,6 +165,43 @@ public class ControladorLogin implements Initializable {
         stage.setResizable(false);
 
         stage.show();
+    }
+
+    private void mostrarInfoPersonal() {
+        JFXDialogLayout content = new JFXDialogLayout();
+        Text titulo = new Text("Ruben Saiz Serrano");
+        titulo.setFont(new Font(20));
+        content.setHeading(titulo);
+
+        Text textoMensaje = new Text("Espero que te guste la aplicación, puedes seguir el proyecto en github.");
+        textoMensaje.setFont(new Font(15));
+        content.setBody(textoMensaje);
+
+        ArrayList<JFXDialog.DialogTransition> transiciones = new ArrayList<>(Arrays.asList(
+                JFXDialog.DialogTransition.TOP, JFXDialog.DialogTransition.CENTER, JFXDialog.DialogTransition.BOTTOM,
+                JFXDialog.DialogTransition.RIGHT, JFXDialog.DialogTransition.LEFT
+        ));
+
+        JFXDialog dialog = new JFXDialog(stackPane, content, transiciones.get(new Random().nextInt(5)));
+
+        JFXButton button = new JFXButton("Vale");
+        button.setStyle("-fx-background-color: #2f2f2fa3; -fx-cursor: HAND; -fx-padding: 10px; -fx-text-fill: white;");
+
+        BoxBlur blur = new BoxBlur(3, 3, 3);
+        content.setActions(button);
+        dialog.show();
+
+        Node pane = (Node) stackPane.getChildren().get(0);
+
+        button.setOnAction(e ->{
+            dialog.close();
+        });
+
+        dialog.setOnDialogClosed((e) -> {
+            pane.setEffect(null);
+        });
+
+        pane.setEffect( blur );
     }
 
 }
