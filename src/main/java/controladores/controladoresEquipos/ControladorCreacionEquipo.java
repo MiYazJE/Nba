@@ -2,6 +2,7 @@ package controladores.controladoresEquipos;
 
 import com.jfoenix.controls.*;
 import dominio.Equipo;
+import dominio.Mensaje;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,9 +10,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -36,6 +39,7 @@ public class ControladorCreacionEquipo implements Initializable {
     @FXML private JFXComboBox<String> comboDivision;
     @FXML private JFXProgressBar progressBar;
     @FXML private ProgressIndicator progressIndicator;
+    @FXML private Label labelSinImagen;
 
     private Stage stage;
     private Parent root;
@@ -157,6 +161,7 @@ public class ControladorCreacionEquipo implements Initializable {
             this.imgEquipo.setImage(new Image("file:" + imagen.getPath()));
             imagenSumada = true;
             sumarProgreso();
+            this.labelSinImagen.setVisible(false);
         }
 
     }
@@ -176,14 +181,16 @@ public class ControladorCreacionEquipo implements Initializable {
                     conferencia, comboDivision.getValue(),"");
             if (FicherosCarpetas.almacenarImagen(this.imagen, equipo)) {
                 System.out.println("Equipo añadido");
+                Mensaje.mostrar((StackPane) root, "El equipo " + equipo.getNombre() + " ha sido agregado\n" +
+                        "correctamente a la base de datos");
             }
             else {
-                // ERROR
                 System.out.println("Problemas al guardar el equipo");
+                Mensaje.mostrar((StackPane) root, "Han habido problemas al añadir el equipo.");
             }
         }
         else {
-            // Mensaje de error
+            Mensaje.mostrar((StackPane) root, "Por favor, rellene todos los campos.");
         }
 
     }
