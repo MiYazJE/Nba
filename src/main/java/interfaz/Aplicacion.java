@@ -21,9 +21,6 @@ public class Aplicacion extends Application {
 	@Override
 	public void start(Stage ventana) {
 
-		//ControladorCreacionEquipo crearEquipo = new ControladorCreacionEquipo("west");
-		//crearEquipo.mostrar();
-
 		Parent root = null;
 
 		try {

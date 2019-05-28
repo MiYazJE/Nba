@@ -117,6 +117,8 @@ public class ControladorEquipos implements Initializable, Runnable {
         int left;
         Parent cajaEquipo;
 
+        this.contenedor.getChildren().clear();
+
         // EQUIPOS "ESTE"
         VBox cajaTitulo = cajaConferencia("Este");
         this.contenedor.getChildren().add( cajaTitulo );
@@ -166,13 +168,18 @@ public class ControladorEquipos implements Initializable, Runnable {
         titulo.getStyleClass().add( "tituloEquipo" );
         titulo.setTextAlignment(TextAlignment.CENTER);
 
-        JFXButton boton = new JFXButton("Crear equipo");
-        boton.setMinHeight(70);
-        boton.setMinWidth(150);
+        JFXButton boton = new JFXButton("Agregar equipo a " + conferencia);
+        boton.setMinHeight(60);
+        boton.setMinWidth(200);
+
         boton.setOnAction(e -> {
             ControladorCreacionEquipo crearEquipo = new ControladorCreacionEquipo(conferencia);
             crearEquipo.mostrar();
+            ControladorCreacionEquipo.stage.setOnHiding(event -> {
+                this.run();
+            });
         });
+
         boton.getStyleClass().add("btnSlideLeft");
 
         VBox cajaBoton = new VBox( boton );

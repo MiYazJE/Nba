@@ -41,7 +41,7 @@ public class ControladorCreacionEquipo implements Initializable {
     @FXML private ProgressIndicator progressIndicator;
     @FXML private Label labelSinImagen;
 
-    private Stage stage;
+    public static Stage stage;
     private Parent root;
     private File imagen;
     private String conferencia;
@@ -159,8 +159,10 @@ public class ControladorCreacionEquipo implements Initializable {
 
         if (imagen != null) {
             this.imgEquipo.setImage(new Image("file:" + imagen.getPath()));
-            imagenSumada = true;
-            sumarProgreso();
+            if (!imagenSumada){
+                sumarProgreso();
+                imagenSumada = true;
+            }
             this.labelSinImagen.setVisible(false);
         }
 

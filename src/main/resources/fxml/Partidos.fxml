@@ -14,7 +14,7 @@
    <children>
       <TableView fx:id="tablaPartidos" layoutX="21.0" layoutY="136.0" prefHeight="590.0" prefWidth="990.0" stylesheets="@../estilos/estilosTabla.css">
         <placeholder>
-            <Label text="No se han encontrado coincidencias" />
+            <Label text="No existen datos del equipo indicado."/>
         </placeholder>
         <columns>
           <TableColumn fx:id="col_Local" prefWidth="210.0" text="Local" />
@@ -35,6 +35,6 @@
             <ColorAdjust brightness="1.0" />
          </effect>
       </ImageView>
-      <JFXComboBox fx:id="comboTemporada" focusColor="WHITE" layoutX="21.0" layoutY="71.0" prefHeight="32.0" prefWidth="260.0" promptText="Introduce una temporada" style="-fx-font-size: 16px; -fx-text-fill: white;" unFocusColor="WHITE" />
+      <JFXComboBox fx:id="comboTemporada" focusColor="WHITE" layoutX="21.0" layoutY="71.0" prefHeight="32.0" prefWidth="260.0" promptText="Introduce una temporada" style="-fx-font-size: 16px; -fx-text-fill: white; -fx-prompt-text-fill: white;" unFocusColor="WHITE" />
    </children>
 </AnchorPane>

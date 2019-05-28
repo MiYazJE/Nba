@@ -1,5 +1,6 @@
 package controladores.controladoresPrincipal;
 
+import com.jfoenix.controls.JFXButton;
 import controladores.controladoresEquipos.ControladorCargando;
 import controladores.controladoresEquipos.ControladorEquipos;
 import javafx.fxml.FXML;
@@ -24,6 +25,7 @@ public class ControladorMain implements Initializable {
     @FXML Button botonJugadores;
     @FXML Button botonEquipos;
     @FXML ImageView imagenPrincipal;
+    @FXML JFXButton btnCerrarSesion;
 
     private double posX;
     private double posY;
@@ -52,6 +54,8 @@ public class ControladorMain implements Initializable {
             esconderContenedor();
             mostrarEquipos();
         });
+
+        btnCerrarSesion.setOnAction(e -> abrirLogin());
 
     }
 
@@ -142,6 +146,42 @@ public class ControladorMain implements Initializable {
         stage.getIcons().add(new Image("/imagenes/information.png"));
         stage.setResizable( false );
         stage.show();
+    }
+
+    private void abrirLogin() {
+
+        Stage ventana = new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Scene scene = new Scene( root );
+
+        root.setOnMousePressed(e -> {
+            posX = ventana.getX() - e.getScreenX();
+            posY = ventana.getY() - e.getScreenY();
+        });
+        root.setOnMouseDragged(e -> {
+            ventana.setX(e.getScreenX() + posX);
+            ventana.setY(e.getScreenY() + posY);
+        });
+
+        // PROPIEDADES ESCENARIO
+        ventana.getIcons().add(new Image(getClass().getResourceAsStream("/imagenes/icon.png")));
+        ventana.initStyle(StageStyle.UNDECORATED);
+        ventana.setScene(scene);
+        ventana.setTitle("NBA");
+        ventana.setResizable(false);
+
+        ventana.show();
+        cerrarStage();
+    }
+
+    private void cerrarStage() {
+        ((Stage)btnCerrarSesion.getScene().getWindow()).close();
     }
 
 }
