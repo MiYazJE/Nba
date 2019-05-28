@@ -1,0 +1,12 @@
+/* Author - Ruben Saiz Serrnano */
+
+.btnSlideLeft{
+    -fx-background-color: #0a3765;
+    -fx-text-fill: white;
+    -fx-cursor: HAND;
+    -fx-border-color: white;
+}
+
+.btnSlideLeft:hover {
+    -fx-background-color: #0b4074;
+}
