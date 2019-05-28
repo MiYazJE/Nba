@@ -10,3 +10,12 @@
 .btnSlideLeft:hover {
     -fx-background-color: #0b4074;
 }
+
+.btnBorder {
+    -fx-border-color: white;
+    -fx-border-radius: 10px;
+}
+
+.jfx-progress-bar > .bar {
+    -fx-background-color:  linear-gradient(to right, #0765AF, #D83248);
+}

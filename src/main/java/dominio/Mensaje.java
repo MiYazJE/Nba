@@ -6,6 +6,7 @@ package dominio;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import javafx.scene.Node;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -43,7 +44,7 @@ public class Mensaje {
         content.setActions(button);
         dialog.show();
 
-        AnchorPane pane = (AnchorPane) stackPane.getChildren().get(0);
+        Node pane = (Node) stackPane.getChildren().get(0);
 
         button.setOnAction(e ->{
             dialog.close();

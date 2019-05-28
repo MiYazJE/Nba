@@ -7,15 +7,15 @@ public class Equipo {
 
     private String nombre;
     private String ciudad;
-    private String Conferencia;
-    private String Division;
+    private String conferencia;
+    private String division;
     private String Imagen;
 
     public Equipo(String nombre, String ciudad, String conferencia, String division, String imagen) {
         this.nombre = nombre;
         this.ciudad = ciudad;
-        Conferencia = conferencia;
-        Division = division;
+        this.conferencia = conferencia;
+        this.division = division;
         Imagen = imagen;
     }
 
@@ -36,19 +36,19 @@ public class Equipo {
     }
 
     public String getConferencia() {
-        return Conferencia;
+        return conferencia;
     }
 
     public void setConferencia(String conferencia) {
-        Conferencia = conferencia;
+        conferencia = conferencia;
     }
 
     public String getDivision() {
-        return Division;
+        return division;
     }
 
     public void setDivision(String division) {
-        Division = division;
+        division = division;
     }
 
     public String getImagen() {
@@ -64,8 +64,8 @@ public class Equipo {
         return "Equipo{" +
                 "nombre='" + nombre + '\'' +
                 ", ciudad='" + ciudad + '\'' +
-                ", Conferencia='" + Conferencia + '\'' +
-                ", Division='" + Division + '\'' +
+                ", conferencia='" + conferencia + '\'' +
+                ", division='" + division + '\'' +
                 ", Imagen='" + Imagen + '\'' +
                 '}';
     }

@@ -99,7 +99,7 @@
                               <Font size="20.0" />
                            </font>
                         </JFXTextField>
-                        <JFXComboBox fx:id="comboPosicion" focusColor="WHITE" layoutY="5.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="39.0" prefWidth="455.0" style="-fx-text-fill: red;" styleClass="combo-box" unFocusColor="WHITE">
+                        <JFXComboBox fx:id="comboPosicion" focusColor="WHITE" layoutY="5.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="39.0" prefWidth="455.0" style="-fx-text-fill: white;" styleClass="combo-box" unFocusColor="WHITE">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
@@ -185,7 +185,7 @@
             </JFXButton>
          </children>
       </HBox>
-      <JFXTextField fx:id="buscarJugador" focusColor="WHITE" labelFloat="true" layoutX="170.0" layoutY="37.0" prefHeight="47.0" prefWidth="296.0" promptText="Buscar un jugador..." style="-fx-font-size: 20px; -fx-prompt-text-fill: white; -fx-text-fill: black;" unFocusColor="WHITE" />
+      <JFXTextField fx:id="buscarJugador" focusColor="WHITE" labelFloat="true" layoutX="170.0" layoutY="37.0" prefHeight="47.0" prefWidth="296.0" promptText="Buscar un jugador . . ." style="-fx-font-size: 20px; -fx-prompt-text-fill: white; -fx-text-fill: black;" unFocusColor="WHITE" />
       <ImageView fx:id="imgBuscar" fitHeight="33.0" fitWidth="33.0" layoutX="389.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/busqueda.png" />

@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.ConexionBDD;
 
@@ -41,6 +43,7 @@ public class ControladorPlantilla implements Initializable {
     @FXML private Text textVictorias;
     @FXML private Text textDivision;
     @FXML private Text textConferencia;
+    @FXML private JFXButton btnAgregarJugador;
 
     @FXML private TableView<Jugador> tablaJugadores;
     @FXML private TableColumn<Jugador, String> col_Nombre;
@@ -94,6 +97,8 @@ public class ControladorPlantilla implements Initializable {
         this.imgVolver.setOnMousePressed(e -> {
             ((Stage)imgVolver.getScene().getWindow()).close();
         });
+
+        this.btnAgregarJugador.setOnAction(e -> crearJugador());
 
     }
 
@@ -243,6 +248,26 @@ public class ControladorPlantilla implements Initializable {
         controlador.stage.setOnHiding(e -> {
             leerJugadores();
         });
+
+    }
+
+    private void crearJugador() {
+
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/CreacionJugador.fxml"));
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.getIcons().add(new Image("/imagenes/player.png"));
+            stage.setTitle("Creación Jugador");
+            stage.setResizable(false);
+            stage.show();
+
+            stage.setOnHiding(e -> leerJugadores());
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 

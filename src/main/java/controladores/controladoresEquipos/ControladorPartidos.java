@@ -73,6 +73,7 @@ public class ControladorPartidos implements Initializable {
         });
 
         comboTemporada.setOnAction(e -> {
+            partidos.clear();
             cargarPartidos(this.comboTemporada.getValue());
         });
 
@@ -95,7 +96,10 @@ public class ControladorPartidos implements Initializable {
         try {
 
             PreparedStatement ps = conexion.con.prepareStatement(
-                    "SELECT DISTINCT temporada from partidos;");
+                    "SELECT DISTINCT temporada from partidos where equipo_local = ? || " +
+                        "equipo_visitante = ?;");
+            ps.setString(1, this.equipo.getNombre());
+            ps.setString(2, this.equipo.getNombre());
 
             ResultSet rs = conexion.realizarConsulta( ps );
 

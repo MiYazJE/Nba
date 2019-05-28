@@ -3,6 +3,10 @@
  */
 package modelo;
 
+import dominio.Equipo;
+import javafx.scene.image.Image;
+
+import javax.imageio.ImageIO;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -159,5 +163,48 @@ public class FicherosCarpetas {
         }
 
     }
+
+    public static boolean almacenarImagen(File archivo, Equipo equipo) {
+
+        ConexionBDD conexion = new ConexionBDD("root", "root");
+        conexion.abrirConexion();
+        File carpeta = new File("imagenesNba");
+        String nombre = archivo.getName();
+        String rutaAbsoluta = carpeta.getAbsolutePath();
+
+        if (carpeta.exists()) {
+
+            try {
+
+                InputStream source = new FileInputStream(archivo);
+                Files.copy(source, Paths.get(rutaAbsoluta + File.separator + nombre), StandardCopyOption.REPLACE_EXISTING);
+
+                try {
+
+                    PreparedStatement ps = conexion.con.prepareStatement(
+                            "INSERT INTO equipos (nombre, ciudad, conferencia, division, imagen) " +
+                                "VALUES (?, ?, ?, ?, ?)");
+
+                    ps.setString(1, equipo.getNombre());
+                    ps.setString(2, equipo.getCiudad());
+                    ps.setString(3, equipo.getConferencia());
+                    ps.setString(4, equipo.getDivision());
+                    ps.setString(5, rutaAbsoluta + File.separator + nombre);
+
+                    return conexion.realizarUpdate( ps );
+
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+
+        }
+
+        return false;
+    }
+
 
 }

@@ -140,5 +140,17 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+      <JFXButton fx:id="btnAgregarJugador" alignment="CENTER" contentDisplay="CENTER" layoutX="781.0" layoutY="271.0" prefHeight="63.0" prefWidth="127.0" style="-fx-border-color: white; -fx-border-radius: 10px;" text="AÑADIR JUGADOR" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <ImageInput>
+               <source>
+                  <Image url="@../imagenes/detalles.png" />
+               </source>
+            </ImageInput>
+         </effect>
+      </JFXButton>
    </children>
 </AnchorPane>
