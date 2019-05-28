@@ -24,7 +24,6 @@ public class Aplicacion extends Application {
 		//ControladorCreacionEquipo crearEquipo = new ControladorCreacionEquipo("west");
 		//crearEquipo.mostrar();
 
-
 		Parent root = null;
 
 		try {

@@ -1,30 +1,55 @@
 package controladores.controladoresEquipos;
 
-import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.*;
+import dominio.Equipo;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import modelo.ConexionBDD;
+import modelo.FicherosCarpetas;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class ControladorCreacionEquipo implements Initializable {
 
     @FXML private ImageView imgEquipo;
     @FXML private JFXButton btnElegirImagen;
+    @FXML private JFXButton btnCrearEquipo;
+    @FXML private JFXCheckBox checkEste;
+    @FXML private JFXCheckBox checkOeste;
+    @FXML private JFXTextField fieldEquipo;
+    @FXML private JFXTextField fieldCiudad;
+    @FXML private JFXComboBox<String> comboDivision;
+    @FXML private JFXProgressBar progressBar;
+    @FXML private ProgressIndicator progressIndicator;
 
     private Stage stage;
     private Parent root;
+    private File imagen;
     private String conferencia;
+    private boolean imagenSumada;
+    private boolean nombreSumado;
+    private boolean conferenciaSumada;
+    private boolean divisionSumada;
+    private boolean ciudadSumada;
+    private ConexionBDD conexion;
+    private ObservableList<String> divisiones = FXCollections.observableArrayList(Arrays.asList(
+            "Atlantic", "SouthEast", "Central", "Pacific", "SouthWest", "NorthWest"
+    ));
 
     public ControladorCreacionEquipo(String conferencia) {
         this.conferencia = conferencia;
@@ -60,25 +85,105 @@ public class ControladorCreacionEquipo implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        conexion = new ConexionBDD();
+
+        this.comboDivision.getItems().addAll(divisiones);
+
+        this.comboDivision.valueProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal.isEmpty()) {
+                if (!divisionSumada) {
+                    sumarProgreso();
+                    divisionSumada = true;
+                }
+            }
+        });
+
         this.btnElegirImagen.setOnAction(e -> {
             abrirFileChooser();
         });
 
+        verProgreso(false);
+
+        checkEste.setOnAction( e -> {
+            checkOeste.setSelected(false);
+            if (!conferenciaSumada) {
+                sumarProgreso();
+            }
+            conferenciaSumada = true;
+        });
+        checkOeste.setOnAction(e -> {
+            checkEste.setSelected(false);
+            if (!conferenciaSumada) {
+                sumarProgreso();
+            }
+            conferenciaSumada = true;
+        });
+
+        this.fieldEquipo.focusedProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal) {
+                nombreSumado = true;
+                sumarProgreso();
+            }
+        });
+
+        this.fieldCiudad.focusedProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal) {
+                ciudadSumada = true;
+                sumarProgreso();
+            }
+        });
+
+        this.btnCrearEquipo.setOnAction(e -> crearEquipo());
+
+    }
+
+    private void verProgreso(boolean estado) {
+        this.progressBar.setVisible(estado);
+        this.progressIndicator.setVisible(estado);
     }
 
     private void abrirFileChooser() {
 
         FileChooser fileChooser = new FileChooser();
 
-        fileChooser.setTitle("Selecciona una imagen");
+        fileChooser.setTitle("Selecciona una imagenSumada");
         fileChooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("Imagenes", "*.png", "*.jpg", "*.gif")
         );
 
-        File archivo = fileChooser.showOpenDialog(this.stage);
+        imagen = fileChooser.showOpenDialog(this.stage);
 
-        if (archivo != null) {
-            this.imgEquipo.setImage(new Image("file:" + archivo.getPath()));
+        if (imagen != null) {
+            this.imgEquipo.setImage(new Image("file:" + imagen.getPath()));
+            imagenSumada = true;
+            sumarProgreso();
+        }
+
+    }
+
+    private void sumarProgreso() {
+        verProgreso(true);
+        this.progressIndicator.setProgress(progressIndicator.getProgress() + 0.2);
+        this.progressBar.setProgress(progressBar.getProgress() + 0.2);
+    }
+
+    private void crearEquipo() {
+
+        if (progressBar.getProgress() == 1) {
+            String conferencia = (checkOeste.isSelected())
+                    ? "west" : "east";
+            Equipo equipo = new Equipo(fieldEquipo.getText(), fieldCiudad.getText(),
+                    conferencia, comboDivision.getValue(),"");
+            if (FicherosCarpetas.almacenarImagen(this.imagen, equipo)) {
+                System.out.println("Equipo añadido");
+            }
+            else {
+                // ERROR
+                System.out.println("Problemas al guardar el equipo");
+            }
+        }
+        else {
+            // Mensaje de error
         }
 
     }
