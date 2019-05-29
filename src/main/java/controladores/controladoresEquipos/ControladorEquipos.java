@@ -173,7 +173,8 @@ public class ControladorEquipos implements Initializable, Runnable {
         boton.setMinWidth(200);
 
         boton.setOnAction(e -> {
-            ControladorCreacionEquipo crearEquipo = new ControladorCreacionEquipo(conferencia);
+            String zona = (conferencia.equals("Este")) ? "East" : "West";
+            ControladorCreacionEquipo crearEquipo = new ControladorCreacionEquipo(zona);
             crearEquipo.mostrar();
             ControladorCreacionEquipo.stage.setOnHiding(event -> {
                 this.run();

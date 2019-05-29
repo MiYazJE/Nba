@@ -32,8 +32,6 @@ public class ControladorCreacionEquipo implements Initializable {
     @FXML private ImageView imgEquipo;
     @FXML private JFXButton btnElegirImagen;
     @FXML private JFXButton btnCrearEquipo;
-    @FXML private JFXCheckBox checkEste;
-    @FXML private JFXCheckBox checkOeste;
     @FXML private JFXTextField fieldEquipo;
     @FXML private JFXTextField fieldCiudad;
     @FXML private JFXComboBox<String> comboDivision;
@@ -46,7 +44,6 @@ public class ControladorCreacionEquipo implements Initializable {
     private String conferencia;
     private boolean imagenSumada;
     private boolean nombreSumado;
-    private boolean conferenciaSumada;
     private boolean divisionSumada;
     private boolean ciudadSumada;
     private ConexionBDD conexion;
@@ -107,32 +104,21 @@ public class ControladorCreacionEquipo implements Initializable {
 
         verProgreso(false);
 
-        checkEste.setOnAction( e -> {
-            checkOeste.setSelected(false);
-            if (!conferenciaSumada) {
-                sumarProgreso();
-            }
-            conferenciaSumada = true;
-        });
-        checkOeste.setOnAction(e -> {
-            checkEste.setSelected(false);
-            if (!conferenciaSumada) {
-                sumarProgreso();
-            }
-            conferenciaSumada = true;
-        });
-
         this.fieldEquipo.focusedProperty().addListener((o, oldVal, newVal) -> {
             if (!newVal) {
-                nombreSumado = true;
-                sumarProgreso();
+                if (!nombreSumado) {
+                    nombreSumado = true;
+                    sumarProgreso();
+                }
             }
         });
 
         this.fieldCiudad.focusedProperty().addListener((o, oldVal, newVal) -> {
             if (!newVal) {
-                ciudadSumada = true;
-                sumarProgreso();
+                if (!ciudadSumada) {
+                    sumarProgreso();
+                    ciudadSumada = true;
+                }
             }
         });
 
@@ -168,15 +154,13 @@ public class ControladorCreacionEquipo implements Initializable {
 
     private void sumarProgreso() {
         verProgreso(true);
-        this.progressIndicator.setProgress(progressIndicator.getProgress() + 0.2);
-        this.progressBar.setProgress(progressBar.getProgress() + 0.2);
+        this.progressIndicator.setProgress(progressIndicator.getProgress() + 0.25);
+        this.progressBar.setProgress(progressBar.getProgress() + 0.25);
     }
 
     private void crearEquipo() {
 
         if (progressBar.getProgress() == 1) {
-            String conferencia = (checkOeste.isSelected())
-                    ? "west" : "east";
             Equipo equipo = new Equipo(fieldEquipo.getText(), fieldCiudad.getText(),
                     conferencia, comboDivision.getValue(),"");
             if (FicherosCarpetas.almacenarImagen(this.imagen, equipo)) {
