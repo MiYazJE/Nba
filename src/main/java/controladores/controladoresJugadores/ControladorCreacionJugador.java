@@ -100,7 +100,7 @@ public class ControladorCreacionJugador implements Initializable {
             !fieldProcedencia.getText().isEmpty() &&
             !fieldAltura.getText().isEmpty() &&
             !fieldPeso.getText().isEmpty() &&
-            !comboPosiciones.getValue().isEmpty() &&
+            comboPosiciones.getValue() != null &&
             comboEquipo.getValue() != null) {
 
             boolean estadoConsulta = consultaCreacionJugador();

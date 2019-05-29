@@ -207,13 +207,11 @@ public class ControladorLogin implements Initializable {
             dialog.close();
         });
 
-        botonGitHub.setOnAction(e -> {
+       botonGitHub.setOnAction(e -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://github.com/MiYazJE/Nba"));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (URISyntaxException ex) {
-                ex.printStackTrace();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
         });
 
