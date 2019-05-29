@@ -137,7 +137,9 @@ public class ControladorTablaJugadores implements Initializable {
 				boolean estadoConsulta = consultaEliminarJugador(jugador.getNombre());
 				if (estadoConsulta) {
 					// Consulta realizada
-					infoJugadorEliminado(jugador.getNombre());
+					StackPane stackPane = (StackPane) this.buscarNombre.getScene().getRoot();
+					Mensaje.mostrar(stackPane, "El jugador " + jugador.getNombre() + " ha sido eliminado permanentemente de la\n" +
+							                           "base de datos.");
 					jugadores.remove(jugador);
 				}
 				else {

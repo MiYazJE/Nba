@@ -1,0 +1,8 @@
+/* CSS Styles - Rubén Saiz Serrano*/
+
+.btn-dialog {
+    -fx-background-color: #2f2f2fa3;
+    -fx-cursor: HAND;
+    -fx-padding: 10px;
+    -fx-text-fill: white;
+}

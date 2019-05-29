@@ -37,6 +37,7 @@ public class ControladorCreacionEquipo implements Initializable {
     @FXML private JFXComboBox<String> comboDivision;
     @FXML private JFXProgressBar progressBar;
     @FXML private ProgressIndicator progressIndicator;
+    @FXML private ImageView imgVolver;
 
     public static Stage stage;
     private Parent root;
@@ -121,6 +122,8 @@ public class ControladorCreacionEquipo implements Initializable {
                 }
             }
         });
+
+        this.imgVolver.setOnMousePressed(e -> stage.close());
 
         this.btnCrearEquipo.setOnAction(e -> crearEquipo());
 

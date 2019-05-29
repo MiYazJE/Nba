@@ -5,6 +5,9 @@ package controladores.controladoresPrincipal;
 
 import com.jfoenix.controls.*;
 import dominio.Mensaje;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -23,7 +26,10 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import modelo.ConexionBDD;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -169,11 +175,11 @@ public class ControladorLogin implements Initializable {
 
     private void mostrarInfoPersonal() {
         JFXDialogLayout content = new JFXDialogLayout();
-        Text titulo = new Text("Informacion");
+        Text titulo = new Text("Información");
         titulo.setFont(new Font(20));
         content.setHeading(titulo);
 
-        Text textoMensaje = new Text("Espero que te guste la aplicación, puedes seguir el proyecto en github.");
+        Label textoMensaje = new Label("Este programa esta desarrollado por Rubén Saiz,\npuedes descargarte el poyecto en github.");
         textoMensaje.setFont(new Font(15));
         content.setBody(textoMensaje);
 
@@ -186,16 +192,29 @@ public class ControladorLogin implements Initializable {
         JFXDialog dialog = new JFXDialog(stackPane, content, transiciones.get(new Random().nextInt(5)));
 
         JFXButton button = new JFXButton("Vale");
-        button.setStyle("-fx-background-color: #2f2f2fa3; -fx-cursor: HAND; -fx-padding: 10px; -fx-text-fill: white;");
+        button.getStyleClass().add("btn-dialog");
+
+        JFXButton botonGitHub = new JFXButton("Ir a Github");
+        botonGitHub.getStyleClass().add("btn-dialog");
 
         BoxBlur blur = new BoxBlur(3, 3, 3);
-        content.setActions(button);
+        content.setActions(button, botonGitHub);
         dialog.show();
 
         Node pane = (Node) stackPane.getChildren().get(0);
 
         button.setOnAction(e ->{
             dialog.close();
+        });
+
+        botonGitHub.setOnAction(e -> {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/MiYazJE/Nba"));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (URISyntaxException ex) {
+                ex.printStackTrace();
+            }
         });
 
         dialog.setOnDialogClosed((e) -> {
