@@ -51,15 +51,13 @@ public class FicherosCarpetas {
         try {
 
             PreparedStatement pst = conexion.con.prepareStatement(
-                    "alter table Equipos DROP COLUMN Imagen;");
+                    "alter table equipos DROP COLUMN Imagen;");
             conexion.realizarUpdate( pst );
 
             PreparedStatement ps = conexion.con.prepareStatement(
                     "alter table equipos add Imagen varchar(250);");
             conexion.realizarUpdate( ps );
 
-        } catch (SQLSyntaxErrorException e) {
-            System.out.println("Puede que la columa Imagen ya existiera.\nO puede que no.");
         } catch(SQLException e) {
             e.printStackTrace();
         }
@@ -92,23 +90,24 @@ public class FicherosCarpetas {
      * Genera las imagenes utilizadas por la aplicacion
      * @return boolean
      */
-    public boolean moverImagenes() {
-
+    public void moverImagenes() {
 
        ArrayList<String> nombres = getNombresEquipos();
 
-        try {
-
-            for (String nombre : nombres) {
-                InputStream source = getClass().getResourceAsStream("/imagenes/logosNba/" + nombre + ".png");
+        for (String nombre : nombres) {
+            InputStream source = null;
+            try {
+                try {
+                    source = getClass().getResourceAsStream("/imagenes/logosNba/" + nombre + ".png");
+                    Image image = new Image(source);
+                    source = getClass().getResourceAsStream("/imagenes/logosNba/" + nombre + ".png");
+                } catch(Exception e) {
+                    source = getClass().getResourceAsStream("/imagenes/logosNba/" + "real-madrid" + ".png");
+                }
                 Files.copy(source, Paths.get( this.rutaAbsoluta + File.separator + nombre + ".png" ), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
-
-            return true;
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return false;
         }
 
     }
@@ -138,7 +137,6 @@ public class FicherosCarpetas {
         return listaNombres;
     }
 
-
     /**
      * Inserta en la base de datos la ruta de cada una de las imagenes utilizadas
      */
@@ -150,9 +148,11 @@ public class FicherosCarpetas {
             for (String file : imagenes) {
                 String nombre = file.substring(0, file.length() - 4); // file("76ers.png") -> "76ers"
 
+                String ruta = this.rutaAbsoluta + File.separator + nombre + ".png";;
+
                 PreparedStatement ps = conexion.con.prepareStatement(
                                     "UPDATE equipos SET imagen = ? WHERE nombre = ?;");
-                ps.setString(1, this.rutaAbsoluta + File.separator + nombre + ".png");
+                ps.setString(1, ruta);
                 ps.setString(2, nombre);
 
                 conexion.realizarUpdate( ps );
